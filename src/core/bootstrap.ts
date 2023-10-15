@@ -23,43 +23,24 @@
  * questions.
  */
 
-import { SiyuanDevice } from "zhi-device"
-import pkg from "./../../package.json"
+import Lifecycle from "./lifecycle"
+import DependencyItem from "../models/dependencyItem"
 
 /**
- * 获取插件路径
- */
-export const getAppBase = () => {
-  const win = SiyuanDevice.siyuanWindow()
-  const path = win.require("path")
-  const basePath = path.join("plugins", pkg.name)
-  return basePath
-}
-
-/**
- * 加载插件依赖
+ * 服务唯一激活入口
  *
- * @param path - 相对路径
+ * @author terwer
+ * @since 0.1.0
  */
-export const requirePluginLib = (path: string) => {
-  const basePath = getAppBase()
-  const fullpath = SiyuanDevice.joinPath(basePath, path)
-  return SiyuanDevice.requireDataLib(fullpath)
+class Bootstrap {
+  private static lifecycle = new Lifecycle()
+
+  /**
+   * 主题激活
+   */
+  public static async start(): Promise<DependencyItem[]> {
+    return await this.lifecycle.load()
+  }
 }
 
-/**
- * 异步读取 json
- *
- * @param jsonFile
- */
-export const importPluginJson = async (jsonFile: string) => {
-  const win = SiyuanDevice.siyuanWindow()
-  const path = win.require("path")
-  const pluginBase = path.join("/", "plugins", pkg.name)
-  const { default: data } = await import(SiyuanDevice.joinPath(pluginBase, jsonFile), {
-    assert: {
-      type: "json",
-    },
-  })
-  return data
-}
+export default Bootstrap
