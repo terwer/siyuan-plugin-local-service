@@ -23,12 +23,13 @@
  * questions.
  */
 
-import {App, IObject, Plugin} from "siyuan"
-import {simpleLogger} from "zhi-lib-base"
+import { App, IObject, Plugin } from "siyuan"
+import { simpleLogger } from "zhi-lib-base"
 
 import "../index.styl"
-import {isDev} from "./Constants"
-import {SiyuanDevice} from "zhi-device"
+import { isDev } from "./Constants"
+import { DeviceDetection, SiyuanDevice } from "zhi-device"
+import { LocalService } from "./service/localService"
 
 export default class ImporterPlugin extends Plugin {
   private logger
@@ -36,7 +37,7 @@ export default class ImporterPlugin extends Plugin {
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
 
-    this.logger = simpleLogger("index", "demo", isDev)
+    this.logger = simpleLogger("index", "local-service", isDev)
   }
 
   async onload() {
@@ -44,29 +45,34 @@ export default class ImporterPlugin extends Plugin {
       console.warn("系统工具插件仅PC客户端可用")
       return
     }
-    await this.loadInfra()
-    this.loadCmd()
-    this.logger.info("local service loaded")
+
+    // 加载服务。这里使用异步来做
+    const that = this
+    this.logger.info("local service is starting...")
+    this.loadServices()
+      .then(() => {
+        that.logger.info("local service has been successfully initiated😄")
+      })
+      .catch((e) => {
+        that.logger.error("the initiation of local service has encountered an error😭", e)
+      })
   }
 
   onunload() {
-    this.logger.info("system tool unloaded")
+    const win = SiyuanDevice.siyuanWindow()
+    win.npmManager = undefined
+    win.zhiCmd = undefined
+    this.logger.info("local services have been deactivated.")
   }
 
   //===================
   // private function
   //===================
-  private async loadInfra() {
-    // const siyuanWindow = SiyuanDevice.siyuanWindow()
-    // const siyuanRequire = siyuanWindow.require
-    // const workspaceDir = siyuanWindow?.siyuan.config.system.workspaceDir
-    // const path = siyuanRequire("path")
-    // const infraDir = path.join("libs", "zhi-infra", "index.cjs")
-    // const toolDir = path.join("data", "plugins", "siyuan-plugin-system-tool")
-    // const initZhiInfra = siyuanRequire(path.join(workspaceDir, toolDir, infraDir)).default
-    // const zhiNpmPath = path.join(workspaceDir, toolDir, "deps", "npm")
-    // await initZhiInfra(zhiNpmPath)
+  /**
+   * 加载服务
+   */
+  private async loadServices() {
+    const localService = new LocalService(DeviceDetection.getDevice())
+    await localService.init()
   }
-
-  private async loadCmd() {}
 }

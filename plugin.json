@@ -8,7 +8,7 @@
     "zh_CN": "本地服务"
   },
   "description": {
-    "default": "A plugin connecting siyuan-note with local services",
+    "default": "a plugin connecting siyuan-note with local services",
     "zh_CN": "一个连接思源笔记与本地服务的思源笔记插件"
   },
   "readme": {

@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { BaseApi } from "./base-api"
+import { BaseApi, SiyuanData } from "./base-api"
 
 /**
  * 思源笔记服务端API v2.8.9
@@ -34,6 +34,40 @@ import { BaseApi } from "./base-api"
  * @version 0.0.1
  * @since 0.0.1
  */
-class KernelApi extends BaseApi {}
+class KernelApi extends BaseApi {
+  /**
+   * 推送报错消息
+   *
+   * 参数
+   *
+   * ```
+   * {
+   *   "msg": "test",
+   *   "timeout": 7000
+   * }
+   * ```
+   *
+   * timeout：消息持续显示时间，单位为毫秒。可以不传入该字段，默认为 7000 毫秒
+   *
+   * 返回值
+   *
+   * ```
+   * {
+   *   "code": 0,
+   *   "msg": "",
+   *   "data": {
+   *       "id": "qc9znut"
+   *   }
+   * }
+   *
+   * id：消息 ID
+   * ```
+   *
+   * @param msgObj
+   */
+  public async pushErrMsg(msgObj: object): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notification/pushErrMsg", msgObj)
+  }
+}
 
 export default KernelApi

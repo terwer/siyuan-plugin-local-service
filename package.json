@@ -1,7 +1,7 @@
 {
   "name": "siyuan-plugin-local-service",
   "version": "0.0.1",
-  "description": "system tool for siyuan-note",
+  "description": "a plugin connecting siyuan-note with local services",
   "type": "module",
   "repository": "terwer/siyuan-plugin-local-service",
   "homepage": "https://github.com/terwer/siyuan-plugin-local-service",
@@ -39,6 +39,7 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "zhi-common": "^1.24.0",
     "zhi-device": "^2.3.1",
     "zhi-lib-base": "^0.5.0"
   }

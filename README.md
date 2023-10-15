@@ -2,7 +2,7 @@
 
 # siyuan-plugin-local-service
 
-A plugin connecting siyuan-note with local services
+a plugin connecting siyuan-note with local services
 
 ## Features
 
