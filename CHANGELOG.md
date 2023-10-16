@@ -1,24 +1,15 @@
 # Changelog
 
 ## 1.0.0 (2023-10-16)
-
-
 ### Features
-
 * 初始化本地服务插件 ([5c4ac5f](https://github.com/terwer/siyuan-plugin-local-service/commit/5c4ac5fe014f659d0968b93b478c07ca8b756246))
 * 初步完成核心加载流程 ([976cce8](https://github.com/terwer/siyuan-plugin-local-service/commit/976cce8566188a5a48e33ab2db83e8a561b8ff69))
 * 基本启动流程 ([36a66d1](https://github.com/terwer/siyuan-plugin-local-service/commit/36a66d11252cb435782f1b42aaf8c9778b92b40d))
 * 整合基础设施、命令工具 ([3955bbc](https://github.com/terwer/siyuan-plugin-local-service/commit/3955bbc53a22a1deae209a8485b1e90c23ad2aba))
-
-
 ### Bug Fixes
-
 * **deps:** bump actions/checkout from 3 to 4 ([9604c83](https://github.com/terwer/siyuan-plugin-local-service/commit/9604c83eacfdd68bd86362d5c2b7e37b1f9710f0))
 * **deps:** bump zhi-lib-base from 0.2.6 to 0.5.0 ([5251393](https://github.com/terwer/siyuan-plugin-local-service/commit/5251393e1065da85883d8a14eb37202147807474))
-
-
 ### Miscellaneous
-
 * **deps-dev:** bump @tsconfig/svelte from 4.0.1 to 5.0.2 ([576750c](https://github.com/terwer/siyuan-plugin-local-service/commit/576750c24f419f36fd6d138234b52cd2595fec0f))
 * **deps-dev:** bump @types/minimist from 1.2.2 to 1.2.3 ([90bacb1](https://github.com/terwer/siyuan-plugin-local-service/commit/90bacb165259ccdf959ea0b1199ebcbc50cd4864))
 * **deps-dev:** bump siyuan from 0.7.9 to 0.8.5 ([0eb4b0d](https://github.com/terwer/siyuan-plugin-local-service/commit/0eb4b0d9b561fc42d7e3bd27e7c17bb753cfff5c))
