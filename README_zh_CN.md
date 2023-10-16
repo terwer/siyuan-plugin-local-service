@@ -21,7 +21,7 @@
    path3 => [zhiAppNpmPath]/node_modules 
 
    备注： Mac上 [zhiAppNpmPath]=/Users/[Mac用户名]/Library/Application Support/siyuancommunity
-   Windows上 [zhiAppNpmPath]=[用户目录]/siyuancommunity
+   Windows上 [zhiAppNpmPath]=[用户目录]/siyuancommunity，即：C:\\Users\\Terwer\\AppData\\Roaming\\siyuancommunity
    Linux上 [zhiAppNpmPath]=[用户目录]/siyuancommunity
    ```
 
