@@ -4,7 +4,48 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-## 功能特性
+1.0.0 已有功能
+
+- [x] 开发者工具控制台执行命令
+
+  
+  ```js
+  await npmManager.npmVersion()
+  // '9.5.1\n'
+
+  require("cross-spawn")
+
+  require("vue")
+  // node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
+
+  await npmManager.requireInstall("vue")
+  // {TransitionGroup: {…}, compile: ƒ, Transition: ƒ, VueElement: ƒ, createApp: ƒ, …}
+
+  await zhiCmd.getElectronNodeVersion()
+  // '18.15.0'
+
+  // TODO
+  // [工作空间]
+  // const workspaceDir = "C:/Users/Terwer/Documents/mydocs/SiyuanWorkspace/test"
+  // const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-publisher`
+  // const cwd = `${basePath}/core/zhi-infra/deps/npm`
+  // await zhiCmd.executeCommandWithBundledNodeAsync(`${cwd}/hello.js`, [], cwd)
+
+  await zhiCmd.getSystemNodeVersion()
+  // 'v18.16.0'
+
+  // TODO
+  // [工作空间]
+  // const workspaceDir = "C:/Users/Terwer/Documents/mydocs/SiyuanWorkspace/test"
+  // const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-publisher`
+  // const cwd = `${basePath}/core/zhi-infra/deps/npm`
+  // await zhiCmd.executeCommand("node", [`${cwd}/hello.js`], cwd)
+
+  await zhiCmd.executeCommand("python", ["-V"])
+  //'Python 3.11.3'
+  ```
+
+## 功能特性-TODO
 
 可实现如下功能：
 
