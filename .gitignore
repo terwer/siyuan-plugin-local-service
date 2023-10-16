@@ -3,4 +3,4 @@
 node_modules
 dist
 build
-!public/deps/npm/node_modules
+!public/core/zhi-infra/deps/npm/node_modules

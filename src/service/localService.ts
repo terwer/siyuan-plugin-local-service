@@ -23,13 +23,13 @@
  * questions.
  */
 
-import { DeviceTypeEnum, SiyuanDevice } from "zhi-device"
+import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
 import { simpleLogger } from "zhi-lib-base"
-import { isDev } from "../Constants"
+import { dataDir, isDev } from "../Constants"
 import KernelApi from "../api/kernel-api"
 import pkg from "../../package.json"
 import Bootstrap from "../core/bootstrap"
-import { requirePluginLib } from "../utils/utils"
+import { getAppBase, importPluginLib, requirePluginLib } from "../utils/utils"
 import { StrUtil } from "zhi-common"
 
 /**
@@ -79,10 +79,11 @@ class LocalService {
       // 平台检测
       if (
         this.runAs !== DeviceTypeEnum.DeviceType_Siyuan_MainWin &&
+        this.runAs !== DeviceTypeEnum.DeviceType_Siyuan_RendererWin &&
         this.runAs !== DeviceTypeEnum.DeviceType_Siyuan_Widget
       ) {
         this.logger.warn(
-          `local service can only run as ${DeviceTypeEnum.DeviceType_Siyuan_MainWin} or ${DeviceTypeEnum.DeviceType_Siyuan_Widget}`
+          `local service can only run as ${DeviceTypeEnum.DeviceType_Siyuan_MainWin}, ${DeviceTypeEnum.DeviceType_Siyuan_RendererWin} or ${DeviceTypeEnum.DeviceType_Siyuan_Widget}`
         )
         return
       }
@@ -132,37 +133,55 @@ class LocalService {
         }
 
         this.logger.info(`Loading modules form zhi => ${item.libpath}`)
-        let lib
+        let lib: any
         if (item.importType == "import") {
-          lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
+          if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
+            lib = importPluginLib(item.libpath)
+          } else {
+            lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
+          }
           this.logger.debug(`Importing lib ${item.libpath} with basePath of ${item.baseType} ...`)
         } else {
-          lib = SiyuanDevice.requireLib(item.libpath, false, item.baseType)
+          if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
+            lib = requirePluginLib(item.libpath)
+          } else {
+            lib = SiyuanDevice.requireLib(item.libpath, false, item.baseType)
+          }
           this.logger.debug(`Requiring lib ${item.libpath} with basePath of ${item.baseType} ...`)
         }
         // 如果有初始化方法，进行初始化
         if (lib) {
           const libObj = lib
           this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
+          // 参数替换
+          item.initParams = item.initParams.map((x: any) => {
+            if (typeof x === "string") {
+              const basePath = getAppBase()
+              const absBasePath = SiyuanDevice.joinPath(dataDir, basePath)
+              return x.replace(/\[basePath\]/g, absBasePath)
+            } else {
+              return x
+            }
+          })
           if (typeof libObj == "function") {
-            await libObj()
-            this.logger.info(`Inited ${item.libpath} with default function`)
+            await libObj(item.initParams)
+            this.logger.info(`Inited ${item.libpath} with function, params=>`, item.initParams)
           } else {
-            if (libObj.init) {
-              const res = await libObj.init()
+            if (libObj.main) {
+              const res = await libObj.main(item.initParams)
               if (res) {
                 this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
               }
-              this.logger.info(`Inited ${item.libpath} with init function`)
+              this.logger.info(`Inited ${item.libpath} with init function, params=>`, item.initParams)
             } else {
+              this.logger.info(`No init method for ${item.importType} ${item.libpath}, try default`)
               if (libObj.default) {
-                const res = await libObj.default()
+                const res = await libObj.default(item.initParams)
                 if (res) {
                   this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
                 }
-                this.logger.info(`Inited ${item.libpath} with default function`)
+                this.logger.info(`Inited ${item.libpath} with default function, params=>`, item.initParams)
               }
-              this.logger.info(`No init method for ${item.importType} ${item.libpath}`)
             }
           }
         } else {

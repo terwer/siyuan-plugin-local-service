@@ -21,7 +21,7 @@ It enables the following functionalities:
    Available zhi node_modules path3 => [zhiAppNpmPath]/node_modules 
 
    Note: On Mac, [zhiAppNpmPath]=/Users/[MacUsername]/Library/Application Support/siyuancommunity
-   On Windows, [zhiAppNpmPath]=[UserDirectory]/siyuancommunity
+   On Windows, [zhiAppNpmPath]=[UserDirectory]/siyuancommunity, like：C:\\Users\\Terwer\\AppData\\Roaming\\siyuancommunity
    On Linux, [zhiAppNpmPath]=[UserDirectory]/siyuancommunity
    ```
 
