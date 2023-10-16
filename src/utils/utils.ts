@@ -52,14 +52,10 @@ export const requirePluginLib = (path: string) => {
  *
  * @param jsonFile
  */
-export const importPluginJson = async (jsonFile: string) => {
+export const importPluginLib = async (jsonFile: string) => {
   const win = SiyuanDevice.siyuanWindow()
   const path = win.require("path")
   const pluginBase = path.join("/", "plugins", pkg.name)
-  const { default: data } = await import(SiyuanDevice.joinPath(pluginBase, jsonFile), {
-    assert: {
-      type: "json",
-    },
-  })
+  const { default: data } = await import(SiyuanDevice.joinPath(pluginBase, jsonFile))
   return data
 }

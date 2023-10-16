@@ -32,7 +32,7 @@ import { DeviceDetection, SiyuanDevice } from "zhi-device"
 import { LocalService } from "./service/localService"
 
 export default class ImporterPlugin extends Plugin {
-  private logger
+  private logger: any
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
@@ -41,12 +41,7 @@ export default class ImporterPlugin extends Plugin {
   }
 
   async onload() {
-    if (!SiyuanDevice.isInSiyuanNewWin() && !SiyuanDevice.isInSiyuanWidget()) {
-      console.warn("系统工具插件仅PC客户端可用")
-      return
-    }
-
-    // 加载服务。这里使用异步来做
+    // 加载服务，使用异步来做
     const that = this
     this.logger.info("local service is starting...")
     this.loadServices()

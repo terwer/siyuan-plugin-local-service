@@ -6,21 +6,21 @@ settings:
 
 dependencies:
   zhi-common:
-    specifier: ^1.24.0
-    version: 1.24.0
+    specifier: ^1.24.1
+    version: 1.24.1
   zhi-device:
-    specifier: ^2.3.1
-    version: 2.3.1
+    specifier: ^2.6.0
+    version: 2.6.0
   zhi-lib-base:
     specifier: ^0.5.0
     version: 0.5.0
 
 devDependencies:
   '@sveltejs/vite-plugin-svelte':
-    specifier: ^2.4.1
+    specifier: ^2.4.6
     version: 2.4.6(svelte@4.2.1)(vite@4.4.11)
   '@terwer/eslint-config-custom':
-    specifier: ^1.3.4
+    specifier: ^1.3.6
     version: 1.3.6(@nuxt/eslint-config@0.1.1)(@typescript-eslint/eslint-plugin@5.62.0)(astro-eslint-parser@0.13.3)(eslint-config-prettier@8.10.0)(eslint-config-turbo@1.10.15)(eslint-plugin-prettier@4.2.1)(eslint-plugin-svelte@2.34.0)(eslint-plugin-vue@9.17.0)(eslint@8.51.0)(prettier-plugin-svelte@2.10.1)(prettier@2.8.8)(typescript@5.2.2)
   '@tsconfig/svelte':
     specifier: ^5.0.2
@@ -29,10 +29,10 @@ devDependencies:
     specifier: 1.2.3
     version: 1.2.3
   fast-glob:
-    specifier: ^3.2.12
+    specifier: ^3.3.1
     version: 3.3.1
   jsdom:
-    specifier: ^22.0.0
+    specifier: ^22.1.0
     version: 22.1.0
   minimist:
     specifier: ^1.2.8
@@ -50,10 +50,10 @@ devDependencies:
     specifier: ^4.2.1
     version: 4.2.1
   typescript:
-    specifier: ^5.0.4
+    specifier: ^5.2.2
     version: 5.2.2
   vite:
-    specifier: ^4.3.5
+    specifier: ^4.4.11
     version: 4.4.11(@types/node@20.8.6)(stylus@0.60.0)
   vite-plugin-dts:
     specifier: ^3.6.0
@@ -65,7 +65,7 @@ devDependencies:
     specifier: ^0.17.0
     version: 0.17.0(vite@4.4.11)
   vite-tsconfig-paths:
-    specifier: ^4.2.0
+    specifier: ^4.2.1
     version: 4.2.1(typescript@5.2.2)(vite@4.4.11)
   vitest:
     specifier: ^0.34.6
@@ -499,8 +499,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@rollup/plugin-inject@5.0.4:
-    resolution: {integrity: sha512-dM93Nyqp9Ah14jvThFFA30ifjB8cDKk3Bx69M1nIIHGytXug3VrTv5HEuYBzevu45HvZ0ho7t+40bmScmkzZhg==}
+  /@rollup/plugin-inject@5.0.5:
+    resolution: {integrity: sha512-2+DEJbNBoPROPkgTDNe8/1YXWcqxbN5DTjASVIOx8HS+pITXushyNiBV56RB08zuptzz8gT3YfkqriTBVycepg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
@@ -510,7 +510,7 @@ packages:
     dependencies:
       '@rollup/pluginutils': 5.0.5
       estree-walker: 2.0.2
-      magic-string: 0.27.0
+      magic-string: 0.30.5
     dev: true
 
   /@rollup/pluginutils@5.0.5:
@@ -2696,13 +2696,6 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /magic-string@0.27.0:
-    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-    dev: true
-
   /magic-string@0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
     engines: {node: '>=12'}
@@ -2885,8 +2878,8 @@ packages:
     resolution: {integrity: sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==}
     dev: true
 
-  /object-inspect@1.12.3:
-    resolution: {integrity: sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==}
+  /object-inspect@1.13.0:
+    resolution: {integrity: sha512-HQ4J+ic8hKrgIt3mqk6cVOVrW2ozL4KdvHlqpBv9vDYWx9ysAgENAdvy4FoGF+KFdhR7nQTNm5J0ctAeOwn+3g==}
     dev: true
 
   /object-is@1.1.5:
@@ -3407,7 +3400,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
-      object-inspect: 1.12.3
+      object-inspect: 1.13.0
     dev: true
 
   /siginfo@2.0.0:
@@ -3862,7 +3855,7 @@ packages:
     peerDependencies:
       vite: ^2.0.0 || ^3.0.0 || ^4.0.0
     dependencies:
-      '@rollup/plugin-inject': 5.0.4
+      '@rollup/plugin-inject': 5.0.5
       buffer-polyfill: /buffer@6.0.3
       node-stdlib-browser: 1.2.0
       process: 0.11.10
@@ -4233,20 +4226,24 @@ packages:
       commander: 9.5.0
     dev: true
 
-  /zhi-common@1.24.0:
-    resolution: {integrity: sha512-5npk1z/i/EW/n8J8oMAb9pbDKggMfR7addwGZSQoaOAN5wGRj+do015ZIZ1tunwff+zYybH3SnHGd3WUZ8RwvQ==}
+  /zhi-common@1.24.1:
+    resolution: {integrity: sha512-ttQOeoDHDtzCsuEWHlH2/CkasEA0C9fGuXagrYsoaT7hFajtoi7t9AauM3Rtb6CJnqZskpmLcph1vS6M3Cvb+w==}
     dependencies:
       js-yaml: 4.1.0
       shorthash2: 1.0.3
       transliteration: 2.3.5
       vue: 3.3.4
-      zhi-lib-base: 0.5.0
+      zhi-lib-base: 0.6.0
     dev: false
 
-  /zhi-device@2.3.1:
-    resolution: {integrity: sha512-HLNroA/bIHrEPQTaOC0gZyR42FpaxSJb/lc+LqWvtlazsxeOiYAc9HhFHBwJFdbikMqCogFWVFtGG7OMLYmaKg==}
+  /zhi-device@2.6.0:
+    resolution: {integrity: sha512-Xyju0hxbpVpxAcyYl9DnIjbgskZglAO5gBLdzWq7BXbT/d4TvovkfWjuYf76VqGxRCD545q0FEIF4Gt6XKed8w==}
     dev: false
 
   /zhi-lib-base@0.5.0:
     resolution: {integrity: sha512-56QfNhYA5HgmnTWRmOxD4UDpOplR0dcpmdq4ZxRFqBtr3eyHdEmm0qBITJt6kk7lzbPNPD2wgsuHq7pnz+9OQg==}
+    dev: false
+
+  /zhi-lib-base@0.6.0:
+    resolution: {integrity: sha512-rxBe1ubPbgFOTS+0bWL+kNH7LgL2lm4RFz4YYZJ9heofbNNeYm0gR/GtsVI54WLRWFOgnYwU2/FJPLKud5pa8w==}
     dev: false

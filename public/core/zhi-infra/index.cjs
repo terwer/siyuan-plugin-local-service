@@ -4572,17 +4572,17 @@ function fixPath() {
 init_define_import_meta_env();
 var w = (r2, i, p2) => {
   const s = i ?? "zhi", $ = (t) => {
-    const e = t.getFullYear(), o = String(t.getMonth() + 1).padStart(2, "0"), n2 = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), d = String(t.getMinutes()).padStart(2, "0"), u2 = String(t.getSeconds()).padStart(2, "0");
-    return `${e}-${o}-${n2} ${S}:${d}:${u2}`;
+    const e = t.getFullYear(), o = String(t.getMonth() + 1).padStart(2, "0"), n = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), d = String(t.getMinutes()).padStart(2, "0"), u2 = String(t.getSeconds()).padStart(2, "0");
+    return `${e}-${o}-${n} ${S}:${d}:${u2}`;
   }, c2 = (t, e) => {
-    const o = $(/* @__PURE__ */ new Date()), n2 = typeof e == "boolean" ? String(e) : e;
-    n2 ? console.log(`[${s}] [${o}] [DEBUG] [${r2}] ${t}`, n2) : console.log(`[${s}] [${o}] [DEBUG] [${r2}] ${t}`);
+    const o = $(/* @__PURE__ */ new Date()), n = typeof e == "boolean" ? String(e) : e;
+    n ? console.log(`[${s}] [${o}] [DEBUG] [${r2}] ${t}`, n) : console.log(`[${s}] [${o}] [DEBUG] [${r2}] ${t}`);
   }, l = (t, e) => {
-    const o = $(/* @__PURE__ */ new Date()), n2 = typeof e == "boolean" ? String(e) : e;
-    n2 ? console.info(`[${s}] [${o}] [INFO] [${r2}] ${t}`, n2) : console.info(`[${s}] [${o}] [INFO] [${r2}] ${t}`);
+    const o = $(/* @__PURE__ */ new Date()), n = typeof e == "boolean" ? String(e) : e;
+    n ? console.info(`[${s}] [${o}] [INFO] [${r2}] ${t}`, n) : console.info(`[${s}] [${o}] [INFO] [${r2}] ${t}`);
   }, f = (t, e) => {
-    const o = $(/* @__PURE__ */ new Date()), n2 = typeof e == "boolean" ? String(e) : e;
-    n2 ? console.warn(`[${s}] [${o}] [WARN] [${r2}] ${t}`, n2) : console.warn(`[${s}] [${o}] [WARN] [${r2}] ${t}`);
+    const o = $(/* @__PURE__ */ new Date()), n = typeof e == "boolean" ? String(e) : e;
+    n ? console.warn(`[${s}] [${o}] [WARN] [${r2}] ${t}`, n) : console.warn(`[${s}] [${o}] [WARN] [${r2}] ${t}`);
   }, g2 = (t, e) => {
     const o = $(/* @__PURE__ */ new Date());
     e ? console.error(`[${s}] [${o}] [ERROR] [${r2}] ${t.toString()}`, e) : console.error(`[${s}] [${o}] [ERROR] [${r2}] ${t.toString()}`);
@@ -4606,8 +4606,8 @@ var w = (r2, i, p2) => {
 // ../zhi-device/dist/index.js
 init_define_import_meta_env();
 var P = Object.defineProperty;
-var g = (a, e, t) => e in a ? P(a, e, { enumerable: true, configurable: true, writable: true, value: t }) : a[e] = t;
-var r = (a, e, t) => (g(a, typeof e != "symbol" ? e + "" : e, t), t);
+var g = (n, e, i) => e in n ? P(n, e, { enumerable: true, configurable: true, writable: true, value: i }) : n[e] = i;
+var r = (n, e, i) => (g(n, typeof e != "symbol" ? e + "" : e, i), i);
 var p = class {
   /**
    * 检测是否运行在Chrome插件中
@@ -4624,25 +4624,25 @@ var p = class {
     if (navigator && navigator.clipboard)
       await navigator.clipboard.writeText(e);
     else {
-      const t = document.createElement("input");
-      t.style.position = "fixed", t.style.opacity = "0", t.value = e, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t);
+      const i = document.createElement("input");
+      i.style.position = "fixed", i.style.opacity = "0", i.value = e, document.body.appendChild(i), i.select(), document.execCommand("copy"), document.body.removeChild(i);
     }
   }
 };
-var n = p;
-r(n, "isNode", typeof process < "u" && process.versions != null && process.versions.node != null), /**
+var a = p;
+r(a, "isNode", typeof process < "u" && process.versions != null && process.versions.node != null), /**
 * 是否在浏览器环境
 */
-r(n, "isInBrowser", typeof window < "u" && typeof document < "u"), /**
+r(a, "isInBrowser", typeof window < "u" && typeof document < "u"), /**
 * 浏览器路径分隔符
 */
-r(n, "BrowserSeparator", "/"), /**
+r(a, "BrowserSeparator", "/"), /**
 * 是否是Electron环境
 */
-r(n, "isElectron", () => typeof process < "u" && process.versions != null && process.versions.electron != null), /**
+r(a, "isElectron", () => typeof process < "u" && process.versions != null && process.versions.electron != null), /**
 * 是否有Node环境，目前包括 Electron 和 Node
 */
-r(n, "hasNodeEnv", () => p.isElectron() || p.isNode), /**
+r(a, "hasNodeEnv", () => p.isElectron() || p.isNode), /**
 * 通用的从 url 中获取获取参数的方法，优先获取查询参数，然后获取 hash 参数与
 *
 * @param key - 参数
@@ -4650,18 +4650,18 @@ r(n, "hasNodeEnv", () => p.isElectron() || p.isNode), /**
 * @version 0.9.0
 * @since 0.0.1
 */
-r(n, "getQueryParam", (e) => {
+r(a, "getQueryParam", (e) => {
   if (!p.isInBrowser)
     return "";
-  const t = window.location.href, i = t.indexOf("?");
-  if (i !== -1) {
-    const o = t.indexOf("#", i), w2 = o !== -1 ? t.substring(i + 1, o) : t.substring(i + 1), m = new URLSearchParams(w2).get(e);
+  const i = window.location.href, t = i.indexOf("?");
+  if (t !== -1) {
+    const o = i.indexOf("#", t), w2 = o !== -1 ? i.substring(t + 1, o) : i.substring(t + 1), m = new URLSearchParams(w2).get(e);
     if (m)
       return m;
   }
-  const s = t.indexOf("#");
+  const s = i.indexOf("#");
   if (s !== -1) {
-    const o = t.substring(s + 1), l = new URLSearchParams(o).get(e);
+    const o = i.substring(s + 1), l = new URLSearchParams(o).get(e);
     if (l)
       return l;
   }
@@ -4683,13 +4683,13 @@ r(n, "getQueryParam", (e) => {
 * @param paramName - 参数名
 * @param paramValue - 参数值
 */
-r(n, "replaceUrlParam", (e, t, i) => {
-  i == null && (i = "");
-  const s = new RegExp("\\b(" + t + "=).*?(&|#|$)");
+r(a, "replaceUrlParam", (e, i, t) => {
+  t == null && (t = "");
+  const s = new RegExp("\\b(" + i + "=).*?(&|#|$)");
   if (e.search(s) >= 0)
-    return e.replace(s, "$1" + i + "$2");
+    return e.replace(s, "$1" + t + "$2");
   const [o, w2] = e.split("#"), [l, m] = o.split("?"), y = new URLSearchParams(m);
-  y.set(t, i);
+  y.set(i, t);
   const f = y.toString(), b = l + (f ? "?" + f : "");
   return w2 ? b + "#" + w2 : b;
 }), /**
@@ -4699,32 +4699,32 @@ r(n, "replaceUrlParam", (e, t, i) => {
 * @param key - key
 * @param value - value
 */
-r(n, "setUrlParameter", (e, t, i) => {
-  if (e.includes(t))
-    return p.replaceUrlParam(e, t, i);
+r(a, "setUrlParameter", (e, i, t) => {
+  if (e.includes(i))
+    return p.replaceUrlParam(e, i, t);
   const s = e.split("#");
   let o = s[0];
   const w2 = s[1];
-  return o.includes("?") ? o += `&${t}=${i}` : o += `?${t}=${i}`, w2 && (o += "#" + w2), o;
+  return o.includes("?") ? o += `&${i}=${t}` : o += `?${i}=${t}`, w2 && (o += "#" + w2), o;
 }), /**
 * 重新加载指定tab
 *
 * @param tabname - tabname
 * @param t - 延迟时间
 */
-r(n, "reloadTabPage", (e, t) => {
+r(a, "reloadTabPage", (e, i) => {
   setTimeout(function() {
     if (p.isInBrowser) {
-      const i = window.location.href;
-      window.location.href = p.setUrlParameter(i, "tab", e);
+      const t = window.location.href;
+      window.location.href = p.setUrlParameter(t, "tab", e);
     }
-  }, t ?? 200);
+  }, i ?? 200);
 }), /**
 * 刷新当前tab页面
 *
 * @param t - 延迟时间
 */
-r(n, "reloadPage", (e) => {
+r(a, "reloadPage", (e) => {
   setTimeout(function() {
     p.isInBrowser && window.location.reload();
   }, e ?? 200);
@@ -4735,25 +4735,25 @@ r(n, "reloadPage", (e) => {
 * @param cb - 回调
 * @param t - 延迟时间
 */
-r(n, "reloadPageWithMessageCallback", (e, t, i) => {
-  t && t(e), setTimeout(function() {
+r(a, "reloadPageWithMessageCallback", (e, i, t) => {
+  i && i(e), setTimeout(function() {
     p.isInBrowser && window.location.reload();
-  }, i ?? 200);
+  }, t ?? 200);
 });
-var h = /* @__PURE__ */ ((a) => (a.BasePathType_Appearance = "Appearance", a.BasePathType_Data = "Data", a.BasePathType_Themes = "Themes", a.BasePathType_ZhiTheme = "ZhiTheme", a.BasePathType_None = "None", a))(h || {});
+var h = /* @__PURE__ */ ((n) => (n.BasePathType_Appearance = "Appearance", n.BasePathType_Data = "Data", n.BasePathType_Themes = "Themes", n.BasePathType_ZhiTheme = "ZhiTheme", n.BasePathType_ThisPlugin = "ThisPlugin", n.BasePathType_None = "None", n))(h || {});
 var c = class {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
   static isInSiyuanBrowser() {
-    return n.isInBrowser ? typeof window.siyuan < "u" && typeof window.Lute < "u" : false;
+    return a.isInBrowser ? typeof window.siyuan < "u" && typeof window.Lute < "u" : false;
   }
   /**
    * 思源笔记 window 对象
    */
   static siyuanWindow() {
     let e;
-    return this.isInSiyuanWidget() ? e = parent.window : this.isInSiyuanNewWin() || this.isInSiyuanBrowser() || typeof window < "u" ? e = window : e = void 0, e;
+    return this.isInSiyuanWidget() ? e = parent.window : this.isInSiyuanRendererWin() || this.isInSiyuanBrowser() || typeof window < "u" ? e = window : e = void 0, e;
   }
   // =========================
   // require end
@@ -4767,27 +4767,27 @@ var c = class {
    * @param jsPath - js相对路径全路径
    * @param type - 类型
    */
-  static async importJs(e, t) {
-    let i = e;
-    switch (t) {
+  static async importJs(e, i) {
+    let t = e;
+    switch (i) {
       case h.BasePathType_Appearance:
-        i = this.browserJoinPath(this.siyuanAppearanceRelativePath(), e);
+        t = this.browserJoinPath(this.siyuanAppearanceRelativePath(), e);
         break;
       case h.BasePathType_Data:
-        i = this.browserJoinPath(this.siyuanDataRelativePath(), e);
+        t = this.browserJoinPath(this.siyuanDataRelativePath(), e);
         break;
       case h.BasePathType_Themes:
-        i = this.browserJoinPath(this.siyuanThemeRelativePath(), e);
+        t = this.browserJoinPath(this.siyuanThemeRelativePath(), e);
         break;
       case h.BasePathType_ZhiTheme:
-        i = this.browserJoinPath(this.zhiThemeRelativePath(), e);
+        t = this.browserJoinPath(this.zhiThemeRelativePath(), e);
         break;
       default:
         throw new Error("type must be provided");
     }
     const { default: s } = await import(
       /* @vite-ignore */
-      i
+      t
     );
     return s;
   }
@@ -4868,15 +4868,15 @@ var c = class {
    * @param paths - 路径数组
    */
   static joinPath(...e) {
-    if (n.hasNodeEnv()) {
-      const t = this.requireLib("path");
-      if (t)
-        return t.join(...e);
+    if (a.hasNodeEnv()) {
+      const i = this.requireLib("path");
+      if (i)
+        return i.join(...e);
     }
     return this.browserJoinPath(...e);
   }
   static browserJoinPath(...e) {
-    return e.join(n.BrowserSeparator);
+    return e.join(a.BrowserSeparator);
   }
   /**
    * 思源笔记 conf 目录
@@ -4928,7 +4928,7 @@ var c = class {
    * @since 0.1.0
    */
   static siyuanThemePath() {
-    if (n.hasNodeEnv())
+    if (a.hasNodeEnv())
       return this.joinPath(this.siyuanAppearancePath(), "themes");
     {
       const e = this.siyuanWindow();
@@ -4959,14 +4959,14 @@ var c = class {
   }
 };
 var u = c;
-r(u, "isInSiyuanWidget", () => n.isInBrowser ? typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
-* 思源笔记新窗口
+r(u, "isInSiyuanWidget", () => a.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
+* 思源笔记渲染窗口
 *
 * @author terwer
 * @version 0.1.0
 * @since 0.0.1
 */
-r(u, "isInSiyuanNewWin", () => typeof window < "u" && window.process && window.process.type === "renderer"), // =========================
+r(u, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && window.process.type === "renderer"), // =========================
 // require start
 // =========================
 /**
@@ -4976,12 +4976,12 @@ r(u, "isInSiyuanNewWin", () => typeof window < "u" && window.process && window.p
  * @param abs - 可选，是否使用觉得路径，默认是 true ， 启用之后 type参数无效
  * @param type - 可选，以谁的基本路径为准
  */
-r(u, "requireLib", (e, t = true, i = h.BasePathType_None) => {
-  if (!n.hasNodeEnv())
+r(u, "requireLib", (e, i = true, t = h.BasePathType_None) => {
+  if (!a.hasNodeEnv())
     throw new Error("require ony works on node env");
   let s = e;
-  if (!t)
-    switch (i) {
+  if (!i)
+    switch (t) {
       case h.BasePathType_Appearance:
         s = c.joinPath(c.siyuanAppearancePath(), e);
         break;
@@ -5170,10 +5170,10 @@ function updatePackageJson(depsFilePath, packageJsonFilePath) {
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.1.2",
+  version: "0.4.0",
   type: "module",
   description: "basic issues for zhi",
-  main: "./dist/index.js",
+  main: "./dist/index.cjs",
   typings: "./dist/index.d.ts",
   repository: "terwer/zhi",
   homepage: "https://github.com/terwer/zhi/tree/main/apps/zhi-server-infra",
@@ -5187,12 +5187,7 @@ var package_default = {
   scripts: {
     dev: "zhi-build --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/infra",
     build: "zhi-build --production",
-    test: "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-infra",
-    lint: "eslint 'src/**/*.{ts,js}' --fix",
-    doc: "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
-    md: "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-infra && pnpm mdfix",
-    mdfix: "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-infra/index.md",
-    mdfmt: "echo '---\ntitle: zhi-server-infra\n---' | cat - ../zhi-docs/src/api/zhi-server-infra/index.md > ../zhi-docs/src/api/zhi-server-infra/README.md"
+    test: "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-infra"
   },
   devDependencies: {
     "@terwer/esbuild-config-custom": "workspace:*",
@@ -5435,9 +5430,11 @@ if (syWin.require && re) {
 }
 
 // src/index.ts
-async function init(zhiNpmPath, isFixPath) {
+var main = async (args2) => {
   const logger3 = w("init-infra", "zhi", false);
   const win = u.siyuanWindow();
+  const zhiNpmPath = args2.length > 0 ? args2[0] : void 0;
+  const isFixPath = args2.length > 1 ? args2[1] : void 0;
   if (!win.zhiInfraInited) {
     const zhiInfra = new zhiInfra_default(zhiNpmPath);
     if (isFixPath) {
@@ -5451,5 +5448,5 @@ async function init(zhiNpmPath, isFixPath) {
     logger3.info("zhi infra is already inited.skip");
   }
   return win.npmManager;
-}
-var src_default = init;
+};
+var src_default = main;
