@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (2023-10-15)
+## 1.0.0 (2023-10-16)
 
 
 ### Features
@@ -8,6 +8,7 @@
 * 初始化本地服务插件 ([5c4ac5f](https://github.com/terwer/siyuan-plugin-local-service/commit/5c4ac5fe014f659d0968b93b478c07ca8b756246))
 * 初步完成核心加载流程 ([976cce8](https://github.com/terwer/siyuan-plugin-local-service/commit/976cce8566188a5a48e33ab2db83e8a561b8ff69))
 * 基本启动流程 ([36a66d1](https://github.com/terwer/siyuan-plugin-local-service/commit/36a66d11252cb435782f1b42aaf8c9778b92b40d))
+* 整合基础设施、命令工具 ([3955bbc](https://github.com/terwer/siyuan-plugin-local-service/commit/3955bbc53a22a1deae209a8485b1e90c23ad2aba))
 
 
 ### Bug Fixes
