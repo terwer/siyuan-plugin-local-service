@@ -2,46 +2,124 @@
 
 # siyuan-plugin-local-service
 
-a plugin connecting siyuan-note with local services
+A plugin for connecting SiYuan notes with local services.
 
-## Features
+v1.0.0 - Current Features
 
-It enables the following functionalities:
+* [X] Developer tool console commands
 
-1. **Automated startup with siyuan-note:** Automatically initiates Node applications using Electron integrated Node upon siyuan-note's startup; the Node service shuts down when siyuan-note is closed. Prerequisites: None.
+  ```js
+  await npmManager.npmVersion()
+  // '9.5.1\n'
+  ```
 
-   Use case: next.js
-2. **NPM Package Installation:** Prerequisites: Local system with Node >= 18 installed and environment variables correctly configured.
+  ```js
+  require("cross-spawn")
+  // ƒ spawn(command, args, options) {
+  ```
+
+  ```js
+  require("vue")
+  // node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
+  ```
+
+  ```js
+  await npmManager.requireInstall("vue")
+  // {TransitionGroup: {…}, compile: ƒ, Transition: ƒ, VueElement: ƒ, createApp: ƒ, …}
+  ```
+
+  ```js
+  await zhiCmd.getElectronNodeVersion()
+  // '18.15.0'
+  ```
+
+  ```js
+  // [Workspace]
+  const workspaceDir = window.siyuan.config.system.workspaceDir
+  const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-local-service`
+  // Point to the .js file you want to run
+  const command = `${basePath}/hello.js`
+  const args = []
+  const cwd = undefined
+  const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
+  if (result.status) {
+    console.log("Command executed successfully! 😄")
+  } else {
+    console.error("Command execution failed 😭: ", result.msg)
+  }
+  // Executing command: C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/hello.js, args=>, options=> {cwd: 'C:\\Program Files\\SiYuan', silent: true}
+  // C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/core/zhi-cmd/index.cjs:482 Command execution log saved to file => C:\Users\Terwer\electron-command-log.txt
+  // Command executed successfully! 😄
+  ```
+
+  ```js
+  await zhiCmd.getSystemNodeVersion()
+  // 'v18.16.0'
+  ```
+
+  ```js
+  // [Workspace]
+  const workspaceDir = window.siyuan.config.system.workspaceDir
+  const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-local-service`
+  // Point to the .js file you want to run
+  const command = `${basePath}/hello.js`
+  const args = []
+  const cwd = undefined
+  const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
+  if (result.status) {
+    console.log("Command executed successfully! 😄")
+  } else {
+    console.error("Command execution failed 😭: ", result.msg)
+  }
+  await zhiCmd.executeCommand("node", [`${command}`], cwd)
+  // Executing command: C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/hello.js, args=>, options=> {cwd: 'C:\\Program Files\SiYuan', silent: true}
+  // C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/core/zhi-cmd/index.cjs:482 Command execution log saved to file => C:\Users\Terwer\electron-command-log.txt
+  // Command executed successfully! 😄
+  // 'Hello, World!'
+  ```
+
+  ```js
+  await zhiCmd.executeCommand("python", ["-V"])
+  // 'Python 3.11.3'
+  ```
+
+## Features - TODO
+
+The following features can be implemented:
+
+1. Automatically start a Node application with Electron when SiYuan notes are launched and shut down the Node service when SiYuan notes are closed. Prerequisite: None.
+
+   Use case: Next.js
+2. npm package installation. Prerequisite: Local system with Node>=18 installed and environment variables configured correctly.
 
    Available npm package paths:
 
    ```bash
    Available zhi node_modules path1 => [Workspace]/node_modules
-   Available zhi node_modules path2 => [zhiNpmPath]/node_modules 
-   Available zhi node_modules path3 => [zhiAppNpmPath]/node_modules 
+   Available zhi node_modules path2 => [zhiNpmPath]/node_modules Available zhi node_modules
+   path3 => [zhiAppNpmPath]/node_modules 
 
-   Note: On Mac, [zhiAppNpmPath]=/Users/[MacUsername]/Library/Application Support/siyuancommunity
-   On Windows, [zhiAppNpmPath]=[UserDirectory]/siyuancommunity, like：C:\\Users\\Terwer\\AppData\\Roaming\\siyuancommunity
-   On Linux, [zhiAppNpmPath]=[UserDirectory]/siyuancommunity
+   Note:
+   On Mac, [zhiAppNpmPath]=/Users/[MacUsername]/Library/Application Support/siyuancommunity
+   On Windows, [zhiAppNpmPath]=[UserProfile]/siyuancommunity, i.e., C:\\Users\\Terwer\\AppData\\Roaming\\siyuancommunity
+   On Linux, [zhiAppNpmPath]=[UserProfile]/siyuancommunity
    ```
-
-   The npm located in the above paths can be directly required in the siyuan-note console. It can even be automatically installed on-demand during require.
+   The npm in the paths above can be required directly in the SiYuan notes console. It can even be automatically installed on-demand during require.
 
    ```js
-   // Assuming vue package exists in the above directory
+   // Assuming the vue package is already present in the above directory
     require("vue")
-    // If vue package doesn't exist, install it first before requiring. Installation directory is [zhiAppNpmPath]
+    // If the vue package is missing, install it first and then require. Installation directory is [zhiAppNpmPath]
     requireInstall("vue")
    ```
+3. Execute shell commands. Prerequisite: Local system with Node>=18 installed and environment variables configured correctly.
 
-3. **Shell Commands Execution:** Prerequisites: Local system with Node >= 18 installed and environment variables correctly configured.
+    1. Automatically start a Node application with the local system when SiYuan notes are launched and shut down the Node service when SiYuan notes are closed.
 
-    1. Starts local Node applications automatically upon siyuan-note's startup and shuts down the Node service when siyuan-note is closed.
-
-       Use cases: Nuxt, nocodb
-    2. Invokes the `java` command to start Java services upon siyuan-note's startup and shuts down the Java service when siyuan-note is closed.
+       Use case: Nuxt, nocodb
+    2. Call the java command to start a Java service when SiYuan notes are launched and shut down the Java service when SiYuan notes are closed.
 
        Use case: Halo
-    3. Calls the `docker` command to start Docker services upon siyuan-note's startup and shuts down the Docker service when siyuan-note is closed.
+    3. Call the docker command to start a Docker service when SiYuan notes are launched and shut down the Docker service when SiYuan notes are closed.
 
-       Use cases: nocodb, memos, WordPress, Halo
+       Use case: nocodb, memos, WordPress, Halo
