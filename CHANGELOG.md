@@ -1,19 +1,14 @@
 # Changelog
 
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.0...v1.0.1) (2023-10-17)
-
-
 ### Bug Fixes
-
 * 更新开发计划 ([88ee9f6](https://github.com/terwer/siyuan-plugin-local-service/commit/88ee9f6f8174f31a606f816533cb8f033522916f))
-
 ## 1.0.0 (2023-10-16)
 ### Features
 * 初始化本地服务插件 ([5c4ac5f](https://github.com/terwer/siyuan-plugin-local-service/commit/5c4ac5fe014f659d0968b93b478c07ca8b756246))
 * 初步完成核心加载流程 ([976cce8](https://github.com/terwer/siyuan-plugin-local-service/commit/976cce8566188a5a48e33ab2db83e8a561b8ff69))
 * 基本启动流程 ([36a66d1](https://github.com/terwer/siyuan-plugin-local-service/commit/36a66d11252cb435782f1b42aaf8c9778b92b40d))
 * 整合基础设施、命令工具 ([3955bbc](https://github.com/terwer/siyuan-plugin-local-service/commit/3955bbc53a22a1deae209a8485b1e90c23ad2aba))
-### Bug Fixes
 * **deps:** bump actions/checkout from 3 to 4 ([9604c83](https://github.com/terwer/siyuan-plugin-local-service/commit/9604c83eacfdd68bd86362d5c2b7e37b1f9710f0))
 * **deps:** bump zhi-lib-base from 0.2.6 to 0.5.0 ([5251393](https://github.com/terwer/siyuan-plugin-local-service/commit/5251393e1065da85883d8a14eb37202147807474))
 ### Miscellaneous
