@@ -48,3 +48,24 @@ or use from electron
     }
 })()
 ```
+
+for windows
+
+```js
+(async () => {
+    const initZhiCmd = require("C:\\Users\\Terwer\\Documents\\mydocs\\zhi-framework\\zhi\\libs\\zhi-cmd\\dist\\index.cjs").default
+    initZhiCmd()
+
+    // 指向您要运行的.js文件
+    const command = "C:\\Users\\Terwer\\Documents\\mydocs\\zhi-framework\\zhi\\libs\\zhi-cmd\\dist\\hello.js"
+    const args = []
+    const cwd = undefined
+    const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
+    
+    if (result.status) {
+    console.log("命令执行成功！😄")
+    } else {
+    console.error("命令执行失败😭: ", result.msg)
+    }
+})()
+```

@@ -24,6 +24,24 @@ declare class CustomCmd {
         msg: string;
     }>;
     /**
+     * 自定义执行系统命令
+     *
+     * 示例：
+     * ```
+     * await customCmd.executeCommand("./node_modules/.bin/nuxt", ["preview"], { shell: true, cwd: '/Users/terwer/Downloads/nu' })
+     * await customCmd.executeCommand("node", ["./server/index.mjs"], { cwd: '/Users/terwer/Downloads/nu' })
+     * ```
+     *
+     * @param command - 命令
+     * @param args - 参数
+     * @param options - 选项
+     */
+    executeCommand(command: string, args: string[], options?: {}): Promise<unknown>;
+    /**
+     * 获取系统的 Node 版本
+     */
+    getSystemNodeVersion(): Promise<unknown>;
+    /**
      * 获取 Electron 的 Node 版本
      */
     getElectronNodeVersion(): Promise<any>;
