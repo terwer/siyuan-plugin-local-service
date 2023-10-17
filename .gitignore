@@ -3,4 +3,5 @@
 node_modules
 dist
 build
+__pycache__
 !public/core/zhi-infra/deps/npm/node_modules
