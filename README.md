@@ -4,7 +4,7 @@
 
 A plugin for connecting SiYuan notes with local services.
 
-v1.0.0 - Current Features
+v1.0.0 Features
 
 * [X] Developer tool console commands
 
@@ -73,44 +73,3 @@ v1.0.0 - Current Features
   await zhiCmd.executeCommand("python", ["-V"])
   // 'Python 3.11.3'
   ```
-
-## Features - TODO
-
-The following features can be implemented:
-
-1. Automatically start a Node application with Electron when SiYuan notes are launched and shut down the Node service when SiYuan notes are closed. Prerequisite: None.
-
-   Use case: Next.js
-2. npm package installation. Prerequisite: Local system with Node>=18 installed and environment variables configured correctly.
-
-   Available npm package paths:
-
-   ```bash
-   Available zhi node_modules path1 => [Workspace]/node_modules
-   Available zhi node_modules path2 => [zhiNpmPath]/node_modules Available zhi node_modules
-   path3 => [zhiAppNpmPath]/node_modules 
-
-   Note:
-   On Mac, [zhiAppNpmPath]=/Users/[MacUsername]/Library/Application Support/siyuancommunity
-   On Windows, [zhiAppNpmPath]=[UserProfile]/siyuancommunity, i.e., C:\\Users\\Terwer\\AppData\\Roaming\\siyuancommunity
-   On Linux, [zhiAppNpmPath]=[UserProfile]/siyuancommunity
-   ```
-   The npm in the paths above can be required directly in the SiYuan notes console. It can even be automatically installed on-demand during require.
-
-   ```js
-   // Assuming the vue package is already present in the above directory
-    require("vue")
-    // If the vue package is missing, install it first and then require. Installation directory is [zhiAppNpmPath]
-    requireInstall("vue")
-   ```
-3. Execute shell commands. Prerequisite: Local system with Node>=18 installed and environment variables configured correctly.
-
-    1. Automatically start a Node application with the local system when SiYuan notes are launched and shut down the Node service when SiYuan notes are closed.
-
-       Use case: Nuxt, nocodb
-    2. Call the java command to start a Java service when SiYuan notes are launched and shut down the Java service when SiYuan notes are closed.
-
-       Use case: Halo
-    3. Call the docker command to start a Docker service when SiYuan notes are launched and shut down the Docker service when SiYuan notes are closed.
-
-       Use case: nocodb, memos, WordPress, Halo
