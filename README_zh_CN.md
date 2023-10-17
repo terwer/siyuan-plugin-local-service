@@ -65,16 +65,7 @@
   const command = `${basePath}/hello.js`
   const args = []
   const cwd = undefined
-  const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
-  if (result.status) {
-    console.log("命令执行成功！😄")
-  } else {
-    console.error("命令执行失败😭: ", result.msg)
-  }
   await zhiCmd.executeCommand("node", [`${command}`], cwd)
-  // 正在执行命令：C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/hello.js,args=>, options=> {cwd: 'C:\\Program Files\\SiYuan', silent: true}
-  // C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test\data\plugins\siyuan-plugin-local-service\core\zhi-cmd\index.cjs:482 命令执行日志已保存到文件 => C:\Users\Terwer\electron-command-log.txt
-  // VM696:10 命令执行成功！😄
   // 'Hello, World!'
   ```
 

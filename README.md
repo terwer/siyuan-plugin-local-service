@@ -65,16 +65,7 @@ v1.0.0 - Current Features
   const command = `${basePath}/hello.js`
   const args = []
   const cwd = undefined
-  const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
-  if (result.status) {
-    console.log("Command executed successfully! 😄")
-  } else {
-    console.error("Command execution failed 😭: ", result.msg)
-  }
   await zhiCmd.executeCommand("node", [`${command}`], cwd)
-  // Executing command: C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/hello.js, args=>, options=> {cwd: 'C:\\Program Files\SiYuan', silent: true}
-  // C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/core/zhi-cmd/index.cjs:482 Command execution log saved to file => C:\Users\Terwer\electron-command-log.txt
-  // Command executed successfully! 😄
   // 'Hello, World!'
   ```
 
