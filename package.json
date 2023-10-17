@@ -1,6 +1,6 @@
 {
   "name": "siyuan-plugin-local-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a plugin connecting siyuan-note with local services",
   "type": "module",
   "repository": "terwer/siyuan-plugin-local-service",
