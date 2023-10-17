@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.0...v1.0.1) (2023-10-17)
+
+
+### Bug Fixes
+
+* 更新开发计划 ([88ee9f6](https://github.com/terwer/siyuan-plugin-local-service/commit/88ee9f6f8174f31a606f816533cb8f033522916f))
+
 ## 1.0.0 (2023-10-16)
 ### Features
 * 初始化本地服务插件 ([5c4ac5f](https://github.com/terwer/siyuan-plugin-local-service/commit/5c4ac5fe014f659d0968b93b478c07ca8b756246))
