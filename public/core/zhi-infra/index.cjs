@@ -5170,7 +5170,7 @@ function updatePackageJson(depsFilePath, packageJsonFilePath) {
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.4.0",
+  version: "0.5.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
