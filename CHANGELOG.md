@@ -1,14 +1,9 @@
 # Changelog
 
 ## [1.0.2](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.1...v1.0.2) (2023-10-17)
-
-
 ### Bug Fixes
-
 * 修复缺失的 cross-spawn 包 ([39bce9e](https://github.com/terwer/siyuan-plugin-local-service/commit/39bce9e40a93eb800a699528d9ef844b5f7e6515))
-
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.0...v1.0.1) (2023-10-17)
-### Bug Fixes
 * 更新开发计划 ([88ee9f6](https://github.com/terwer/siyuan-plugin-local-service/commit/88ee9f6f8174f31a606f816533cb8f033522916f))
 ## 1.0.0 (2023-10-16)
 ### Features
