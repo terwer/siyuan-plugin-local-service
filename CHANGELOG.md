@@ -1,7 +1,11 @@
 # Changelog
 
-## [1.0.2](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.1...v1.0.2) (2023-10-17)
+## [1.0.3](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.2...v1.0.3) (2023-10-18)
 ### Bug Fixes
+* 修改预览图标 ([d3d36e5](https://github.com/terwer/siyuan-plugin-local-service/commit/d3d36e50fb481170827647d1a36e6a3d439b8f12))
+### Miscellaneous
+* **deps-dev:** bump siyuan from 0.8.5 to 0.8.6 ([359713a](https://github.com/terwer/siyuan-plugin-local-service/commit/359713aeec743d1534305760bbd71eb988726475))
+## [1.0.2](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.1...v1.0.2) (2023-10-17)
 * 修复缺失的 cross-spawn 包 ([39bce9e](https://github.com/terwer/siyuan-plugin-local-service/commit/39bce9e40a93eb800a699528d9ef844b5f7e6515))
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.0...v1.0.1) (2023-10-17)
 * 更新开发计划 ([88ee9f6](https://github.com/terwer/siyuan-plugin-local-service/commit/88ee9f6f8174f31a606f816533cb8f033522916f))
@@ -13,7 +17,6 @@
 * 整合基础设施、命令工具 ([3955bbc](https://github.com/terwer/siyuan-plugin-local-service/commit/3955bbc53a22a1deae209a8485b1e90c23ad2aba))
 * **deps:** bump actions/checkout from 3 to 4 ([9604c83](https://github.com/terwer/siyuan-plugin-local-service/commit/9604c83eacfdd68bd86362d5c2b7e37b1f9710f0))
 * **deps:** bump zhi-lib-base from 0.2.6 to 0.5.0 ([5251393](https://github.com/terwer/siyuan-plugin-local-service/commit/5251393e1065da85883d8a14eb37202147807474))
-### Miscellaneous
 * **deps-dev:** bump @tsconfig/svelte from 4.0.1 to 5.0.2 ([576750c](https://github.com/terwer/siyuan-plugin-local-service/commit/576750c24f419f36fd6d138234b52cd2595fec0f))
 * **deps-dev:** bump @types/minimist from 1.2.2 to 1.2.3 ([90bacb1](https://github.com/terwer/siyuan-plugin-local-service/commit/90bacb165259ccdf959ea0b1199ebcbc50cd4864))
 * **deps-dev:** bump siyuan from 0.7.9 to 0.8.5 ([0eb4b0d](https://github.com/terwer/siyuan-plugin-local-service/commit/0eb4b0d9b561fc42d7e3bd27e7c17bb753cfff5c))
