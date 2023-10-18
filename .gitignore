@@ -5,3 +5,6 @@ dist
 build
 __pycache__
 !public/core/zhi-infra/deps/npm/node_modules
+public/server
+public/web
+public/vendor

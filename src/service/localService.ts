@@ -116,6 +116,9 @@ class LocalService {
       //   electron    cjs path: "[abspath][libpath]"
       //   custom-path require-hacker
       const dynamicImports = await Bootstrap.start()
+      this.logger.info("==================================================")
+      this.logger.info("local service detected all imports =>", dynamicImports)
+      this.logger.info("==================================================")
       for (const item of dynamicImports) {
         // 类型校验
         if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
@@ -192,10 +195,11 @@ class LocalService {
       this.logger.info("local service inited")
       this.hello(this.runAs)
     } catch (e) {
-      // const errMsg = "local service load error=>" + e
+      const errMsg = "local service load error=>" + e
       // this.kernelApi.pushErrMsg({
       //   msg: errMsg,
       // })
+      this.logger.error(errMsg)
       throw e
     }
   }
