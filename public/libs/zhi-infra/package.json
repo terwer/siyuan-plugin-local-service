@@ -1,0 +1,39 @@
+{
+  "name": "zhi-infra",
+  "version": "0.6.1",
+  "type": "module",
+  "description": "basic issues for zhi",
+  "main": "./dist/index.cjs",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-infra",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "server",
+    "infra"
+  ],
+  "scripts": {
+    "dev": "zhi-build --watch --outDir=/Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra",
+    "build": "zhi-build --production",
+    "syncBuild": "cp -r ./dist/* /Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra/",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-infra"
+  },
+  "devDependencies": {
+    "@terwer/esbuild-config-custom": "workspace:*",
+    "@terwer/eslint-config-custom": "workspace:*",
+    "@terwer/tsconfig": "workspace:*",
+    "@terwer/vitest-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "fix-path": "^4.0.0",
+    "zhi-cmd": "workspace:*",
+    "zhi-common": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-lib-base": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

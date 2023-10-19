@@ -64,8 +64,8 @@
   // 指向您要运行的.js文件
   const command = `${basePath}/hello.js`
   const args = []
-  const cwd = undefined
-  await zhiCmd.executeCommand("node", [`${command}`], cwd)
+  const options = undefined
+  await zhiCmd.executeCommand("node", [`${command}`], options)
   // 'Hello, World!'
   ```
 
