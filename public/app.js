@@ -7,7 +7,7 @@ module.exports = {
         format: "cjs",
         importType: "require",
         runAs: ["Siyuan_RendererWindow"],
-        initParams: ["[basePath]/libs/zhi-infra/deps/npm", false],
+        initParams: ["[thisPluginBasePath]/libs/zhi-infra/deps/npm", false],
         order: 1,
       },
     ],

@@ -2011,7 +2011,7 @@ var require_universalify = __commonJS({
         if (typeof cb !== "function")
           return fn.apply(this, args2);
         else
-          fn.apply(this, args2.slice(0, -1)).then((r3) => cb(null, r3), cb);
+          fn.apply(this, args2.slice(0, -1)).then((r) => cb(null, r), cb);
       }, "name", { value: fn.name });
     };
   }
@@ -4478,22 +4478,22 @@ function fixPath() {
 }
 
 // ../../libs/zhi-lib-base/dist/index.js
-var w = (r3, i, p) => {
+var w = (r, i, p) => {
   const s = i ?? "zhi", $ = (t) => {
     const e = t.getFullYear(), o3 = String(t.getMonth() + 1).padStart(2, "0"), n3 = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), d = String(t.getMinutes()).padStart(2, "0"), u3 = String(t.getSeconds()).padStart(2, "0");
     return `${e}-${o3}-${n3} ${S}:${d}:${u3}`;
   }, c3 = (t, e) => {
     const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.log(`[${s}] [${o3}] [DEBUG] [${r3}] ${t}`, n3) : console.log(`[${s}] [${o3}] [DEBUG] [${r3}] ${t}`);
+    n3 ? console.log(`[${s}] [${o3}] [DEBUG] [${r}] ${t}`, n3) : console.log(`[${s}] [${o3}] [DEBUG] [${r}] ${t}`);
   }, l = (t, e) => {
     const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.info(`[${s}] [${o3}] [INFO] [${r3}] ${t}`, n3) : console.info(`[${s}] [${o3}] [INFO] [${r3}] ${t}`);
+    n3 ? console.info(`[${s}] [${o3}] [INFO] [${r}] ${t}`, n3) : console.info(`[${s}] [${o3}] [INFO] [${r}] ${t}`);
   }, f = (t, e) => {
     const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.warn(`[${s}] [${o3}] [WARN] [${r3}] ${t}`, n3) : console.warn(`[${s}] [${o3}] [WARN] [${r3}] ${t}`);
+    n3 ? console.warn(`[${s}] [${o3}] [WARN] [${r}] ${t}`, n3) : console.warn(`[${s}] [${o3}] [WARN] [${r}] ${t}`);
   }, g3 = (t, e) => {
     const o3 = $(/* @__PURE__ */ new Date());
-    e ? console.error(`[${s}] [${o3}] [ERROR] [${r3}] ${t.toString()}`, e) : console.error(`[${s}] [${o3}] [ERROR] [${r3}] ${t.toString()}`);
+    e ? console.error(`[${s}] [${o3}] [ERROR] [${r}] ${t.toString()}`, e) : console.error(`[${s}] [${o3}] [ERROR] [${r}] ${t.toString()}`);
   };
   return {
     debug: (t, e) => {
@@ -4560,9 +4560,9 @@ h(o, "hasNodeEnv", () => u.isElectron() || u.isNode), /**
 h(o, "getQueryParam", (e) => {
   if (!u.isInBrowser)
     return "";
-  const t = window.location.href, a = t.indexOf("?");
-  if (a !== -1) {
-    const p = t.indexOf("#", a), l = p !== -1 ? t.substring(a + 1, p) : t.substring(a + 1), m = new URLSearchParams(l).get(e);
+  const t = window.location.href, r = t.indexOf("?");
+  if (r !== -1) {
+    const p = t.indexOf("#", r), l = p !== -1 ? t.substring(r + 1, p) : t.substring(r + 1), m = new URLSearchParams(l).get(e);
     if (m)
       return m;
   }
@@ -4590,13 +4590,13 @@ h(o, "getQueryParam", (e) => {
 * @param paramName - 参数名
 * @param paramValue - 参数值
 */
-h(o, "replaceUrlParam", (e, t, a) => {
-  a == null && (a = "");
+h(o, "replaceUrlParam", (e, t, r) => {
+  r == null && (r = "");
   const s = new RegExp("\\b(" + t + "=).*?(&|#|$)");
   if (e.search(s) >= 0)
-    return e.replace(s, "$1" + a + "$2");
+    return e.replace(s, "$1" + r + "$2");
   const [p, l] = e.split("#"), [w2, m] = p.split("?"), y = new URLSearchParams(m);
-  y.set(t, a);
+  y.set(t, r);
   const f = y.toString(), P = w2 + (f ? "?" + f : "");
   return l ? P + "#" + l : P;
 }), /**
@@ -4606,13 +4606,13 @@ h(o, "replaceUrlParam", (e, t, a) => {
 * @param key - key
 * @param value - value
 */
-h(o, "setUrlParameter", (e, t, a) => {
+h(o, "setUrlParameter", (e, t, r) => {
   if (e.includes(t))
-    return u.replaceUrlParam(e, t, a);
+    return u.replaceUrlParam(e, t, r);
   const s = e.split("#");
   let p = s[0];
   const l = s[1];
-  return p.includes("?") ? p += `&${t}=${a}` : p += `?${t}=${a}`, l && (p += "#" + l), p;
+  return p.includes("?") ? p += `&${t}=${r}` : p += `?${t}=${r}`, l && (p += "#" + l), p;
 }), /**
 * 重新加载指定tab
 *
@@ -4622,8 +4622,8 @@ h(o, "setUrlParameter", (e, t, a) => {
 h(o, "reloadTabPage", (e, t) => {
   setTimeout(function() {
     if (u.isInBrowser) {
-      const a = window.location.href;
-      window.location.href = u.setUrlParameter(a, "tab", e);
+      const r = window.location.href;
+      window.location.href = u.setUrlParameter(r, "tab", e);
     }
   }, t ?? 200);
 }), /**
@@ -4642,13 +4642,13 @@ h(o, "reloadPage", (e) => {
 * @param cb - 回调
 * @param t - 延迟时间
 */
-h(o, "reloadPageWithMessageCallback", (e, t, a) => {
+h(o, "reloadPageWithMessageCallback", (e, t, r) => {
   t && t(e), setTimeout(function() {
     u.isInBrowser && window.location.reload();
-  }, a ?? 200);
+  }, r ?? 200);
 });
 var n = /* @__PURE__ */ ((i) => (i.BasePathType_Appearance = "Appearance", i.BasePathType_Data = "Data", i.BasePathType_Themes = "Themes", i.BasePathType_ZhiTheme = "ZhiTheme", i.BasePathType_ThisPlugin = "ThisPlugin", i.BasePathType_AppData = "AppData", i.BasePathType_AppNpm = "AppNpm", i.BasePathType_AppService = "AppService", i.BasePathType_Absolute = "Absolute", i.BasePathType_None = "None", i))(n || {});
-var r = class {
+var a = class {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
@@ -4675,7 +4675,7 @@ var r = class {
    * @param type - 类型
    * @param pluginName - 可选，当前插件目录
    */
-  static async importJs(e, t, a) {
+  static async importJs(e, t, r) {
     let s = e;
     switch (t) {
       case n.BasePathType_Appearance:
@@ -4691,9 +4691,9 @@ var r = class {
         s = this.browserJoinPath(this.zhiThemeRelativePath(), e);
         break;
       case n.BasePathType_ThisPlugin:
-        if (!a)
+        if (!r)
           throw new Error("pluginName must be provided when use plugin path");
-        s = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", a);
+        s = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", r);
         break;
       case n.BasePathType_Absolute:
         break;
@@ -4822,17 +4822,17 @@ var r = class {
    * 用户数据目录
    */
   static appDataFolder() {
-    const e = r.siyuanWindow().process, t = r.requireNpm("path");
-    let a;
+    const e = a.siyuanWindow().process, t = a.requireNpm("path");
+    let r;
     if (e.platform === "darwin")
-      a = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
+      r = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
     else if (e.platform === "win32")
-      a = e.env.APPDATA;
+      r = e.env.APPDATA;
     else if (e.platform === "linux")
-      a = e.env.HOME;
+      r = e.env.HOME;
     else
       throw new Error("OS not supported");
-    return t.join(a ?? e.cwd());
+    return t.join(r ?? e.cwd());
   }
   /**
    * 工作空间名称
@@ -4850,7 +4850,19 @@ var r = class {
    * Node包安装目录
    */
   static nodeFolder() {
-    return this.joinPath(this.appSiyuancommunityFolder(), "node", "current", "bin");
+    return this.joinPath(this.appSiyuancommunityFolder(), "node");
+  }
+  /**
+   * Node包当前目录
+   */
+  static nodeCurrentFolder() {
+    return this.joinPath(this.nodeFolder(), "current");
+  }
+  /**
+   * Node包当前bin目录
+   */
+  static nodeCurrentBinFolder() {
+    return this.joinPath(this.nodeCurrentFolder(), "bin");
   }
   /**
    * 思源社区工作空间目录
@@ -4871,7 +4883,7 @@ var r = class {
     return this.joinPath(this.appNpmFolder(), "apps");
   }
 };
-var c = r;
+var c = a;
 h(c, "isInSiyuanWidget", () => o.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
 * 思源笔记渲染窗口
 *
@@ -4887,48 +4899,48 @@ h(c, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && win
  *
  * @param libpath
  */
-h(c, "requireNpm", (e) => r.requireLib(e, n.BasePathType_Absolute)), /**
+h(c, "requireNpm", (e) => a.requireLib(e, n.BasePathType_Absolute)), /**
 * 引入依赖
 *
 * @param libpath - 依赖全路径
 * @param type - 可选，以谁的基本路径为准
 * @param pluginName - 可选，当前插件目录
 */
-h(c, "requireLib", (e, t, a) => {
+h(c, "requireLib", (e, t, r) => {
   if (!o.hasNodeEnv())
     throw new Error("require ony works on node env");
   let s = e;
   switch (t) {
     case n.BasePathType_Appearance:
-      s = r.joinPath(r.siyuanAppearancePath(), e);
+      s = a.joinPath(a.siyuanAppearancePath(), e);
       break;
     case n.BasePathType_Data:
-      s = r.joinPath(r.siyuanDataPath(), e);
+      s = a.joinPath(a.siyuanDataPath(), e);
       break;
     case n.BasePathType_Themes:
-      s = r.joinPath(r.siyuanAppearancePath(), "themes", e);
+      s = a.joinPath(a.siyuanAppearancePath(), "themes", e);
       break;
     case n.BasePathType_ZhiTheme:
-      s = r.joinPath(r.siyuanAppearancePath(), "themes", "zhi", e);
+      s = a.joinPath(a.siyuanAppearancePath(), "themes", "zhi", e);
       break;
     case n.BasePathType_ThisPlugin:
-      if (!a)
+      if (!r)
         throw new Error("pluginName must be provided when use plugin path");
-      s = r.joinPath(r.siyuanDataPath(), "plugins", a);
+      s = a.joinPath(a.siyuanDataPath(), "plugins", r);
       break;
     case n.BasePathType_AppData:
-      s = r.joinPath(r.appDataFolder(), e);
+      s = a.joinPath(a.appDataFolder(), e);
       break;
     case n.BasePathType_AppNpm:
-      s = r.joinPath(r.appNpmFolder(), e);
+      s = a.joinPath(a.appNpmFolder(), e);
       break;
     case n.BasePathType_AppService:
-      s = r.joinPath(r.appServiceFolder(), e);
+      s = a.joinPath(a.appServiceFolder(), e);
       break;
     case n.BasePathType_Absolute:
       break;
   }
-  const p = r.siyuanWindow();
+  const p = a.siyuanWindow();
   if (!p)
     return require(s);
   if (typeof p.require < "u")
@@ -4938,31 +4950,31 @@ h(c, "requireLib", (e, t, a) => {
 *
 * @param libpath - 相对于 appearance 的相对路径
 */
-h(c, "requireAppearanceLib", (e) => r.requireLib(e, n.BasePathType_Appearance)), /**
+h(c, "requireAppearanceLib", (e) => a.requireLib(e, n.BasePathType_Appearance)), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 data 的相对路径
 */
-h(c, "requireDataLib", (e) => r.requireLib(e, n.BasePathType_Data)), /**
+h(c, "requireDataLib", (e) => a.requireLib(e, n.BasePathType_Data)), /**
 * 引入依赖，以 theme 的基本路径为准
 *
 * @param libpath - 相对于 theme 的相对路径
 */
-h(c, "requireThemesLib", (e) => r.requireLib(e, n.BasePathType_Themes)), /**
+h(c, "requireThemesLib", (e) => a.requireLib(e, n.BasePathType_Themes)), /**
 * 引入依赖，以 ZhiTheme 的基本路径为准
 *
 * @param libpath - 相对于 ZhiTheme 的相对路径
 */
-h(c, "requireZhiThemeLib", (e) => r.requireLib(e, n.BasePathType_ZhiTheme)), /**
+h(c, "requireZhiThemeLib", (e) => a.requireLib(e, n.BasePathType_ZhiTheme)), /**
 * 引入依赖，以 AppService 的基本路径为准
 *
 * @param libpath - 相对于 AppService 的相对路径
 */
-h(c, "requireAppServiceLib", (e) => r.requireLib(e, n.BasePathType_AppService));
+h(c, "requireAppServiceLib", (e) => a.requireLib(e, n.BasePathType_AppService));
 
 // ../../libs/zhi-cmd/dist/index.cjs
 var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b22) => (typeof require !== "undefined" ? require : a)[b22]
+  get: (a22, b22) => (typeof require !== "undefined" ? require : a22)[b22]
 }) : x)(function(x) {
   if (typeof require !== "undefined")
     return require.apply(this, arguments);
@@ -5016,9 +5028,9 @@ h2(o2, "hasNodeEnv", () => u2.isElectron() || u2.isNode), /**
 h2(o2, "getQueryParam", (e) => {
   if (!u2.isInBrowser)
     return "";
-  const t = window.location.href, a = t.indexOf("?");
-  if (a !== -1) {
-    const p = t.indexOf("#", a), l = p !== -1 ? t.substring(a + 1, p) : t.substring(a + 1), m = new URLSearchParams(l).get(e);
+  const t = window.location.href, r = t.indexOf("?");
+  if (r !== -1) {
+    const p = t.indexOf("#", r), l = p !== -1 ? t.substring(r + 1, p) : t.substring(r + 1), m = new URLSearchParams(l).get(e);
     if (m)
       return m;
   }
@@ -5046,13 +5058,13 @@ h2(o2, "getQueryParam", (e) => {
 * @param paramName - 参数名
 * @param paramValue - 参数值
 */
-h2(o2, "replaceUrlParam", (e, t, a) => {
-  a == null && (a = "");
+h2(o2, "replaceUrlParam", (e, t, r) => {
+  r == null && (r = "");
   const s = new RegExp("\\b(" + t + "=).*?(&|#|$)");
   if (e.search(s) >= 0)
-    return e.replace(s, "$1" + a + "$2");
+    return e.replace(s, "$1" + r + "$2");
   const [p, l] = e.split("#"), [w2, m] = p.split("?"), y = new URLSearchParams(m);
-  y.set(t, a);
+  y.set(t, r);
   const f = y.toString(), P = w2 + (f ? "?" + f : "");
   return l ? P + "#" + l : P;
 }), /**
@@ -5062,13 +5074,13 @@ h2(o2, "replaceUrlParam", (e, t, a) => {
 * @param key - key
 * @param value - value
 */
-h2(o2, "setUrlParameter", (e, t, a) => {
+h2(o2, "setUrlParameter", (e, t, r) => {
   if (e.includes(t))
-    return u2.replaceUrlParam(e, t, a);
+    return u2.replaceUrlParam(e, t, r);
   const s = e.split("#");
   let p = s[0];
   const l = s[1];
-  return p.includes("?") ? p += `&${t}=${a}` : p += `?${t}=${a}`, l && (p += "#" + l), p;
+  return p.includes("?") ? p += `&${t}=${r}` : p += `?${t}=${r}`, l && (p += "#" + l), p;
 }), /**
 * 重新加载指定tab
 *
@@ -5078,8 +5090,8 @@ h2(o2, "setUrlParameter", (e, t, a) => {
 h2(o2, "reloadTabPage", (e, t) => {
   setTimeout(function() {
     if (u2.isInBrowser) {
-      const a = window.location.href;
-      window.location.href = u2.setUrlParameter(a, "tab", e);
+      const r = window.location.href;
+      window.location.href = u2.setUrlParameter(r, "tab", e);
     }
   }, t ?? 200);
 }), /**
@@ -5098,13 +5110,13 @@ h2(o2, "reloadPage", (e) => {
 * @param cb - 回调
 * @param t - 延迟时间
 */
-h2(o2, "reloadPageWithMessageCallback", (e, t, a) => {
+h2(o2, "reloadPageWithMessageCallback", (e, t, r) => {
   t && t(e), setTimeout(function() {
     u2.isInBrowser && window.location.reload();
-  }, a ?? 200);
+  }, r ?? 200);
 });
 var n2 = /* @__PURE__ */ ((i) => (i.BasePathType_Appearance = "Appearance", i.BasePathType_Data = "Data", i.BasePathType_Themes = "Themes", i.BasePathType_ZhiTheme = "ZhiTheme", i.BasePathType_ThisPlugin = "ThisPlugin", i.BasePathType_AppData = "AppData", i.BasePathType_AppNpm = "AppNpm", i.BasePathType_AppService = "AppService", i.BasePathType_Absolute = "Absolute", i.BasePathType_None = "None", i))(n2 || {});
-var r2 = class {
+var a2 = class {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
@@ -5131,7 +5143,7 @@ var r2 = class {
    * @param type - 类型
    * @param pluginName - 可选，当前插件目录
    */
-  static async importJs(e, t, a) {
+  static async importJs(e, t, r) {
     let s = e;
     switch (t) {
       case n2.BasePathType_Appearance:
@@ -5147,9 +5159,9 @@ var r2 = class {
         s = this.browserJoinPath(this.zhiThemeRelativePath(), e);
         break;
       case n2.BasePathType_ThisPlugin:
-        if (!a)
+        if (!r)
           throw new Error("pluginName must be provided when use plugin path");
-        s = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", a);
+        s = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", r);
         break;
       case n2.BasePathType_Absolute:
         break;
@@ -5278,17 +5290,17 @@ var r2 = class {
    * 用户数据目录
    */
   static appDataFolder() {
-    const e = r2.siyuanWindow().process, t = r2.requireNpm("path");
-    let a;
+    const e = a2.siyuanWindow().process, t = a2.requireNpm("path");
+    let r;
     if (e.platform === "darwin")
-      a = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
+      r = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
     else if (e.platform === "win32")
-      a = e.env.APPDATA;
+      r = e.env.APPDATA;
     else if (e.platform === "linux")
-      a = e.env.HOME;
+      r = e.env.HOME;
     else
       throw new Error("OS not supported");
-    return t.join(a ?? e.cwd());
+    return t.join(r ?? e.cwd());
   }
   /**
    * 工作空间名称
@@ -5306,7 +5318,19 @@ var r2 = class {
    * Node包安装目录
    */
   static nodeFolder() {
-    return this.joinPath(this.appSiyuancommunityFolder(), "node", "current", "bin");
+    return this.joinPath(this.appSiyuancommunityFolder(), "node");
+  }
+  /**
+   * Node包当前目录
+   */
+  static nodeCurrentFolder() {
+    return this.joinPath(this.nodeFolder(), "current");
+  }
+  /**
+   * Node包当前bin目录
+   */
+  static nodeCurrentBinFolder() {
+    return this.joinPath(this.nodeCurrentFolder(), "bin");
   }
   /**
    * 思源社区工作空间目录
@@ -5327,7 +5351,7 @@ var r2 = class {
     return this.joinPath(this.appNpmFolder(), "apps");
   }
 };
-var c2 = r2;
+var c2 = a2;
 h2(c2, "isInSiyuanWidget", () => o2.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
 * 思源笔记渲染窗口
 *
@@ -5343,48 +5367,48 @@ h2(c2, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && w
  *
  * @param libpath
  */
-h2(c2, "requireNpm", (e) => r2.requireLib(e, n2.BasePathType_Absolute)), /**
+h2(c2, "requireNpm", (e) => a2.requireLib(e, n2.BasePathType_Absolute)), /**
 * 引入依赖
 *
 * @param libpath - 依赖全路径
 * @param type - 可选，以谁的基本路径为准
 * @param pluginName - 可选，当前插件目录
 */
-h2(c2, "requireLib", (e, t, a) => {
+h2(c2, "requireLib", (e, t, r) => {
   if (!o2.hasNodeEnv())
     throw new Error("require ony works on node env");
   let s = e;
   switch (t) {
     case n2.BasePathType_Appearance:
-      s = r2.joinPath(r2.siyuanAppearancePath(), e);
+      s = a2.joinPath(a2.siyuanAppearancePath(), e);
       break;
     case n2.BasePathType_Data:
-      s = r2.joinPath(r2.siyuanDataPath(), e);
+      s = a2.joinPath(a2.siyuanDataPath(), e);
       break;
     case n2.BasePathType_Themes:
-      s = r2.joinPath(r2.siyuanAppearancePath(), "themes", e);
+      s = a2.joinPath(a2.siyuanAppearancePath(), "themes", e);
       break;
     case n2.BasePathType_ZhiTheme:
-      s = r2.joinPath(r2.siyuanAppearancePath(), "themes", "zhi", e);
+      s = a2.joinPath(a2.siyuanAppearancePath(), "themes", "zhi", e);
       break;
     case n2.BasePathType_ThisPlugin:
-      if (!a)
+      if (!r)
         throw new Error("pluginName must be provided when use plugin path");
-      s = r2.joinPath(r2.siyuanDataPath(), "plugins", a);
+      s = a2.joinPath(a2.siyuanDataPath(), "plugins", r);
       break;
     case n2.BasePathType_AppData:
-      s = r2.joinPath(r2.appDataFolder(), e);
+      s = a2.joinPath(a2.appDataFolder(), e);
       break;
     case n2.BasePathType_AppNpm:
-      s = r2.joinPath(r2.appNpmFolder(), e);
+      s = a2.joinPath(a2.appNpmFolder(), e);
       break;
     case n2.BasePathType_AppService:
-      s = r2.joinPath(r2.appServiceFolder(), e);
+      s = a2.joinPath(a2.appServiceFolder(), e);
       break;
     case n2.BasePathType_Absolute:
       break;
   }
-  const p = r2.siyuanWindow();
+  const p = a2.siyuanWindow();
   if (!p)
     return __require(s);
   if (typeof p.require < "u")
@@ -5394,27 +5418,27 @@ h2(c2, "requireLib", (e, t, a) => {
 *
 * @param libpath - 相对于 appearance 的相对路径
 */
-h2(c2, "requireAppearanceLib", (e) => r2.requireLib(e, n2.BasePathType_Appearance)), /**
+h2(c2, "requireAppearanceLib", (e) => a2.requireLib(e, n2.BasePathType_Appearance)), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 data 的相对路径
 */
-h2(c2, "requireDataLib", (e) => r2.requireLib(e, n2.BasePathType_Data)), /**
+h2(c2, "requireDataLib", (e) => a2.requireLib(e, n2.BasePathType_Data)), /**
 * 引入依赖，以 theme 的基本路径为准
 *
 * @param libpath - 相对于 theme 的相对路径
 */
-h2(c2, "requireThemesLib", (e) => r2.requireLib(e, n2.BasePathType_Themes)), /**
+h2(c2, "requireThemesLib", (e) => a2.requireLib(e, n2.BasePathType_Themes)), /**
 * 引入依赖，以 ZhiTheme 的基本路径为准
 *
 * @param libpath - 相对于 ZhiTheme 的相对路径
 */
-h2(c2, "requireZhiThemeLib", (e) => r2.requireLib(e, n2.BasePathType_ZhiTheme)), /**
+h2(c2, "requireZhiThemeLib", (e) => a2.requireLib(e, n2.BasePathType_ZhiTheme)), /**
 * 引入依赖，以 AppService 的基本路径为准
 *
 * @param libpath - 相对于 AppService 的相对路径
 */
-h2(c2, "requireAppServiceLib", (e) => r2.requireLib(e, n2.BasePathType_AppService));
+h2(c2, "requireAppServiceLib", (e) => a2.requireLib(e, n2.BasePathType_AppService));
 var CustomCmd = class {
   /**
    * 使用 Electron 自带的 node 运行命令
@@ -5652,6 +5676,24 @@ var NpmPackageManager = class {
     this.customCmd = new CustomCmd();
   }
   /**
+   * 执行 Node 命令
+   *
+   * @param subCommand - 要执行的 NPM 命令
+   * @returns 执行结果的 Promise
+   */
+  async nodeCmd(subCommand) {
+    const command = `node`;
+    const args2 = [subCommand, this.zhiCoreNpmPath];
+    const options = {
+      cwd: this.zhiCoreNpmPath,
+      env: {
+        PATH: c.nodeCurrentBinFolder()
+      }
+    };
+    this.logger.info("nodeCmd options =>", options);
+    return await this.customCmd.executeCommand(command, args2, options);
+  }
+  /**
    * 执行 NPM 命令
    *
    * @param subCommand - 要执行的 NPM 命令
@@ -5663,15 +5705,24 @@ var NpmPackageManager = class {
     const options = {
       cwd: this.zhiCoreNpmPath,
       env: {
-        PATH: c.nodeFolder()
+        PATH: c.nodeCurrentBinFolder()
       }
     };
     this.logger.info("npmCmd options =>", options);
     return await this.customCmd.executeCommand(command, args2, options);
   }
   /**
-   * 获取 NPM 的版本号。
-   * @returns NPM 版本号的 Promise。
+   * 获取 Node 的版本号
+   *
+   * @returns Node 版本号的 Promise
+   */
+  async nodeVersion() {
+    return await this.nodeCmd(`-v`);
+  }
+  /**
+   * 获取 NPM 的版本号
+   *
+   * @returns NPM 版本号的 Promise
    */
   async npmVersion() {
     return await this.npmCmd(`-v`);
@@ -5700,15 +5751,22 @@ var NpmPackageManager = class {
   }
   /**
    * 检测并初始化 Node
+   *
+   * @param nodeVersion node版本，例如：v18.18.2
+   * @param nodeInstallDir 安装路径
    */
-  async checkAndInitNode() {
+  async checkAndInitNode(nodeVersion, nodeInstallDir) {
     let flag = false;
     const fs3 = c.requireNpm("fs");
-    if (!fs3.existsSync(c.nodeFolder())) {
+    const nodeFolder = c.nodeFolder();
+    const nodeCurrentBinFolder = c.nodeCurrentBinFolder();
+    if (!fs3.existsSync(nodeCurrentBinFolder)) {
       this.logger.info("Node\u73AF\u5883\u4E0D\u5B58\u5728\uFF0C\u51C6\u5907\u5B89\u88C5Node...");
       const command = `${this.zhiCoreNpmPath}/setup.js`;
       const args2 = [];
-      const cwd = void 0;
+      args2.push(nodeVersion ?? "v18.18.2");
+      args2.push(nodeInstallDir ?? nodeFolder);
+      const cwd = nodeFolder;
       const result = await this.customCmd.executeCommandWithBundledNodeAsync(command, args2, cwd);
       if (result.status) {
         this.logger.info("Node\u5B89\u88C5\u6210\u529F\uFF01\u{1F604}");
@@ -5741,7 +5799,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.6.1",
+  version: "0.7.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -5982,6 +6040,13 @@ var main = async (args2) => {
   const win = c.siyuanWindow();
   win.zhi = win.zhi ?? {};
   win.zhi.status = win.zhi.status ?? {};
+  if (!win.zhi.status.deviceInited) {
+    win.zhi.device = c;
+    win.zhi.status.deviceInited = true;
+    logger3.info("zhi device inited");
+  } else {
+    logger3.info("zhi device is already inited.skip");
+  }
   if (!win.zhi.status.cmdInited) {
     const cmd = new CustomCmd();
     win.zhi.cmd = cmd;

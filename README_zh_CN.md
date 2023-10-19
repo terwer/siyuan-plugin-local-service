@@ -4,7 +4,28 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-1.0.0 已有功能
+## 最近更新
+
+* [X] 命令统一挂载到 `window.zhi`，其他命令
+
+## 下载并且安装Node
+
+```js
+await zhi.npm.checkAndInitNode()
+```
+
+## 测试node和npm
+
+```js
+// node
+await zhi.npm.nodeCmd("-v")
+await zhi.npm.nodeVersion()
+
+// npm
+await zhi.npm.npmCmd("-v")
+await zhi.npm.npmVersion()
+```
+
 
 * [X] 开发者工具控制台执行命令
 
