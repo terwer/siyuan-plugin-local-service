@@ -19,6 +19,7 @@
 ### Miscellaneous
 
 * **deps-dev:** bump @types/minimist from 1.2.3 to 1.2.4 ([a5a405b](https://github.com/terwer/siyuan-plugin-local-service/commit/a5a405b2bf9def33533d03d51f5cbc4e7e716309))
+* **deps-dev:** bump svelte from 4.2.1 to 4.2.2 ([0ab7887](https://github.com/terwer/siyuan-plugin-local-service/commit/0ab788723f2d0a4c223d1b306e4e01c68295d689))
 * **deps-dev:** bump vite from 4.4.11 to 4.5.0 ([3326679](https://github.com/terwer/siyuan-plugin-local-service/commit/33266793607a299dc26eb26ca62bc87a955cd488))
 
 ## [1.0.3](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.2...v1.0.3) (2023-10-18)
