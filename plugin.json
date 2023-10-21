@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-local-service",
   "author": "terwer",
   "url": "https://github.com/terwer/siyuan-plugin-local-service",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "displayName": {
     "default": "Local Service",
     "zh_CN": "本地服务"

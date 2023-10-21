@@ -1,38 +1,24 @@
 # Changelog
 
 ## [1.1.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.3...v1.1.0) (2023-10-21)
-
-
 ### Features
-
-* 初始化安装Node以及预定义依赖 ([62d0e8a](https://github.com/terwer/siyuan-plugin-local-service/commit/62d0e8a31845ae7e97ad208a8b4595a40462c29f))
-* 统一规范化管理命令 ([e069a71](https://github.com/terwer/siyuan-plugin-local-service/commit/e069a714ae0398d7c36e39ee920df93ad0c87bcf))
+* 初始化安装node以及预定义依赖 ([62d0e8a](https://github.com/terwer/siyuan-plugin-local-service/commit/62d0e8a31845ae7e97ad208a8b4595a40462c29f))
 * 统一规范化管理命令 ([6de6a22](https://github.com/terwer/siyuan-plugin-local-service/commit/6de6a22a6583128e6cedf7f9e41402cffcd378ce))
 * 重构基础设施 ([f90f2ff](https://github.com/terwer/siyuan-plugin-local-service/commit/f90f2ff4147b4af10299894e207498c044aa33e5))
-
-
 ### Bug Fixes
-
 * **deps:** bump zhi-device from 2.6.0 to 2.8.1 ([44c0962](https://github.com/terwer/siyuan-plugin-local-service/commit/44c09623aa76fd24f1269ab89e0c3969f561e9f4))
-
-
 ### Miscellaneous
-
 * **deps-dev:** bump @types/minimist from 1.2.3 to 1.2.4 ([a5a405b](https://github.com/terwer/siyuan-plugin-local-service/commit/a5a405b2bf9def33533d03d51f5cbc4e7e716309))
 * **deps-dev:** bump svelte from 4.2.1 to 4.2.2 ([0ab7887](https://github.com/terwer/siyuan-plugin-local-service/commit/0ab788723f2d0a4c223d1b306e4e01c68295d689))
 * **deps-dev:** bump vite from 4.4.11 to 4.5.0 ([3326679](https://github.com/terwer/siyuan-plugin-local-service/commit/33266793607a299dc26eb26ca62bc87a955cd488))
-
 ## [1.0.3](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.2...v1.0.3) (2023-10-18)
-### Bug Fixes
 * 修改预览图标 ([d3d36e5](https://github.com/terwer/siyuan-plugin-local-service/commit/d3d36e50fb481170827647d1a36e6a3d439b8f12))
-### Miscellaneous
 * **deps-dev:** bump siyuan from 0.8.5 to 0.8.6 ([359713a](https://github.com/terwer/siyuan-plugin-local-service/commit/359713aeec743d1534305760bbd71eb988726475))
 ## [1.0.2](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.1...v1.0.2) (2023-10-17)
 * 修复缺失的 cross-spawn 包 ([39bce9e](https://github.com/terwer/siyuan-plugin-local-service/commit/39bce9e40a93eb800a699528d9ef844b5f7e6515))
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.0...v1.0.1) (2023-10-17)
 * 更新开发计划 ([88ee9f6](https://github.com/terwer/siyuan-plugin-local-service/commit/88ee9f6f8174f31a606f816533cb8f033522916f))
 ## 1.0.0 (2023-10-16)
-### Features
 * 初始化本地服务插件 ([5c4ac5f](https://github.com/terwer/siyuan-plugin-local-service/commit/5c4ac5fe014f659d0968b93b478c07ca8b756246))
 * 初步完成核心加载流程 ([976cce8](https://github.com/terwer/siyuan-plugin-local-service/commit/976cce8566188a5a48e33ab2db83e8a561b8ff69))
 * 基本启动流程 ([36a66d1](https://github.com/terwer/siyuan-plugin-local-service/commit/36a66d11252cb435782f1b42aaf8c9778b92b40d))
