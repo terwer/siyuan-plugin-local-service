@@ -16,6 +16,7 @@
   cmd: CustomCmd {},
   device: class,
   npm: NpmPackageManager {...},
+  sc: ServiceManager {...}
   status: {deviceInited: true, cmdInited: true, infraInited: true}
   }
   ```
@@ -24,10 +25,13 @@
 * 新增服务管理器，并挂载到 `zhi.sc`
 
 ```
+zhi.sc.findAll()
+zhi.sc.findByServiceName(serviceName)
 zhi.sc.startAll()
+zhi.sc.startMany(services)
 zhi.sc.stopAll()
-zhi.sc.start(serviceName)
-zhi.sc.stop(serviceName)
+zhi.sc.startByServiceName(serviceName)
+zhi.sc.stopByServiceName(serviceName)
 ```
 
 ## 命令列表

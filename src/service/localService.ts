@@ -118,7 +118,7 @@ class LocalService {
       // mount sc as serviceManager
       win.zhi.sc = serviceManager
       win.zhi.status.serviceInited = true
-      this.logger.info("local service inited")
+      this.logger.debug("local service inited")
       this.hello(this.runAs)
     } catch (e) {
       const errMsg = "local service load error=>" + e

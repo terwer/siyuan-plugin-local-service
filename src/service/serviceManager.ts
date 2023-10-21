@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -78,9 +78,9 @@ class ServiceManager {
   /**
    * 启动多个服务
    *
-   * @param dynamicImports - 服务列表
+   * @param services - 服务列表
    */
-  public async startMany(dynamicImports: dependencyItem[]): Promise<void> {
+  public async startMany(services: dependencyItem[]): Promise<void> {
     const isEnvReady = await this.checkEnv()
     if (!isEnvReady) {
       this.logger.warn("Environment is not ready, please init env with `await zhi.npm.checkAndInitNode()")
@@ -97,10 +97,10 @@ class ServiceManager {
     //   browser     X
     //   electron    cjs path: "[abspath][libpath]"
     //   custom-path require-hacker
-    this.logger.info("==================================================")
-    this.logger.info("local service detected all imports =>", dynamicImports)
-    this.logger.info("==================================================")
-    for (const item of dynamicImports) {
+    this.logger.info("====================================================================")
+    this.logger.info(`local service plugin detected (${services.length}) services =>`, services)
+    this.logger.info("====================================================================")
+    for (const item of services) {
       await this.start(item)
     }
   }

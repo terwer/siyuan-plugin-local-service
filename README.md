@@ -16,7 +16,8 @@ a plugin for connecting siyuan-note with local services
   cmd: CustomCmd {},
   device: class,
   npm: NpmPackageManager {...},
-  status: {deviceInited: true, cmdInited: true, infraInited: true}
+  sc: ServiceManager {...}
+  status: {deviceInited: true, cmdInited: true, infraInited: true},
 }
 ```
 
@@ -27,10 +28,13 @@ a plugin for connecting siyuan-note with local services
 * Added a service manager and mount it to `zhi.sc`
 
 ```
+zhi.sc.findAll()
+zhi.sc.findByServiceName(serviceName)
 zhi.sc.startAll()
+zhi.sc.startMany(services)
 zhi.sc.stopAll()
-zhi.sc.start(serviceName)
-zhi.sc.stop(serviceName)
+zhi.sc.startByServiceName(serviceName)
+zhi.sc.stopByServiceName(serviceName)
 ```
 
 ## Command List
