@@ -161,7 +161,7 @@ class LocalService {
             if (typeof x === "string") {
               const basePath = getAppBase()
               const absBasePath = SiyuanDevice.joinPath(dataDir, basePath)
-              return x.replace(/\[basePath\]/g, absBasePath)
+              return x.replace(/\[thisPluginBasePath\]/g, absBasePath)
             } else {
               return x
             }

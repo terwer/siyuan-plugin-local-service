@@ -2,74 +2,151 @@
 
 # siyuan-plugin-local-service
 
-A plugin for connecting SiYuan notes with local services.
+<img src="./icon.png" width="160" height="160" alt="icon">
 
-v1.0.0 Features
+a plugin for connecting siyuan-note with local services
 
-* [X] Developer tool console commands
+## Recent Updates
 
-  ```js
-  await npmManager.npmVersion()
-  // '9.5.1\n'
-  ```
+* Commands are now unified under `window.zhi`.
 
-  ```js
-  require("cross-spawn")
-  // ƒ spawn(command, args, options) {
-  ```
+```bash
+> zhi
+{
+  cmd: CustomCmd {},
+  device: class,
+  npm: NpmPackageManager {...},
+  status: {deviceInited: true, cmdInited: true, infraInited: true}
+}
+```
 
-  ```js
-  require("vue")
-  // node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
-  ```
+* Unnecessary `node_modules` dependencies have been removed.
 
-  ```js
-  await npmManager.requireInstall("vue")
-  // {TransitionGroup: {…}, compile: ƒ, Transition: ƒ, VueElement: ƒ, createApp: ƒ, …}
-  ```
+* Added Node download and npm dependency installation via `zhi.npm.checkAndInitNode()`.
 
-  ```js
-  await zhiCmd.getElectronNodeVersion()
-  // '18.15.0'
-  ```
+## Command List
 
-  ```js
-  // [Workspace]
-  const workspaceDir = window.siyuan.config.system.workspaceDir
-  const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-local-service`
-  // Point to the .js file you want to run
-  const command = `${basePath}/hello.js`
-  const args = []
-  const cwd = undefined
-  const result = await zhiCmd.executeCommandWithBundledNodeAsync(command, args, cwd)
-  if (result.status) {
-    console.log("Command executed successfully! 😄")
-  } else {
-    console.error("Command execution failed 😭: ", result.msg)
-  }
-  // Executing command: C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/hello.js, args=>, options=> {cwd: 'C:\\Program Files\\SiYuan', silent: true}
-  // C:\Users\Terwer\Documents\mydocs\SiyuanWorkspace\test/data/plugins/siyuan-plugin-local-service/core/zhi-cmd/index.cjs:482 Command execution log saved to file => C:\Users\Terwer\electron-command-log.txt
-  // Command executed successfully! 😄
-  ```
+* Download and install Node
 
-  ```js
-  await zhiCmd.getSystemNodeVersion()
-  // 'v18.16.0'
-  ```
+```js
+await zhi.npm.checkAndInitNode()
+```
 
-  ```js
-  // [Workspace]
-  const workspaceDir = window.siyuan.config.system.workspaceDir
-  const basePath = `${workspaceDir}/data/plugins/siyuan-plugin-local-service`
-  // Point to the .js file you want to run
-  const command = `${basePath}/hello.js`
-  const args = []
-  const cwd = undefined
-  await zhiCmd.executeCommand("node", [`${command}`], cwd)
-  // 'Hello, World!'
-  ```
+Initialization process:
 
-  ```js
-  await zhiCmd.executeCommand("python", ["-V"])
-  // 'Python 3.11.3'
-  ```
+```js
+await zhi.npm.checkAndInitNode()
+// [zhi] [2023-10-21 14:42:36] [INFO] [npm-package-manager] Node environment doesn't exist, preparing to install Node...
+// Executing command: [thisPluginBasePath]/setup.cjs, args => v18.18.2, [appSiyuancommunityFolder]/node, options => {cwd: '[appSiyuancommunityFolder]/node', silent: true}
+// Command execution log has been saved to the file => /Users/terwer/electron-command-log.txt
+// [zhi] [2023-10-21 14:42:42] [INFO] [npm-package-manager] Node installation successful! 😄
+// [zhi] [2023-10-21 14:42:42] [INFO] [package-helper] Dependencies updated successfully at [appSiyuancommunityFolder]/workspace/test/package.json
+// [zhi] [2023-10-21 14:42:42] [INFO] [npm-package-manager] Detected deps.json change. Will install node_module once if needed, please wait...
+// [zhi] [2023-10-21 14:42:42] [INFO] [npm-package-manager] npmCmd options => {cwd: '[appSiyuancommunityFolder]/workspace/test', env: {…}}
+// [zhi] [2023-10-21 14:42:50] [INFO] [npm-package-manager] All node_module installed successfully
+// [zhi] [2023-10-21 14:42:50] [INFO] [npm-package-manager] Package hash updated successfully
+true
+```
+
+If already initialized, it's ignored:
+
+```js
+await zhi.npm.checkAndInitNode()
+// [zhi] [2023-10-21 14:48:16] [INFO] [npm-package-manager] Node already installed, ignore
+// [zhi] [2023-10-21 14:48:16] [INFO] [package-helper] deps.json hasn't changed since the last update, skip
+true
+```
+
+* Test Node and npm
+
+Test `node`:
+
+```js
+await zhi.npm.nodeCmd("-v")
+// 'v18.18.2'
+await zhi.npm.nodeVersion()
+// 'v18.18.2'
+await zhi.npm.electronNpmVersion()
+// '18.15.0'
+await zhi.npm.systemNpmVersion()
+// 'v18.16.0'
+```
+
+Or:
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+await zhi.npm.nodeCmd(`${thisPluginBasePath}/hello.js`)
+// 'Hello, World!'
+```
+
+Test `npm`:
+
+```js
+await zhi.npm.npmCmd("-v")
+// '9.8.1'
+await zhi.npm.npmVersion()
+// '9.8.1'
+```
+
+* Other Commands
+
+Install a dependency:
+
+```js
+// Cannot require if not installed
+require("vue")
+// node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
+```
+
+Install:
+
+```js
+await zhi.npm.npmInstall("vue")
+```
+
+Install and require:
+
+```js
+const vue = await zhi.npm.requireInstall("vue")
+```
+
+Use Electron's built-in Node to execute commands:
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+// Point to the .js file you want to run
+const command = `${thisPluginBasePath}/hello.js`
+const args = []
+const cwd = undefined
+const result = await zhi.cmd.executeCommandWithBundledNodeAsync(command, args, cwd)
+```
+
+Use locally installed Node to execute commands:
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+await zhi.npm.nodeCmd(`${thisPluginBasePath}/hello.js`)
+```
+
+Use the system's Node to execute commands:
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+// Point to the .js file you want to run
+const command = `${thisPluginBasePath}/hello.js`
+const args = []
+const options = undefined
+await zhi.cmd.executeCommand("node", [`${command}`], options)
+```
+
+Use the system's Python to execute commands:
+
+```js
+await zhi.cmd.executeCommand("python", ["-V"])
+// 'Python 3.11.4'
+```
