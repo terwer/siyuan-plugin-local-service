@@ -4,7 +4,7 @@
 
 <img src="./icon.png" width="160" height="160" alt="icon">
 
-a plugin for connecting siyuan-note with local service
+a plugin for connecting siyuan-note with local services
 
 ## Recent Updates
 
