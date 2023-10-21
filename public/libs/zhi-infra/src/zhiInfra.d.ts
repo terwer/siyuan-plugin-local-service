@@ -4,11 +4,10 @@ import { NpmPackageManager } from "./lib/npmHelper";
  */
 declare class ZhiInfra {
     private readonly logger;
-    private zhiAppNodeModulesPath;
     private zhiCoreNpmPath;
-    private zhiNodeModulesPath;
+    private zhiCoreNodeModulesPath;
     private npmManager;
-    constructor(zhiCoreNpmPath?: string);
+    constructor(depsJsonPath: string);
     /**
      * 修复 Mac 和 Linux 下面的 PATH 环境变量问题
      */

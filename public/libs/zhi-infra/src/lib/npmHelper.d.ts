@@ -4,12 +4,14 @@
 declare class NpmPackageManager {
     private logger;
     private zhiCoreNpmPath;
+    private depsJsonPath;
     private customCmd;
     /**
      * 构造函数，用于创建 NpmPackageManager 的实例。
      * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径。
+     * @param depsJsonPath - 一来定义路径
      */
-    constructor(zhiCoreNpmPath: string);
+    constructor(zhiCoreNpmPath: string, depsJsonPath: string);
     /**
      * 执行 Node 命令
      *
@@ -36,6 +38,18 @@ declare class NpmPackageManager {
      * @returns NPM 版本号的 Promise
      */
     npmVersion(): Promise<string>;
+    /**
+     * 获取 Electron的 NPM 的版本号
+     *
+     * @returns NPM 版本号的 Promise
+     */
+    electronNpmVersion(): Promise<string>;
+    /**
+     * 获取系统 NPM 的版本号
+     *
+     * @returns NPM 版本号的 Promise
+     */
+    systemNpmVersion(): Promise<unknown>;
     /**
      * 安装 NPM 依赖
      *

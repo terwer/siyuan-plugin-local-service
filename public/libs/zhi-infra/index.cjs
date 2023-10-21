@@ -4478,22 +4478,22 @@ function fixPath() {
 }
 
 // ../../libs/zhi-lib-base/dist/index.js
-var w = (r, i, p) => {
-  const s = i ?? "zhi", $ = (t) => {
-    const e = t.getFullYear(), o3 = String(t.getMonth() + 1).padStart(2, "0"), n3 = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), d = String(t.getMinutes()).padStart(2, "0"), u3 = String(t.getSeconds()).padStart(2, "0");
-    return `${e}-${o3}-${n3} ${S}:${d}:${u3}`;
+var w = (n3, $, p) => {
+  const s = $ ?? "zhi", i = (t) => {
+    const e = t.getFullYear(), o3 = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), u3 = String(t.getMinutes()).padStart(2, "0"), d = String(t.getSeconds()).padStart(2, "0");
+    return `${e}-${o3}-${r} ${S}:${u3}:${d}`;
   }, c3 = (t, e) => {
-    const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.log(`[${s}] [${o3}] [DEBUG] [${r}] ${t}`, n3) : console.log(`[${s}] [${o3}] [DEBUG] [${r}] ${t}`);
+    const o3 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.log(`[${s}] [${o3}] [DEBUG] [${n3}] ${t}`, r) : console.log(`[${s}] [${o3}] [DEBUG] [${n3}] ${t}`);
   }, l = (t, e) => {
-    const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.info(`[${s}] [${o3}] [INFO] [${r}] ${t}`, n3) : console.info(`[${s}] [${o3}] [INFO] [${r}] ${t}`);
+    const o3 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.info(`[${s}] [${o3}] [INFO] [${n3}] ${t}`, r) : console.info(`[${s}] [${o3}] [INFO] [${n3}] ${t}`);
   }, f = (t, e) => {
-    const o3 = $(/* @__PURE__ */ new Date()), n3 = typeof e == "boolean" ? String(e) : e;
-    n3 ? console.warn(`[${s}] [${o3}] [WARN] [${r}] ${t}`, n3) : console.warn(`[${s}] [${o3}] [WARN] [${r}] ${t}`);
+    const o3 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.warn(`[${s}] [${o3}] [WARN] [${n3}] ${t}`, r) : console.warn(`[${s}] [${o3}] [WARN] [${n3}] ${t}`);
   }, g3 = (t, e) => {
-    const o3 = $(/* @__PURE__ */ new Date());
-    e ? console.error(`[${s}] [${o3}] [ERROR] [${r}] ${t.toString()}`, e) : console.error(`[${s}] [${o3}] [ERROR] [${r}] ${t.toString()}`);
+    const o3 = i(/* @__PURE__ */ new Date());
+    e ? console.error(`[${s}] [${o3}] [ERROR] [${n3}] ${t.toString()}`, e) : console.error(`[${s}] [${o3}] [ERROR] [${n3}] ${t.toString()}`);
   };
   return {
     debug: (t, e) => {
@@ -4509,6 +4509,10 @@ var w = (r, i, p) => {
       e ? g3(t, e) : g3(t);
     }
   };
+};
+var D = (n3, $) => {
+  if (n3 && $ !== void 0 && n3.length > $)
+    return n3[$];
 };
 
 // ../../libs/zhi-device/dist/index.js
@@ -5589,6 +5593,12 @@ var CustomCmd = class {
   async getElectronNodeVersion() {
     return c2.siyuanWindow().process.versions.node;
   }
+  /**
+   * 获取系统的 Node 版本
+   */
+  async getSystemNodeVersion() {
+    return await this.executeCommand("node", ["-v"], { shell: true });
+  }
 };
 
 // src/lib/npmHelper.ts
@@ -5633,7 +5643,7 @@ function updatePackageJson(depsFilePath, packageJsonFilePath) {
     oldHash = "";
   }
   if (oldHash === hash) {
-    logger.info(`deps.json hasn't changed since last update, skipping...`);
+    logger.info(`deps.json hasn't changed since last update, skip`);
     return false;
   }
   const packageJsonString = import_fs.default.readFileSync(packageJsonFilePath).toString();
@@ -5665,14 +5675,17 @@ function updatePackageJsonHash(depsFilePath, packageJsonFilePath) {
 var NpmPackageManager = class {
   logger;
   zhiCoreNpmPath;
+  depsJsonPath;
   customCmd;
   /**
    * 构造函数，用于创建 NpmPackageManager 的实例。
    * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径。
+   * @param depsJsonPath - 一来定义路径
    */
-  constructor(zhiCoreNpmPath) {
+  constructor(zhiCoreNpmPath, depsJsonPath) {
     this.logger = w("npm-package-manager", "zhi", false);
     this.zhiCoreNpmPath = zhiCoreNpmPath;
+    this.depsJsonPath = depsJsonPath;
     this.customCmd = new CustomCmd();
   }
   /**
@@ -5701,7 +5714,7 @@ var NpmPackageManager = class {
    */
   async npmCmd(subCommand) {
     const command = `npm`;
-    const args2 = [subCommand, this.zhiCoreNpmPath];
+    const args2 = [subCommand, `"${this.zhiCoreNpmPath}"`];
     const options = {
       cwd: this.zhiCoreNpmPath,
       env: {
@@ -5726,6 +5739,22 @@ var NpmPackageManager = class {
    */
   async npmVersion() {
     return await this.npmCmd(`-v`);
+  }
+  /**
+   * 获取 Electron的 NPM 的版本号
+   *
+   * @returns NPM 版本号的 Promise
+   */
+  async electronNpmVersion() {
+    return await this.customCmd.getElectronNodeVersion();
+  }
+  /**
+   * 获取系统 NPM 的版本号
+   *
+   * @returns NPM 版本号的 Promise
+   */
+  async systemNpmVersion() {
+    return await this.customCmd.getSystemNodeVersion();
   }
   /**
    * 安装 NPM 依赖
@@ -5762,11 +5791,14 @@ var NpmPackageManager = class {
     const nodeCurrentBinFolder = c.nodeCurrentBinFolder();
     if (!fs3.existsSync(nodeCurrentBinFolder)) {
       this.logger.info("Node\u73AF\u5883\u4E0D\u5B58\u5728\uFF0C\u51C6\u5907\u5B89\u88C5Node...");
-      const command = `${this.zhiCoreNpmPath}/setup.js`;
+      const command = `${this.depsJsonPath}/setup.cjs`;
       const args2 = [];
       args2.push(nodeVersion ?? "v18.18.2");
       args2.push(nodeInstallDir ?? nodeFolder);
       const cwd = nodeFolder;
+      if (!fs3.existsSync(cwd)) {
+        fs3.mkdirSync(cwd, { recursive: true });
+      }
       const result = await this.customCmd.executeCommandWithBundledNodeAsync(command, args2, cwd);
       if (result.status) {
         this.logger.info("Node\u5B89\u88C5\u6210\u529F\uFF01\u{1F604}");
@@ -5775,14 +5807,14 @@ var NpmPackageManager = class {
       }
       flag = true;
     } else {
-      this.logger.info("Node\u5DF2\u5B89\u88C5\u8FC7\uFF0C\u5FFD\u7565");
+      this.logger.info("Node already installed, ignore");
       flag = true;
     }
     const pkgJsonFile = import_path2.default.join(this.zhiCoreNpmPath, "package.json");
-    const depsJsonFile = import_path2.default.join(this.zhiCoreNpmPath, "deps.json");
+    const depsJsonFile = import_path2.default.join(this.depsJsonPath, "deps.json");
     const depsJsonStatus = updatePackageJson(depsJsonFile, pkgJsonFile);
     if (depsJsonStatus) {
-      this.logger.info("Will install node_module once if needed, please wait...");
+      this.logger.info("Detected deps.json change.Will install node_module once if needed, please wait...");
       await this.npmInstall();
       this.logger.info("All node_module installed successfully");
       updatePackageJsonHash(depsJsonFile, pkgJsonFile);
@@ -5799,7 +5831,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.7.0",
+  version: "0.12.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -5840,16 +5872,14 @@ var package_default = {
 // src/zhiInfra.ts
 var ZhiInfra = class {
   logger;
-  zhiAppNodeModulesPath;
   zhiCoreNpmPath;
-  zhiNodeModulesPath;
+  zhiCoreNodeModulesPath;
   npmManager;
-  constructor(zhiCoreNpmPath) {
+  constructor(depsJsonPath) {
     this.logger = w("zhi-infra", "zhi", true);
-    this.zhiCoreNpmPath = zhiCoreNpmPath ?? c.joinPath(c.zhiThemePath(), "npm");
-    this.zhiNodeModulesPath = c.joinPath(this.zhiCoreNpmPath, "node_modules");
-    this.npmManager = new NpmPackageManager(this.zhiCoreNpmPath);
-    this.zhiAppNodeModulesPath = c.joinPath(c.appNpmFolder(), "node_modules");
+    this.zhiCoreNpmPath = c.appNpmFolder();
+    this.zhiCoreNodeModulesPath = c.joinPath(this.zhiCoreNpmPath, "node_modules");
+    this.npmManager = new NpmPackageManager(this.zhiCoreNpmPath, depsJsonPath);
   }
   /**
    * 修复 Mac 和 Linux 下面的 PATH 环境变量问题
@@ -5861,20 +5891,14 @@ var ZhiInfra = class {
     this.logger.info("Fixed $PATH in Electron apps as GUI apps on macOS and Linux");
   }
   async hackRequire() {
-    this.logger.info("Init zhi core node_modules from => ", this.zhiNodeModulesPath);
-    c.siyuanWindow().require.setExternalDeps(this.zhiNodeModulesPath);
-    this.logger.info("Init zhi app node_modules from => ", this.zhiAppNodeModulesPath);
+    this.logger.info("Init zhi core node_modules from => ", this.zhiCoreNodeModulesPath);
+    c.siyuanWindow().require.setExternalDeps(this.zhiCoreNodeModulesPath);
     const pkgJsonFile = import_path3.default.join(this.zhiCoreNpmPath, "package.json");
     if (!import_fs_extra.default.existsSync(pkgJsonFile)) {
       await import_fs_extra.default.mkdirs(this.zhiCoreNpmPath);
       createPackageJson("zhi-app-package", package_default.version, {}, pkgJsonFile);
       this.logger.warn("app package.json not exist, inited");
     }
-    c.siyuanWindow().require.setExternalDeps(this.zhiAppNodeModulesPath);
-    const externalDepPathes = c.siyuanWindow().ExternalDepPathes;
-    externalDepPathes.map((path5, index) => {
-      this.logger.info(`Available zhi node_modules path${index + 1} => ${path5}`);
-    });
   }
   getNpmManager() {
     return this.npmManager;
@@ -6055,10 +6079,10 @@ var main = async (args2) => {
   } else {
     logger3.info("zhi cmd is already inited.skip");
   }
-  const zhiNpmPath = args2.length > 0 ? args2[0] : void 0;
-  const isFixPath = args2.length > 1 ? args2[1] : void 0;
+  const depsJsonPath = D(args2, 0);
+  const isFixPath = D(args2, 1);
   if (!win.zhi.status.infraInited) {
-    const infra = new zhiInfra_default(zhiNpmPath);
+    const infra = new zhiInfra_default(depsJsonPath);
     if (isFixPath) {
       infra.fixPathEnv();
     }

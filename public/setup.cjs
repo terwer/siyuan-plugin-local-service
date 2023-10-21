@@ -1,3 +1,7 @@
+/**
+ * 这个脚本会在执行 `await zhi.npm.checkAndInitNode()` 的时候自动调用
+ * 可在这里写上一些需要安装其他包的脚本
+ */
 const https = require("https")
 const fs = require("fs")
 const path = require("path")
@@ -114,4 +118,6 @@ const installNodeJS = async () => {
   }
 }
 
-installNodeJS()
+;(async () => {
+  await installNodeJS()
+})()
