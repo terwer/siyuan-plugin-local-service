@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.3...v1.1.0) (2023-10-21)
+
+
+### Features
+
+* 初始化安装Node以及预定义依赖 ([62d0e8a](https://github.com/terwer/siyuan-plugin-local-service/commit/62d0e8a31845ae7e97ad208a8b4595a40462c29f))
+* 统一规范化管理命令 ([e069a71](https://github.com/terwer/siyuan-plugin-local-service/commit/e069a714ae0398d7c36e39ee920df93ad0c87bcf))
+* 统一规范化管理命令 ([6de6a22](https://github.com/terwer/siyuan-plugin-local-service/commit/6de6a22a6583128e6cedf7f9e41402cffcd378ce))
+* 重构基础设施 ([f90f2ff](https://github.com/terwer/siyuan-plugin-local-service/commit/f90f2ff4147b4af10299894e207498c044aa33e5))
+
+
+### Bug Fixes
+
+* **deps:** bump zhi-device from 2.6.0 to 2.8.1 ([44c0962](https://github.com/terwer/siyuan-plugin-local-service/commit/44c09623aa76fd24f1269ab89e0c3969f561e9f4))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @types/minimist from 1.2.3 to 1.2.4 ([a5a405b](https://github.com/terwer/siyuan-plugin-local-service/commit/a5a405b2bf9def33533d03d51f5cbc4e7e716309))
+* **deps-dev:** bump vite from 4.4.11 to 4.5.0 ([3326679](https://github.com/terwer/siyuan-plugin-local-service/commit/33266793607a299dc26eb26ca62bc87a955cd488))
+
 ## [1.0.3](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.2...v1.0.3) (2023-10-18)
 ### Bug Fixes
 * 修改预览图标 ([d3d36e5](https://github.com/terwer/siyuan-plugin-local-service/commit/d3d36e50fb481170827647d1a36e6a3d439b8f12))
