@@ -21,6 +21,14 @@
   ```
 * 移除不必要的 `node_modules` 依赖
 * 新增 Node 下载以及 npm 依赖安装到 `zhi.npm.checkAndInitNode()`
+* 新增服务管理器，并挂载到 `zhi.sc`
+
+```
+zhi.sc.startAll()
+zhi.sc.stopAll()
+zhi.sc.start(serviceName)
+zhi.sc.stop(serviceName)
+```
 
 ## 命令列表
 

@@ -24,6 +24,15 @@ a plugin for connecting siyuan-note with local services
 
 * Added Node download and npm dependency installation via `zhi.npm.checkAndInitNode()`.
 
+* Added a service manager and mount it to `zhi.sc`
+
+```
+zhi.sc.startAll()
+zhi.sc.stopAll()
+zhi.sc.start(serviceName)
+zhi.sc.stop(serviceName)
+```
+
 ## Command List
 
 * Download and install Node
