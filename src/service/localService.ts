@@ -112,8 +112,7 @@ class LocalService {
       }
 
       // 启动服务，后续可配置为是否启动时自动启动服务
-      const dynamicImports = await Bootstrap.start()
-      const serviceManager = new ServiceManager(this.runAs, dynamicImports)
+      const serviceManager = new ServiceManager(this.runAs)
       await serviceManager.startAll()
 
       // mount sc as serviceManager
