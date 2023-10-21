@@ -16,6 +16,7 @@ a plugin for connecting siyuan-note with local services
   cmd: CustomCmd {},
   device: class,
   npm: NpmPackageManager {...},
+  pd: PackageDownloader {...},
   sc: ServiceManager {...}
   status: {deviceInited: true, cmdInited: true, infraInited: true},
 }
@@ -36,6 +37,8 @@ zhi.sc.stopAll()
 zhi.sc.startByServiceName(serviceName)
 zhi.sc.stopByServiceName(serviceName)
 ```
+
+* Add a service package downloader and mount it to `zhi.pd`
 
 ## Command List
 

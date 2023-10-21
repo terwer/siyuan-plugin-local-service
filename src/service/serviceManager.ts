@@ -26,7 +26,7 @@
 import DependencyItem from "../models/dependencyItem"
 import dependencyItem from "../models/dependencyItem"
 import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
-import { getAppBase, importPluginLib, requirePluginLib } from "../utils/utils"
+import { getAppBase, getThisPluginName, importPluginLib, requirePluginLib } from "../utils/utils"
 import { dataDir, isDev } from "../Constants"
 import { ILogger, simpleLogger } from "zhi-lib-base"
 import Bootstrap from "../core/bootstrap"
@@ -163,6 +163,15 @@ class ServiceManager {
    * @param item
    */
   private async start(item: DependencyItem): Promise<void> {
+    await this.startWithBundledNode(item)
+  }
+
+  /**
+   * 使用 Electron 自带的 Node 启动单个服务
+   *
+   * @param item
+   */
+  private async startWithBundledNode(item: DependencyItem): Promise<void> {
     // 类型校验
     if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
       this.logger.warn("Only esm, cjs supported, skip this lib!", item.libpath)
@@ -178,7 +187,7 @@ class ServiceManager {
       return
     }
 
-    this.logger.info(`Loading modules form zhi => ${item.libpath}`)
+    this.logger.info(`Loading modules form locale service => ${item.libpath}`)
     let lib: any
     if (item.importType == "import") {
       if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {

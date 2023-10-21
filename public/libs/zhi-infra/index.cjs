@@ -5678,9 +5678,10 @@ var NpmPackageManager = class {
   depsJsonPath;
   customCmd;
   /**
-   * 构造函数，用于创建 NpmPackageManager 的实例。
-   * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径。
-   * @param depsJsonPath - 一来定义路径
+   * 构造函数，用于创建 NpmPackageManager 的实例
+   *
+   * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径
+   * @param depsJsonPath - deps.json 路径
    */
   constructor(zhiCoreNpmPath, depsJsonPath) {
     this.logger = w("npm-package-manager", "zhi", false);
@@ -5692,37 +5693,21 @@ var NpmPackageManager = class {
    * 执行 Node 命令
    *
    * @param subCommand - 要执行的 NPM 命令
+   * @param oargs - 其它参数
    * @returns 执行结果的 Promise
    */
-  async nodeCmd(subCommand) {
-    const command = `node`;
-    const args2 = [subCommand, this.zhiCoreNpmPath];
-    const options = {
-      cwd: this.zhiCoreNpmPath,
-      env: {
-        PATH: c.nodeCurrentBinFolder()
-      }
-    };
-    this.logger.info("nodeCmd options =>", options);
-    return await this.customCmd.executeCommand(command, args2, options);
+  async nodeCmd(subCommand, oargs) {
+    return await this.localNodeCmd("node", subCommand, oargs);
   }
   /**
    * 执行 NPM 命令
    *
    * @param subCommand - 要执行的 NPM 命令
+   * @param oargs - 其它参数
    * @returns 执行结果的 Promise
    */
-  async npmCmd(subCommand) {
-    const command = `npm`;
-    const args2 = [subCommand, `"${this.zhiCoreNpmPath}"`];
-    const options = {
-      cwd: this.zhiCoreNpmPath,
-      env: {
-        PATH: c.nodeCurrentBinFolder()
-      }
-    };
-    this.logger.info("npmCmd options =>", options);
-    return await this.customCmd.executeCommand(command, args2, options);
+  async npmCmd(subCommand, oargs) {
+    return await this.localNodeCmd("npm", subCommand, oargs);
   }
   /**
    * 获取 Node 的版本号
@@ -5775,8 +5760,19 @@ var NpmPackageManager = class {
    * @returns 导入的模块
    */
   async requireInstall(moduleName) {
-    await this.npmCmd(`install ${moduleName}`);
-    return c.requireNpm(moduleName);
+    try {
+      const result = c.requireNpm(moduleName);
+      this.logger.info(`${moduleName} already cached`);
+      return result;
+    } catch (e) {
+      if (e && e.message && e.message.includes(`Cannot find module '${moduleName}'`)) {
+        this.logger.info(`${moduleName} not found, will install once...`);
+        await this.npmCmd(`install ${moduleName}`);
+        this.logger.info(`${moduleName} installed`);
+        return c.requireNpm(moduleName);
+      }
+      throw e;
+    }
   }
   /**
    * 检测并初始化 Node
@@ -5822,6 +5818,25 @@ var NpmPackageManager = class {
     }
     return flag;
   }
+  /**
+   * 本地服务的 Node 命令
+   *
+   * @param command 主命令
+   * @param subCommand 子命令
+   * @param oargs 其它参数
+   * @private
+   */
+  async localNodeCmd(command, subCommand, oargs) {
+    const args2 = [subCommand, this.zhiCoreNpmPath].concat(oargs ?? []);
+    const options = {
+      cwd: this.zhiCoreNpmPath,
+      env: {
+        PATH: c.nodeCurrentBinFolder()
+      }
+    };
+    this.logger.info("nodeCmd spawn options =>", options);
+    return await this.customCmd.executeCommandWithSpawn(command, args2, options);
+  }
 };
 
 // src/zhiInfra.ts
@@ -5831,7 +5846,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.12.0",
+  version: "0.14.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -6064,24 +6079,26 @@ var main = async (args2) => {
   const win = c.siyuanWindow();
   win.zhi = win.zhi ?? {};
   win.zhi.status = win.zhi.status ?? {};
-  if (!win.zhi.status.deviceInited) {
+  if (win.zhi.status.deviceInited) {
+    logger3.info("zhi device is already inited.skip");
+  } else {
     win.zhi.device = c;
     win.zhi.status.deviceInited = true;
     logger3.info("zhi device inited");
-  } else {
-    logger3.info("zhi device is already inited.skip");
   }
-  if (!win.zhi.status.cmdInited) {
+  if (win.zhi.status.cmdInited) {
+    logger3.info("zhi cmd is already inited.skip");
+  } else {
     const cmd = new CustomCmd();
     win.zhi.cmd = cmd;
     win.zhi.status.cmdInited = true;
     logger3.info("zhi cmd inited");
-  } else {
-    logger3.info("zhi cmd is already inited.skip");
   }
   const depsJsonPath = D(args2, 0);
   const isFixPath = D(args2, 1);
-  if (!win.zhi.status.infraInited) {
+  if (win.zhi.status.infraInited) {
+    logger3.info("zhi infra is already inited.skip");
+  } else {
     const infra = new zhiInfra_default(depsJsonPath);
     if (isFixPath) {
       infra.fixPathEnv();
@@ -6090,8 +6107,6 @@ var main = async (args2) => {
     win.zhi.npm = infra.getNpmManager();
     win.zhi.status.infraInited = true;
     logger3.info("zhi infra inited");
-  } else {
-    logger3.info("zhi infra is already inited.skip");
   }
 };
 var src_default = main;

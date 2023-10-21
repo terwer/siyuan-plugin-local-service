@@ -27,6 +27,13 @@ import { SiyuanDevice } from "zhi-device"
 import pkg from "./../../package.json"
 
 /**
+ * 获取当前插件名称
+ */
+export const getThisPluginName = () => {
+  return pkg.name
+}
+
+/**
  * 获取插件路径
  */
 export const getAppBase = () => {
@@ -58,4 +65,24 @@ export const importPluginLib = async (jsonFile: string) => {
   const pluginBase = path.join("/", "plugins", pkg.name)
   const { default: data } = await import(SiyuanDevice.joinPath(pluginBase, jsonFile))
   return data
+}
+
+/**
+ * 核心服务
+ *
+ * @param coreServiceName 服务名称
+ * @param entry 入口
+ * @param oargs 命令行参数
+ */
+export const requireCoreService = async (coreServiceName: string, entry?: string, oargs?: any[]) => {
+  const path = SiyuanDevice.requireNpm("path")
+  const thisPluginBasePath = getAppBase()
+  const command = path.join(
+    SiyuanDevice.siyuanDataPath(),
+    thisPluginBasePath,
+    "services",
+    coreServiceName,
+    entry ?? "index.cjs"
+  )
+  return await SiyuanDevice.siyuanWindow().zhi.npm.nodeCmd(command, oargs)
 }

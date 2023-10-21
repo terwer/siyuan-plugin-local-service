@@ -32,6 +32,7 @@ import Bootstrap from "../core/bootstrap"
 import { requirePluginLib } from "../utils/utils"
 import { StrUtil } from "zhi-common"
 import ServiceManager from "./serviceManager"
+import PackageDownloader from "./packageDownloader"
 
 /**
  * 本地服务通用类
@@ -114,9 +115,13 @@ class LocalService {
       // 启动服务，后续可配置为是否启动时自动启动服务
       const serviceManager = new ServiceManager(this.runAs)
       await serviceManager.startAll()
-
       // mount sc as serviceManager
       win.zhi.sc = serviceManager
+
+      // mount pd as PackageDownloader
+      const packageDownloader = new PackageDownloader()
+      win.zhi.pd = packageDownloader
+
       win.zhi.status.serviceInited = true
       this.logger.debug("local service inited")
       this.hello(this.runAs)

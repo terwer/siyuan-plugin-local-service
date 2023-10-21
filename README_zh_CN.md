@@ -16,6 +16,7 @@
   cmd: CustomCmd {},
   device: class,
   npm: NpmPackageManager {...},
+  pd: PackageDownloader {...},
   sc: ServiceManager {...}
   status: {deviceInited: true, cmdInited: true, infraInited: true}
   }
@@ -33,6 +34,8 @@ zhi.sc.stopAll()
 zhi.sc.startByServiceName(serviceName)
 zhi.sc.stopByServiceName(serviceName)
 ```
+
+* 新增服务包下载器，并挂载到 `zhi.pd`
 
 ## 命令列表
 
@@ -166,3 +169,18 @@ zhi.sc.stopByServiceName(serviceName)
   await zhi.cmd.executeCommand("python", ["-V"])
   //'Python 3.11.4'
   ```
+
+* 服务命令
+
+或者
+
+```js
+await zhi.pd.downloadAndExtractPackage("bbb")
+```
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+const command = `${thisPluginBasePath}/services/package-downloader/index.cjs`
+await zhi.npm.nodeCmd(command)
+```
