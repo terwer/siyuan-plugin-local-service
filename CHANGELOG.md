@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.1.0...v1.2.0) (2023-10-22)
+
+
+### Features
+
+* 支持 Node 和 Python 调用 ([ecd08ee](https://github.com/terwer/siyuan-plugin-local-service/commit/ecd08eed889e96f46cee59d951396faf69c7673c))
+* 支持 Node 和 Python 调用 ([8995b31](https://github.com/terwer/siyuan-plugin-local-service/commit/8995b31ac0edc838cb54461ba853cc37d00f54a0))
+* 新增包下载器 ([15ef089](https://github.com/terwer/siyuan-plugin-local-service/commit/15ef089c0c4cf4282479a5c356f505a5d3db7fcf))
+* 新增包下载器-下载与缓存服务包 ([1703cd9](https://github.com/terwer/siyuan-plugin-local-service/commit/1703cd98574d186b5a3e75c59b2227ba48d96722))
+* 新增服务管理器 ([4996755](https://github.com/terwer/siyuan-plugin-local-service/commit/4996755e3d28147d5e007ab2290f092bfb32304d))
+* 新增服务管理器 ([6b72008](https://github.com/terwer/siyuan-plugin-local-service/commit/6b72008b3381c4bbf7716693a47541ceab52a462))
+* 新增服务管理器 ([ed437ea](https://github.com/terwer/siyuan-plugin-local-service/commit/ed437ea350d167d872046aac226820a5207540b2))
+
 ## [1.1.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.0.3...v1.1.0) (2023-10-21)
 ### Features
 * 初始化安装node以及预定义依赖 ([62d0e8a](https://github.com/terwer/siyuan-plugin-local-service/commit/62d0e8a31845ae7e97ad208a8b4595a40462c29f))
