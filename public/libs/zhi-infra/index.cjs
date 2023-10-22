@@ -5707,7 +5707,7 @@ var NpmPackageManager = class {
    * @returns 执行结果的 Promise
    */
   async npmCmd(subCommand, oargs) {
-    return await this.localNodeCmd("npm", subCommand, oargs);
+    return await this.localNodeExecCmd("npm", subCommand, oargs);
   }
   /**
    * 获取 Node 的版本号
@@ -5834,8 +5834,27 @@ var NpmPackageManager = class {
         PATH: c.nodeCurrentBinFolder()
       }
     };
-    this.logger.info("nodeCmd spawn options =>", options);
+    this.logger.info("localNodeCmd spawn options =>", options);
     return await this.customCmd.executeCommandWithSpawn(command, args2, options);
+  }
+  /**
+   * 本地服务的 Node exec 命令
+   *
+   * @param command 主命令
+   * @param subCommand 子命令
+   * @param oargs 其它参数
+   * @private
+   */
+  async localNodeExecCmd(command, subCommand, oargs) {
+    const args2 = [subCommand, `"${this.zhiCoreNpmPath}"`].concat(oargs ?? []);
+    const options = {
+      cwd: this.zhiCoreNpmPath,
+      env: {
+        PATH: c.nodeCurrentBinFolder()
+      }
+    };
+    this.logger.info("localNodeExecCmd exec options =>", options);
+    return await this.customCmd.executeCommand(command, args2, options);
   }
 };
 
@@ -5846,7 +5865,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.14.0",
+  version: "0.15.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",

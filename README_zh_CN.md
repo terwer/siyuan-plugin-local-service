@@ -172,11 +172,11 @@ zhi.sc.stopByServiceName(serviceName)
 
 * 服务命令
 
-或者
-
 ```js
-await zhi.pd.downloadAndExtractPackage("bbb")
+await zhi.pd.downloadAndExtractPackage("https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip")
 ```
+
+或者
 
 ```js
 const path = require("path")

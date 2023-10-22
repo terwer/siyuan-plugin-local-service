@@ -30,11 +30,20 @@ const PRODUCTION_MODE = true
 // requireLocalNpm start
 const requireLocalNpm = (moduleName) => {
   console.log("current node version =>", process.versions.node)
+  const fs = require("fs")
   const path = require("path")
   const zhiCodeNpmPath = process.argv.length >= 3 ? process.argv[2] : process.cwd()
   const zhiCodeNodeModulesPath = path.join(zhiCodeNpmPath, "node_modules")
   const libpath = path.join(zhiCodeNodeModulesPath, moduleName)
-  console.log("require local lib =>", libpath)
+  if (fs.existsSync(libpath)) {
+    console.log("require cached local lib =>", libpath)
+  } else {
+    // console.log(`${moduleName} npt found, will install from npm =>`, libpath)
+    // console.log(`${moduleName} npt found,installed success.`)
+    throw new Error(
+      `package ${moduleName} not installed, please ,please install packages with await zhi.npm.checkAndInitNode()`
+    )
+  }
   return require(`${libpath}`)
 }
 // requireLocalNpm end
@@ -54,27 +63,82 @@ if (PRODUCTION_MODE) {
 const logger = console
 // logger end
 
+const fs = require("fs")
+const { pipeline } = require("stream")
+const crypto = require("crypto")
+const unzipper = requireLocalNpm("unzipper")
+
 /**
  * 从提供的URL下载和提取软件包
  *
  * @param downloadUrl - 要从中下载软件包的URL
+ * @param extractPath - 解压目录
  */
-const downloadAndExtractPackage = async (downloadUrl) => {
+const downloadAndExtractPackage = async (downloadUrl, extractPath) => {
   try {
-    // 使用 pacote 下载和提取软件包
-    const pacote = requireLocalNpm("pacote")
-    const result = await pacote.tarball(downloadUrl)
-    logger.info("Package downloaded and extracted successfully.")
-    return result
+    // 确保解压目录存在
+    if (!fs.existsSync(extractPath)) {
+      await fs.promises.mkdir(extractPath, { recursive: true })
+    }
+
+    // 生成downloadUrl的哈希值
+    const hash = crypto.createHash("md5").update(downloadUrl).digest("hex")
+
+    // 检查是否已经存在对应哈希值的软件包
+    const packagePath = `${extractPath}/${hash}.zip`
+
+    if (
+      await fs.promises
+        .access(packagePath)
+        .then(() => false)
+        .catch(() => true)
+    ) {
+      // 使用 fetch 下载软件包
+      const response = await fetch(downloadUrl)
+
+      if (response.status !== 200) {
+        throw new Error("Failed to fetch the archive. Code => " + response.status)
+      }
+
+      // 使用 pipeline 处理流，将 response.body 写入文件
+      await new Promise((resolve, reject) => {
+        const fileWriteStream = fs.createWriteStream(packagePath)
+        pipeline(response.body, fileWriteStream, (err) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
+      })
+
+      // 解压下载的软件包
+      await new Promise((resolve, reject) => {
+        pipeline(fs.createReadStream(packagePath), unzipper.Extract({ path: extractPath }), (err) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
+      })
+
+      logger.info("Package downloaded and extracted successfully.")
+      return "success"
+    } else {
+      logger.info("Package already exists. Skipping download.")
+      return "skipped"
+    }
   } catch (e) {
-    logger.error(`Error downloading or extracting the package: ${error}`)
-    throw e
+    logger.error(`Error downloading or extracting the package: ${e}`)
+    return "error\001" + e.toString()
   }
 }
 
 ;(async () => {
   logger.info("downloadAndExtractPackage.cjs =>", process.argv)
   const downloadUrl = process.argv.length >= 4 ? process.argv[3] : process.cwd()
-  const result = await downloadAndExtractPackage(downloadUrl)
+  const extractPath = process.argv.length >= 5 ? process.argv[4] : process.cwd()
+  const result = await downloadAndExtractPackage(downloadUrl, extractPath)
   logger.info("\001", result)
 })()

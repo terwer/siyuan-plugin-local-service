@@ -166,3 +166,18 @@ Use the system's Python to execute commands:
 await zhi.cmd.executeCommand("python", ["-V"])
 // 'Python 3.11.4'
 ```
+
+* Service command
+
+```js
+await zhi.pd.downloadAndExtractPackage("https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip")
+```
+
+or
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+const command = `${thisPluginBasePath}/services/package-downloader/index.cjs`
+await zhi.npm.nodeCmd(command)
+```

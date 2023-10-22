@@ -82,6 +82,15 @@ declare class NpmPackageManager {
      * @private
      */
     private localNodeCmd;
+    /**
+     * 本地服务的 Node exec 命令
+     *
+     * @param command 主命令
+     * @param subCommand 子命令
+     * @param oargs 其它参数
+     * @private
+     */
+    private localNodeExecCmd;
 }
 export { NpmPackageManager };
 //# sourceMappingURL=npmHelper.d.ts.map

@@ -48,9 +48,20 @@ class PackageDownloader {
     try {
       const coreServiceName = "package-downloader"
       const entry = "downloadAndExtractPackage.cjs"
-      const oargs = [downloadUrl]
+      const extractPath = SiyuanDevice.appServiceFolder()
+      const oargs = [downloadUrl, extractPath]
       const result = await requireCoreService(coreServiceName, entry, oargs)
-      this.logger.info("downloadAndExtractPackage result =>", result)
+      if (result.startsWith("success")) {
+        this.logger.info("downloadAndExtractPackage success😄")
+      } else if (result.startsWith("skipped")) {
+        this.logger.info("package already downloaded, skipped🤔")
+      } else {
+        if (result.startsWith("error\\001")) {
+          this.logger.error(result.split("\\001")[1])
+        } else {
+          this.logger.error("unknown error =>", result)
+        }
+      }
     } catch (e) {
       throw e
     }
