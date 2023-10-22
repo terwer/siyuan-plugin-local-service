@@ -6,7 +6,7 @@
 
 a plugin for connecting siyuan-note with local services
 
-> View all commands: 'windos.zhi'
+> View all commands: `windos.zhi`
 
 ## Recent Updates
 
