@@ -23,43 +23,42 @@
  * questions.
  */
 
+import InvokeBase from "../invokeBase"
+import { ILogger, simpleLogger } from "zhi-lib-base"
+import { isDev } from "../../../Constants"
+import InvokeUtils from "../invokeUtils"
 import { SiyuanDevice } from "zhi-device"
-import pkg from "./../../package.json"
 
 /**
- * 引用模式
+ * `NodeInvoke` 类扩展自 `InvokeBase`，提供对 Node 服务的调用功能
+ *
+ * @author terwer
+ * @since 1.2.0
  */
-export type InvokeFormat = "cjs" | "esm" | "js" | "py" | "java" | "go" | "php" | "cs" | "rust" | "c" | "cpp"
+class NodeInvoke extends InvokeBase {
+  private logger: ILogger
 
-/**
- * 引用方式
- */
-export type InvokeType =
-  | "require"
-  | "import"
-  | "node"
-  | "python"
-  | "java"
-  | "go"
-  | "php"
-  | "csharp"
-  | "rust"
-  | "c"
-  | "cpp"
+  constructor() {
+    super("node")
+    this.logger = simpleLogger("node-invoke", "local-service", isDev)
+  }
 
-/**
- * 获取当前插件名称
- */
-export const getThisPluginName = () => {
-  return pkg.name
+  /**
+   * 异步调用指定的服务
+   *
+   * @param serviceName - 要调用的服务名称
+   * @param entry - 服务的入口点
+   * @param args - 调用服务时传递的参数
+   * @returns 返回服务调用的结果
+   */
+  public async invoke(serviceName: string, entry: string, args: any[]): Promise<any> {
+    this.logger.debug("serviceName=>", serviceName)
+    this.logger.debug("entry=>", entry)
+    this.logger.debug("args=>", args)
+    const command = await InvokeUtils.getCommand(serviceName, entry)
+    this.logger.info(`😄准备从以下路径执行 Node 脚本 => ${command}🤔`)
+    return await SiyuanDevice.siyuanWindow().zhi.npm.nodeCmd(command, args)
+  }
 }
 
-/**
- * 获取插件路径
- */
-export const getAppBase = () => {
-  const win = SiyuanDevice.siyuanWindow()
-  const path = win.require("path")
-  const basePath = path.join("plugins", pkg.name)
-  return basePath
-}
+export default NodeInvoke

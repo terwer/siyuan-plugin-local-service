@@ -23,12 +23,43 @@
  * questions.
  */
 
-export const workspaceDir = `${(window as any).siyuan.config.system.workspaceDir}`
-export const dataDir = `${(window as any).siyuan.config.system.dataDir}`
-export const isDev = process.env.DEV_MODE === "true"
+import { InvokeType } from "../../utils/utils"
+import IInvoke from "./IInvoke"
+import InvokeBase from "./invokeBase"
+import NodeInvoke from "./impl/nodeInvoke"
+import PythonInvoke from "./impl/PythonIvoke"
 
-export const siyuanApiUrl = `${(window as any).location.origin}`
-export const siyuanApiToken = ""
+/**
+ * InvokeFactory 类是一个工厂类，用于创建调用对象
+ *
+ * @author terwer
+ * @since 1.2.0
+ */
+class InvokeFactory {
+  /**
+   * 创建一个调用对象
+   *
+   * @param invokeType - 调用的类型
+   * @returns - 返回创建的调用对象
+   * @throws  - 如果传入的 invokeType 不支持则抛出错误
+   */
+  public static createInvoke(invokeType: InvokeType): IInvoke {
+    switch (invokeType) {
+      case "require":
+        throw new Error("bundled service no need invoke")
+      case "import":
+        throw new Error("bundled service no need invoke")
+      case "node":
+        return new NodeInvoke()
+      case "python":
+        return new PythonInvoke()
+      default:
+        // 对于不支持的类型，抛出异常
+        throw new Error(
+          `invoke type ${invokeType} not supported, please create invoke implementation and add to InvokeFactory`
+        )
+    }
+  }
+}
 
-export const APP_JSON_SCHEMA = "app-schema.js"
-export const APP_JSON = "app.js"
+export default InvokeFactory

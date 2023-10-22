@@ -26,8 +26,8 @@
 import DependencyItem from "../models/dependencyItem"
 import { SiyuanDevice } from "zhi-device"
 import { simpleLogger } from "zhi-lib-base"
-import { isDev } from "../Constants"
-import { getAppBase, requirePluginLib } from "../utils/utils"
+import { APP_JSON, APP_JSON_SCHEMA, isDev } from "../Constants"
+import InvokeUtils from "../service/invoke/invokeUtils"
 
 /**
  * zhi主题统一生命周期管理
@@ -38,8 +38,6 @@ import { getAppBase, requirePluginLib } from "../utils/utils"
  */
 class Lifecycle {
   private readonly logger
-  private APP_JSON_SCHEMA = "app-schema.js"
-  private APP_JSON = "app.js"
 
   constructor() {
     this.logger = simpleLogger("lifecycle", "local-service", isDev)
@@ -63,21 +61,20 @@ class Lifecycle {
     // json-schema 校验
 
     // json读取
-    const basePath = getAppBase()
     const jsonValidatePath = SiyuanDevice.joinPath("libs", "zhi-common-json-validate", "index.cjs")
-    const { JsonValidateUtil } = requirePluginLib(jsonValidatePath)
+    const { JsonValidateUtil } = InvokeUtils.requirePluginLib(jsonValidatePath)
 
-    const appJson = requirePluginLib(this.APP_JSON)
-    const appSchemaJson = requirePluginLib(this.APP_JSON_SCHEMA)
+    const appJson = InvokeUtils.requirePluginLib(APP_JSON)
+    const appSchemaJson = InvokeUtils.requirePluginLib(APP_JSON_SCHEMA)
     this.logger.debug("appJson =>", appJson)
     this.logger.debug("appSchemaJson =>", appSchemaJson)
     const valiResult = JsonValidateUtil.validateObjectSchema(appSchemaJson, appJson)
     if (!valiResult.valid) {
       throw new Error(
-        `${this.APP_JSON} is not valid, error msg: ${valiResult.error ?? "None"}, please check ${this.APP_JSON_SCHEMA}`
+        `${APP_JSON} is not valid, error msg: ${valiResult.error ?? "None"}, please check ${APP_JSON_SCHEMA}`
       )
     } else {
-      this.logger.info(`Success, ${this.APP_JSON} is ok`)
+      this.logger.info(`Success, ${APP_JSON} is ok`)
     }
 
     // 解析json

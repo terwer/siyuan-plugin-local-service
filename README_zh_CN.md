@@ -6,24 +6,31 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
+> 查看所有命令命令：`windos.zhi`
+
 ## 最近更新
 
-* 命令统一挂载到 `window.zhi`
+- 命令统一挂载到 `window.zhi`
 
   ```bash
   > zhi
   {
+  app:
+    pd: {downloadAndExtractPackage},
   cmd: CustomCmd {},
   device: class,
+  if: class InvokeFactory,
+  logger: (n2, $2, p) => {...},
   npm: NpmPackageManager {...},
   pd: PackageDownloader {...},
   sc: ServiceManager {...}
   status: {deviceInited: true, cmdInited: true, infraInited: true}
   }
   ```
-* 移除不必要的 `node_modules` 依赖
-* 新增 Node 下载以及 npm 依赖安装到 `zhi.npm.checkAndInitNode()`
-* 新增服务管理器，并挂载到 `zhi.sc`
+
+- 移除不必要的 `node_modules` 依赖
+- 新增 Node 下载以及 npm 依赖安装到 `zhi.npm.checkAndInitNode()`
+- 新增服务管理器，并挂载到 `zhi.sc`
 
 ```
 zhi.sc.findAll()
@@ -35,11 +42,36 @@ zhi.sc.startByServiceName(serviceName)
 zhi.sc.stopByServiceName(serviceName)
 ```
 
-* 新增服务包下载器，并挂载到 `zhi.pd`
+- 新增服务包下载器，并挂载到 `zhi.app.pd`
+
+```js
+await zhi.app.pd.downloadAndExtractPackage(
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads"
+)
+```
+
+- 新增服务调用工厂 InvokeFactory ，并挂载到 `zhi.if`
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads",
+]
+await nodeInvoke.invoke("package-downloader", "services/package-downloader/downloadAndExtractPackage.cjs", args)
+```
+
+```js
+// python invokde
+const pythonInvode = zhi.if.createInvoke("python")
+const args = []
+await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
+```
 
 ## 命令列表
 
-* 下载并且安装 Node
+- 下载并且安装 Node
 
   ```js
   await zhi.npm.checkAndInitNode()
@@ -70,7 +102,7 @@ zhi.sc.stopByServiceName(serviceName)
   true
   ```
 
-* 测试 node 和 npm
+- 测试 node 和 npm
 
   测试 `node`
 
@@ -100,18 +132,18 @@ zhi.sc.stopByServiceName(serviceName)
   // '9.8.1'
   ```
 
-* 其他命令
+- 其他命令
 
   安装某个依赖
 
   ```js
   // 未安装的情况无法依赖
   require("vue")
-   // node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
+  // node:internal/modules/cjs/loader:1085 Uncaught Error: Cannot find module 'vue'
   ```
 
   ```js
-   // 安装
+  // 安装
   await zhi.npm.npmInstall("vue")
   ```
 
@@ -170,10 +202,16 @@ zhi.sc.stopByServiceName(serviceName)
   //'Python 3.11.4'
   ```
 
-* 服务命令
+- 服务命令
 
 ```js
-await zhi.pd.downloadAndExtractPackage("https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip")
+await zhi.app.pd.downloadAndExtractPackage(
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip"
+)
+await zhi.app.pd.downloadAndExtractPackage(
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads"
+)
 ```
 
 或者
@@ -183,4 +221,22 @@ const path = require("path")
 const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
 const command = `${thisPluginBasePath}/services/package-downloader/index.cjs`
 await zhi.npm.nodeCmd(command)
+```
+
+或者工厂方式调用
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads",
+]
+await nodeInvoke.invoke("package-downloader", "services/package-downloader/downloadAndExtractPackage.cjs", args)
+```
+
+```js
+// python invokde
+const pythonInvode = zhi.if.createInvoke("python")
+const args = []
+await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
 ```

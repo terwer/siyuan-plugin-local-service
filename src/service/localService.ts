@@ -28,11 +28,10 @@ import { simpleLogger } from "zhi-lib-base"
 import { isDev } from "../Constants"
 import KernelApi from "../api/kernel-api"
 import pkg from "../../package.json"
-import Bootstrap from "../core/bootstrap"
-import { requirePluginLib } from "../utils/utils"
-import { StrUtil } from "zhi-common"
+import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
 import ServiceManager from "./serviceManager"
-import PackageDownloader from "./packageDownloader"
+import InvokeFactory from "./invoke/invokeFactory"
+import InvokeUtils from "./invoke/invokeUtils"
 
 /**
  * 本地服务通用类
@@ -87,7 +86,7 @@ class LocalService {
       // 检测内核版本
       const kernelVersion = SiyuanDevice.siyuanWindow().siyuan.config.system.kernelVersion
       const versionPath = SiyuanDevice.joinPath("libs", "zhi-common-version", "index.cjs")
-      const { VersionUtil } = requirePluginLib(versionPath)
+      const { VersionUtil } = InvokeUtils.requirePluginLib(versionPath)
       if (VersionUtil.lesser(kernelVersion, this.SUPPORTED_KERNEL_VERSION)) {
         const errMsg = StrUtil.f(
           "Your siyuan-note kernel version {0} is not supported by local service, style will look weird, you must install siyuan-note {1}+ to use local service plugin",
@@ -118,9 +117,17 @@ class LocalService {
       // mount sc as serviceManager
       win.zhi.sc = serviceManager
 
-      // mount pd as PackageDownloader
-      const packageDownloader = new PackageDownloader()
-      win.zhi.pd = packageDownloader
+      // mount if as invokeFactory
+      win.zhi.if = InvokeFactory
+
+      // mount common
+      win.zhi.common = win.zhi.common ?? {}
+      win.zhi.common.StrUtil = StrUtil
+      win.zhi.common.JsonUtil = JsonUtil
+      win.zhi.common.DateUtil = DateUtil
+
+      // mount logger
+      win.zhi.logger = simpleLogger
 
       win.zhi.status.serviceInited = true
       this.logger.debug("local service inited")

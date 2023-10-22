@@ -24,6 +24,7 @@
  */
 
 import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device"
+import { InvokeFormat, InvokeType } from "../utils/utils"
 
 /**
  * 依赖项类型定义
@@ -35,32 +36,59 @@ import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device"
  */
 class DependencyItem {
   /**
+   * 依赖名称，例如：zhi-infra
+   */
+  name: string
+
+  /**
+   * 版本号
+   */
+  version?: string
+
+  /**
+   * 挂载别名
+   */
+  alias?: string
+
+  /**
    * 依赖库相对路径
    */
   libpath: string
+
+  /**
+   * 路径类型
+   */
   baseType: BasePathTypeEnum
+
   /**
    * 格式
    */
-  format: "cjs" | "esm" | "js"
+  format: InvokeFormat
+
   /**
    * 引入方式
    */
-  importType: "require" | "import"
+  importType: InvokeType
+
   /**
    * 支持的设备列表
    */
   runAs: DeviceTypeEnum[]
+
   /**
    * 初始化参数
    */
-  initParams: any[]
+  initParams?: any[]
+
   /**
    * 加载属性，数组越越靠前
    */
   order: number
 
   constructor() {
+    this.name = "default-service"
+    this.version = "0.0.1"
+    this.alias = ""
     this.libpath = ""
     this.baseType = BasePathTypeEnum.BasePathType_ZhiTheme
     this.format = "cjs"
@@ -75,6 +103,10 @@ class DependencyItem {
    * @param jsonObj
    */
   public fromJson(jsonObj: any) {
+    this.name = jsonObj.name
+    this.version = jsonObj.version
+    this.alias = jsonObj.alias
+
     // 从一个 JSON 对象中读取 libpath 属性并赋值给实例的 libpath 属性
     this.libpath = jsonObj.libpath
 

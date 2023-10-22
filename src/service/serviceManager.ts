@@ -26,10 +26,13 @@
 import DependencyItem from "../models/dependencyItem"
 import dependencyItem from "../models/dependencyItem"
 import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
-import { getAppBase, getThisPluginName, importPluginLib, requirePluginLib } from "../utils/utils"
+import { getAppBase } from "../utils/utils"
 import { dataDir, isDev } from "../Constants"
 import { ILogger, simpleLogger } from "zhi-lib-base"
 import Bootstrap from "../core/bootstrap"
+import { StrUtil } from "zhi-common"
+import InvokeUtils from "./invoke/invokeUtils"
+import InvokeFactory from "./invoke/invokeFactory"
 
 /**
  * 服务管理器，用于启动和停止多个服务
@@ -173,8 +176,20 @@ class ServiceManager {
    */
   private async startWithBundledNode(item: DependencyItem): Promise<void> {
     // 类型校验
-    if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
-      this.logger.warn("Only esm, cjs supported, skip this lib!", item.libpath)
+    if (
+      item.format !== "cjs" &&
+      item.format !== "esm" &&
+      item.format !== "js" &&
+      item.format !== "py" &&
+      item.format !== "java" &&
+      item.format !== "go" &&
+      item.format !== "php" &&
+      item.format !== "cs" &&
+      item.format !== "rust" &&
+      item.format !== "c" &&
+      item.format !== "cpp"
+    ) {
+      this.logger.warn(`format ${item.format} not supported, skip this lib!`, item.libpath)
       return
     }
 
@@ -189,20 +204,81 @@ class ServiceManager {
 
     this.logger.info(`Loading modules form locale service => ${item.libpath}`)
     let lib: any
-    if (item.importType == "import") {
-      if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
-        lib = importPluginLib(item.libpath)
-      } else {
-        lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
+    let result: any
+    switch (item.importType) {
+      case "import": {
+        if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
+          lib = InvokeUtils.importPluginLib(item.libpath)
+        } else {
+          lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
+        }
+        // 挂载服务
+        if (!StrUtil.isEmptyString(item.alias)) {
+          this.mountByName(item.alias, lib)
+        }
+        this.logger.debug(`Importing lib ${item.libpath} with basePath of ${item.baseType} ...`)
+        break
       }
-      this.logger.debug(`Importing lib ${item.libpath} with basePath of ${item.baseType} ...`)
-    } else {
-      if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
-        lib = requirePluginLib(item.libpath)
-      } else {
-        lib = SiyuanDevice.requireLib(item.libpath, item.baseType)
+      case "require": {
+        if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
+          lib = InvokeUtils.requirePluginLib(item.libpath)
+        } else {
+          lib = SiyuanDevice.requireLib(item.libpath, item.baseType)
+        }
+        // 挂载服务
+        if (!StrUtil.isEmptyString(item.alias)) {
+          this.mountByName(item.alias, lib)
+        }
+        this.logger.debug(`Requiring lib ${item.libpath} with basePath of ${item.baseType} ...`)
+        break
       }
-      this.logger.debug(`Requiring lib ${item.libpath} with basePath of ${item.baseType} ...`)
+      case "node": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "python": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "java": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "go": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "php": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "csharp": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "rust": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "c": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      case "cpp": {
+        const invoke = InvokeFactory.createInvoke(item.importType)
+        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        break
+      }
+      default:
+        throw new Error(`invoke type ${item.importType} not supported`)
     }
     // 如果有初始化方法，进行初始化
     if (lib) {
@@ -240,9 +316,9 @@ class ServiceManager {
         }
       }
     } else {
-      this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`, lib)
+      this.logger.debug(`Lib entry is not a js function, ${item.importType} ${item.libpath}, get result =>`, result)
     }
-    this.logger.info(`Success ${item.importType} ${item.libpath}`)
+    this.logger.info(`Success invoke [${item.importType}] script from [${item.libpath}]`)
   }
 
   /**
@@ -251,6 +327,23 @@ class ServiceManager {
    * @param item
    */
   private async stop(item: DependencyItem): Promise<void> {}
+
+  /**
+   * 挂载某个服务
+   *
+   * @param alias
+   * @param lib
+   */
+  private mountByName(alias: string, lib: any) {
+    const win = SiyuanDevice.siyuanWindow()
+    win.zhi.app = win.zhi.app ?? {}
+    const mt = win.zhi.app[alias]
+
+    if (!mt) {
+      SiyuanDevice.siyuanWindow().zhi.app[alias] = lib
+      this.logger.info(`dynamic mount zhi.app.${alias} to window`)
+    }
+  }
 }
 
 export default ServiceManager

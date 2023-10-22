@@ -23,12 +23,41 @@
  * questions.
  */
 
-export const workspaceDir = `${(window as any).siyuan.config.system.workspaceDir}`
-export const dataDir = `${(window as any).siyuan.config.system.dataDir}`
-export const isDev = process.env.DEV_MODE === "true"
+import IInvoke from "./IInvoke"
+import { InvokeType } from "../../utils/utils"
 
-export const siyuanApiUrl = `${(window as any).location.origin}`
-export const siyuanApiToken = ""
+/**
+ * 表示用于执行不同编程语言服务的基础类
+ *
+ * @author terwer
+ * @since 1.2.0
+ */
+class InvokeBase implements IInvoke {
+  private readonly invokeType: InvokeType
 
-export const APP_JSON_SCHEMA = "app-schema.js"
-export const APP_JSON = "app.js"
+  /**
+   * 构造一个新的 InvokeBase 实例
+   *
+   * @param invokeType - 服务的编程语言类型
+   */
+  constructor(invokeType: InvokeType) {
+    this.invokeType = invokeType
+  }
+
+  /**
+   * 执行指定编程语言服务的方法
+   *
+   * @param serviceName - 服务名称
+   * @param entry - 入口点
+   * @param args - 参数数组
+   * @returns 执行结果
+   */
+  public async invoke(serviceName: string, entry: string, args: any[]): Promise<any> {
+    // 记录执行日志
+    console.log(`Service ${serviceName} 调用 ${this.invokeType} 方法，入口点为 ${entry}`)
+    // 返回执行结果
+    return {}
+  }
+}
+
+export default InvokeBase
