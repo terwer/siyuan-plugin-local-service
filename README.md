@@ -6,6 +6,8 @@
 
 a plugin for connecting siyuan-note with local services
 
+> View all commands: `windos.zhi`
+
 ## Recent Updates
 
 * Commands are now unified under `window.zhi`.
@@ -13,16 +15,61 @@ a plugin for connecting siyuan-note with local services
 ```bash
 > zhi
 {
+  app: 
+    pd: {downloadAndExtractPackage},
   cmd: CustomCmd {},
   device: class,
+  if: class InvokeFactory,
+  logger: (n2, $2, p) => {...},
   npm: NpmPackageManager {...},
-  status: {deviceInited: true, cmdInited: true, infraInited: true}
+  pd: PackageDownloader {...},
+  sc: ServiceManager {...}
+  status: {deviceInited: true, cmdInited: true, infraInited: true},
 }
 ```
 
 * Unnecessary `node_modules` dependencies have been removed.
 
 * Added Node download and npm dependency installation via `zhi.npm.checkAndInitNode()`.
+
+* Added a service manager and mount it to `zhi.sc`
+
+```
+zhi.sc.findAll()
+zhi.sc.findByServiceName(serviceName)
+zhi.sc.startAll()
+zhi.sc.startMany(services)
+zhi.sc.stopAll()
+zhi.sc.startByServiceName(serviceName)
+zhi.sc.stopByServiceName(serviceName)
+```
+
+* Add a service package downloader and mount it to `zhi.app.pd`
+
+```js
+await zhi.app.pd.downloadAndExtractPackage(
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads"
+)
+```
+
+- Add service call factory InvokeFactory and mount to `zhi.if`
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads",
+]
+await nodeInvoke.invoke("package-downloader", "services/package-downloader/downloadAndExtractPackage.cjs", args)
+```
+
+```js
+// python invokde
+const pythonInvode = zhi.if.createInvoke("python")
+const args = []
+await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
+```
 
 ## Command List
 
@@ -149,4 +196,41 @@ Use the system's Python to execute commands:
 ```js
 await zhi.cmd.executeCommand("python", ["-V"])
 // 'Python 3.11.4'
+```
+
+* Service command
+
+```js
+await zhi.pd.downloadAndExtractPackage("https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip")
+await zhi.pd.downloadAndExtractPackage(
+    "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+    "/Users/terwer/Downloads"
+)
+```
+
+or
+
+```js
+const path = require("path")
+const thisPluginBasePath = path.join(window.siyuan.config.system.dataDir, "plugins", "siyuan-plugin-local-service")
+const command = `${thisPluginBasePath}/services/package-downloader/index.cjs`
+await zhi.npm.nodeCmd(command)
+```
+
+or factory mode call
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "https://ghproxy.com/https://github.com/terwer/siyuan-plugin-publisher/releases/download/v1.17.3/package.zip",
+  "/Users/terwer/Downloads",
+]
+await nodeInvoke.invoke("package-downloader", "services/package-downloader/downloadAndExtractPackage.cjs", args)
+```
+
+```js
+// python invokde
+const pythonInvode = zhi.if.createInvoke("python")
+const args = []
+await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
 ```

@@ -7,25 +7,28 @@ declare class NpmPackageManager {
     private depsJsonPath;
     private customCmd;
     /**
-     * 构造函数，用于创建 NpmPackageManager 的实例。
-     * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径。
-     * @param depsJsonPath - 一来定义路径
+     * 构造函数，用于创建 NpmPackageManager 的实例
+     *
+     * @param zhiCoreNpmPath - Siyuan App 的 NPM 路径
+     * @param depsJsonPath - deps.json 路径
      */
     constructor(zhiCoreNpmPath: string, depsJsonPath: string);
     /**
      * 执行 Node 命令
      *
      * @param subCommand - 要执行的 NPM 命令
+     * @param oargs - 其它参数
      * @returns 执行结果的 Promise
      */
-    nodeCmd(subCommand: string): Promise<any>;
+    nodeCmd(subCommand: string, oargs?: any[]): Promise<any>;
     /**
      * 执行 NPM 命令
      *
      * @param subCommand - 要执行的 NPM 命令
+     * @param oargs - 其它参数
      * @returns 执行结果的 Promise
      */
-    npmCmd(subCommand: string): Promise<any>;
+    npmCmd(subCommand: string, oargs?: any[]): Promise<any>;
     /**
      * 获取 Node 的版本号
      *
@@ -70,6 +73,24 @@ declare class NpmPackageManager {
      * @param nodeInstallDir 安装路径
      */
     checkAndInitNode(nodeVersion?: string, nodeInstallDir?: string): Promise<boolean>;
+    /**
+     * 本地服务的 Node 命令
+     *
+     * @param command 主命令
+     * @param subCommand 子命令
+     * @param oargs 其它参数
+     * @private
+     */
+    private localNodeCmd;
+    /**
+     * 本地服务的 Node exec 命令
+     *
+     * @param command 主命令
+     * @param subCommand 子命令
+     * @param oargs 其它参数
+     * @private
+     */
+    private localNodeExecCmd;
 }
 export { NpmPackageManager };
 //# sourceMappingURL=npmHelper.d.ts.map

@@ -23,14 +23,15 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
+import { DeviceTypeEnum, SiyuanDevice } from "zhi-device"
 import { simpleLogger } from "zhi-lib-base"
-import { dataDir, isDev } from "../Constants"
+import { isDev } from "../Constants"
 import KernelApi from "../api/kernel-api"
 import pkg from "../../package.json"
-import Bootstrap from "../core/bootstrap"
-import { getAppBase, importPluginLib, requirePluginLib } from "../utils/utils"
-import { StrUtil } from "zhi-common"
+import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
+import ServiceManager from "./serviceManager"
+import InvokeFactory from "./invoke/invokeFactory"
+import InvokeUtils from "./invoke/invokeUtils"
 
 /**
  * 本地服务通用类
@@ -44,12 +45,6 @@ class LocalService {
   private readonly kernelApi
 
   private readonly runAs
-
-  /**
-   * 样式最低支持版本
-   * @private
-   */
-  private readonly SUPPORTED_THEME_VERSION = "2.7.6"
 
   /**
    * 内核最低支持版本
@@ -91,108 +86,51 @@ class LocalService {
       // 检测内核版本
       const kernelVersion = SiyuanDevice.siyuanWindow().siyuan.config.system.kernelVersion
       const versionPath = SiyuanDevice.joinPath("libs", "zhi-common-version", "index.cjs")
-      const { VersionUtil } = requirePluginLib(versionPath)
-      if (VersionUtil.lesser(kernelVersion, this.SUPPORTED_THEME_VERSION)) {
+      const { VersionUtil } = InvokeUtils.requirePluginLib(versionPath)
+      if (VersionUtil.lesser(kernelVersion, this.SUPPORTED_KERNEL_VERSION)) {
         const errMsg = StrUtil.f(
-          "Your siyuan-note kernel version {0} is not supported by zhi theme, style will look weird, you must install siyuan-note {1}+ to use zhi-theme",
+          "Your siyuan-note kernel version {0} is not supported by local service, style will look weird, you must install siyuan-note {1}+ to use local service plugin",
           kernelVersion,
-          this.SUPPORTED_THEME_VERSION
+          this.SUPPORTED_KERNEL_VERSION
         )
         this.logger.error(errMsg)
-        this.kernelApi.pushErrMsg({
+        await this.kernelApi.pushErrMsg({
           msg: errMsg,
         })
         return
       }
 
-      // 初始化第三方依赖
-      // import
-      //   browser     esm path: "/[libpath]"
-      //   electron    esm path: "/[libpath]"
-      //   custom-path X
-      //
-      // require
-      //   browser     X
-      //   electron    cjs path: "[abspath][libpath]"
-      //   custom-path require-hacker
-      const dynamicImports = await Bootstrap.start()
-      this.logger.info("==================================================")
-      this.logger.info("local service detected all imports =>", dynamicImports)
-      this.logger.info("==================================================")
-      for (const item of dynamicImports) {
-        // 类型校验
-        if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
-          this.logger.warn("Only esm, cjs supported, skip this lib!", item.libpath)
-          continue
-        }
+      // win
+      const win = SiyuanDevice.siyuanWindow()
+      win.zhi = win.zhi ?? {}
+      win.zhi.status = win.zhi.status ?? {}
 
-        // 运行环境校验
-        if (!item.runAs.includes(this.runAs)) {
-          this.logger.debug(
-            `I'm sorry because current runtime is ${this.runAs}, while lib's define runtime is ${item.runAs}`
-          )
-          this.logger.warn(`This lib can only run at ${item.runAs}, will skip!Lib is=>${item.libpath}`)
-          continue
-        }
-
-        this.logger.info(`Loading modules form zhi => ${item.libpath}`)
-        let lib: any
-        if (item.importType == "import") {
-          if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
-            lib = importPluginLib(item.libpath)
-          } else {
-            lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
-          }
-          this.logger.debug(`Importing lib ${item.libpath} with basePath of ${item.baseType} ...`)
-        } else {
-          if (item.baseType === BasePathTypeEnum.BasePathType_ThisPlugin) {
-            lib = requirePluginLib(item.libpath)
-          } else {
-            lib = SiyuanDevice.requireLib(item.libpath, false, item.baseType)
-          }
-          this.logger.debug(`Requiring lib ${item.libpath} with basePath of ${item.baseType} ...`)
-        }
-        // 如果有初始化方法，进行初始化
-        if (lib) {
-          const libObj = lib
-          this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
-          // 参数替换
-          item.initParams = item.initParams.map((x: any) => {
-            if (typeof x === "string") {
-              const basePath = getAppBase()
-              const absBasePath = SiyuanDevice.joinPath(dataDir, basePath)
-              return x.replace(/\[thisPluginBasePath\]/g, absBasePath)
-            } else {
-              return x
-            }
-          })
-          if (typeof libObj == "function") {
-            await libObj(item.initParams)
-            this.logger.info(`Inited ${item.libpath} with function, params=>`, item.initParams)
-          } else {
-            if (libObj.main) {
-              const res = await libObj.main(item.initParams)
-              if (res) {
-                this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
-              }
-              this.logger.info(`Inited ${item.libpath} with init function, params=>`, item.initParams)
-            } else {
-              this.logger.info(`No init method for ${item.importType} ${item.libpath}, try default`)
-              if (libObj.default) {
-                const res = await libObj.default(item.initParams)
-                if (res) {
-                  this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
-                }
-                this.logger.info(`Inited ${item.libpath} with default function, params=>`, item.initParams)
-              }
-            }
-          }
-        } else {
-          this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`, lib)
-        }
-        this.logger.info(`Success ${item.importType} ${item.libpath}`)
+      //  init only once
+      if (win.zhi.status.serviceInited) {
+        this.logger.warn("local service already inited.skip")
+        return
       }
-      this.logger.info("local service inited")
+
+      // 启动服务，后续可配置为是否启动时自动启动服务
+      const serviceManager = new ServiceManager(this.runAs)
+      await serviceManager.startAll()
+      // mount sc as serviceManager
+      win.zhi.sc = serviceManager
+
+      // mount if as invokeFactory
+      win.zhi.if = InvokeFactory
+
+      // mount common
+      win.zhi.common = win.zhi.common ?? {}
+      win.zhi.common.StrUtil = StrUtil
+      win.zhi.common.JsonUtil = JsonUtil
+      win.zhi.common.DateUtil = DateUtil
+
+      // mount logger
+      win.zhi.logger = simpleLogger
+
+      win.zhi.status.serviceInited = true
+      this.logger.debug("local service inited")
       this.hello(this.runAs)
     } catch (e) {
       const errMsg = "local service load error=>" + e

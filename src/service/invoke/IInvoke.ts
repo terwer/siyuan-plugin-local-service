@@ -23,12 +23,22 @@
  * questions.
  */
 
-export const workspaceDir = `${(window as any).siyuan.config.system.workspaceDir}`
-export const dataDir = `${(window as any).siyuan.config.system.dataDir}`
-export const isDev = process.env.DEV_MODE === "true"
+/**
+ * 表示可以执行不同编程语言服务的接口
+ *
+ * @author terwer
+ * @since 1.2.0
+ */
+interface IInvoke {
+  /**
+   * 执行指定编程语言服务的方法
+   *
+   * @param serviceName - 服务名称
+   * @param entry - 入口点
+   * @param args - 参数数组
+   * @returns 执行结果
+   */
+  invoke(serviceName: string, entry: string, args: any[]): Promise<any>
+}
 
-export const siyuanApiUrl = `${(window as any).location.origin}`
-export const siyuanApiToken = ""
-
-export const APP_JSON_SCHEMA = "app-schema.js"
-export const APP_JSON = "app.js"
+export default IInvoke
