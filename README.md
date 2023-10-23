@@ -8,9 +8,23 @@ a plugin for connecting siyuan-note with local services
 
 > View all commands: `windos.zhi`
 
-## Recent Updates
+## Quick start
 
-* Commands are now unified under `window.zhi`.
+  ```js
+  await zhi.npm.checkAndInitNode()
+  await zhi.store.getPackage("python-hello")
+  await zhi.store.getPackage("local-service-chatgpt")
+  await zhi.store.getPackage("local-service-nocodb")
+  zhi.sc.stopAll()
+  zhi.sc.startAll()
+  ```
+
+  Open browser access, or set the URL to the WebApp plugin
+
+  ```
+  http://localhost:3000
+  http://localhost:8080
+  ```
 
 ```bash
 > zhi

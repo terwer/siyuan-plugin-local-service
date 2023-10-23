@@ -6,7 +6,24 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-> 查看所有命令：`windos.zhi`
+ 
+## 新手快速体验
+
+  ```js
+  await zhi.npm.checkAndInitNode()
+  await zhi.store.getPackage("python-hello")
+  await zhi.store.getPackage("local-service-chatgpt")
+  await zhi.store.getPackage("local-service-nocodb")
+  zhi.sc.stopAll()
+  zhi.sc.startAll()
+  ```
+
+  打开浏览器访问，或者设置 url 到 webapp 插件
+
+  ```
+  http://localhost:3000
+  http://localhost:8080
+  ```
 
 ## 最近更新
 
