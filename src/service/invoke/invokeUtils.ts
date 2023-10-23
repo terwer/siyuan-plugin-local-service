@@ -87,7 +87,7 @@ class InvokeUtils {
     const current = allImports.find((x: DependencyItem) => {
       return x.name === serviceName
     })
-    const command = path.join(SiyuanDevice.getRequirePath(entry, current.baseType, getThisPluginName()), entry)
+    const command = path.join(SiyuanDevice.getRequirePath(entry, current.baseType, getThisPluginName()))
     return command
   }
 }

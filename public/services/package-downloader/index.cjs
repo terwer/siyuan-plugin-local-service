@@ -32,29 +32,25 @@
 const downloadAndExtractPackage = async (downloadUrl, extractPath) => {
   const logger = window.zhi.logger("index", "package-downloader", false)
 
-  try {
-    const coreServiceName = "package-downloader"
-    const entry = "services/package-downloader/downloadAndExtractPackage.cjs"
-    const oargs = [downloadUrl, extractPath ?? window.zhi.device.appServiceFolder()]
-    const nodeInvoke = window.zhi.if.createInvoke("node")
-    const result = await nodeInvoke.invoke(coreServiceName, entry, oargs)
-    if (zhi.common.StrUtil.isEmptyString(result)) {
-      logger.warn("result is empty")
+  const coreServiceName = "package-downloader"
+  const entry = "services/package-downloader/downloadAndExtractPackage.cjs"
+  const oargs = [downloadUrl, extractPath ?? window.zhi.device.appServiceFolder()]
+  const nodeInvoke = window.zhi.if.createInvoke("node")
+  const result = await nodeInvoke.invoke(coreServiceName, entry, oargs)
+  if (zhi.common.StrUtil.isEmptyString(result)) {
+    logger.warn("result is empty")
+  } else {
+    if (result.startsWith("success")) {
+      logger.info("downloadAndExtractPackage success😄")
+    } else if (result.startsWith("skipped")) {
+      logger.info("package already downloaded, skipped🤔")
     } else {
-      if (result.startsWith("success")) {
-        logger.info("downloadAndExtractPackage success😄")
-      } else if (result.startsWith("skipped")) {
-        logger.info("package already downloaded, skipped🤔")
+      if (result.startsWith("error\\001")) {
+        logger.error(result.split("\\001")[1])
       } else {
-        if (result.startsWith("error\\001")) {
-          logger.error(result.split("\\001")[1])
-        } else {
-          logger.error("unknown error =>", result)
-        }
+        logger.error("unknown error =>", result)
       }
     }
-  } catch (e) {
-    throw e
   }
 }
 

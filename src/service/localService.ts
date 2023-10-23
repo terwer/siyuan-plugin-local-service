@@ -113,7 +113,6 @@ class LocalService {
 
       // 启动服务，后续可配置为是否启动时自动启动服务
       const serviceManager = new ServiceManager(this.runAs)
-      await serviceManager.startAll()
       // mount sc as serviceManager
       win.zhi.sc = serviceManager
 
@@ -130,15 +129,16 @@ class LocalService {
       win.zhi.logger = simpleLogger
 
       win.zhi.status.serviceInited = true
-      this.logger.debug("local service inited")
-      this.hello(this.runAs)
+      this.logger.info("local service inited😎")
+
+      // 启动服务
+      // this.logger.info("..................................................................")
+      // this.logger.info("Try starting services defined in app.js, please wait...")
+      // this.logger.info("..................................................................")
+      // await serviceManager.startAll()
+      // this.hello(this.runAs)
     } catch (e) {
-      const errMsg = "local service load error=>" + e
-      // this.kernelApi.pushErrMsg({
-      //   msg: errMsg,
-      // })
-      this.logger.error(errMsg)
-      throw e
+      this.logger.error("Unable to start some services from local service😭 =>", e)
     }
   }
 
@@ -146,9 +146,7 @@ class LocalService {
   // private function
   //===================
   private hello(from: string): void {
-    this.logger.info(
-      `Hello, this is local service plugin v${pkg.version}, ${pkg.description} by ${pkg.author}! You are from ${from}`
-    )
+    this.logger.info(`local service v${pkg.version} started success😄`)
   }
 }
 

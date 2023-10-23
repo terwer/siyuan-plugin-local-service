@@ -6,7 +6,7 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-> 查看所有命令命令：`windos.zhi`
+> 查看所有命令：`windos.zhi`
 
 ## 最近更新
 
@@ -18,13 +18,13 @@
   app:
     pd: {downloadAndExtractPackage},
   cmd: CustomCmd {},
+  common: {StrUtil: ƒ, JsonUtil: ƒ, DateUtil: ƒ},
   device: class,
   if: class InvokeFactory,
   logger: (n2, $2, p) => {...},
   npm: NpmPackageManager {...},
-  pd: PackageDownloader {...},
   sc: ServiceManager {...}
-  status: {deviceInited: true, cmdInited: true, infraInited: true}
+  status: {serviceInited: true, deviceInited: true, cmdInited: true, infraInited: true}
   }
   ```
 
