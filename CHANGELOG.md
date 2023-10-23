@@ -1,22 +1,12 @@
 # Changelog
 
 ## [1.3.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.2.0...v1.3.0) (2023-10-23)
-
-
 ### Features
-
 * 优化启动与加载顺序 ([b92e156](https://github.com/terwer/siyuan-plugin-local-service/commit/b92e1565d759a4218983bbf585f34040a5ad07fe))
-* 适配 chatgpt 和 nocodb ([06b60cf](https://github.com/terwer/siyuan-plugin-local-service/commit/06b60cfb8c3b7970ad1bd215072e0511b892ec86))
-* 适配 chatgpt 和 nocodb ([306a537](https://github.com/terwer/siyuan-plugin-local-service/commit/306a537f7da0562172312f089cd3323d5091d100))
 * 适配 chatgpt 和 nocodb ([09b113d](https://github.com/terwer/siyuan-plugin-local-service/commit/09b113d2621f32d21e730d8828dbd047a785bd73))
-
-
 ### Bug Fixes
-
 * 修复路径问题 ([77225e2](https://github.com/terwer/siyuan-plugin-local-service/commit/77225e204c198c83ef3171d17c9a60687f17df4e))
-
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.1.0...v1.2.0) (2023-10-22)
-### Features
 * 支持 node 和 python 调用 ([8995b31](https://github.com/terwer/siyuan-plugin-local-service/commit/8995b31ac0edc838cb54461ba853cc37d00f54a0))
 * 新增包下载器 ([15ef089](https://github.com/terwer/siyuan-plugin-local-service/commit/15ef089c0c4cf4282479a5c356f505a5d3db7fcf))
 * 新增包下载器-下载与缓存服务包 ([1703cd9](https://github.com/terwer/siyuan-plugin-local-service/commit/1703cd98574d186b5a3e75c59b2227ba48d96722))
@@ -25,7 +15,6 @@
 * 初始化安装node以及预定义依赖 ([62d0e8a](https://github.com/terwer/siyuan-plugin-local-service/commit/62d0e8a31845ae7e97ad208a8b4595a40462c29f))
 * 统一规范化管理命令 ([6de6a22](https://github.com/terwer/siyuan-plugin-local-service/commit/6de6a22a6583128e6cedf7f9e41402cffcd378ce))
 * 重构基础设施 ([f90f2ff](https://github.com/terwer/siyuan-plugin-local-service/commit/f90f2ff4147b4af10299894e207498c044aa33e5))
-### Bug Fixes
 * **deps:** bump zhi-device from 2.6.0 to 2.8.1 ([44c0962](https://github.com/terwer/siyuan-plugin-local-service/commit/44c09623aa76fd24f1269ab89e0c3969f561e9f4))
 ### Miscellaneous
 * **deps-dev:** bump @types/minimist from 1.2.3 to 1.2.4 ([a5a405b](https://github.com/terwer/siyuan-plugin-local-service/commit/a5a405b2bf9def33533d03d51f5cbc4e7e716309))
