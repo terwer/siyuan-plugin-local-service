@@ -18,13 +18,13 @@ a plugin for connecting siyuan-note with local services
   app: 
     pd: {downloadAndExtractPackage},
   cmd: CustomCmd {},
+  common: {StrUtil: ƒ, JsonUtil: ƒ, DateUtil: ƒ},
   device: class,
   if: class InvokeFactory,
   logger: (n2, $2, p) => {...},
   npm: NpmPackageManager {...},
-  pd: PackageDownloader {...},
   sc: ServiceManager {...}
-  status: {deviceInited: true, cmdInited: true, infraInited: true},
+  status: {serviceInited: true, deviceInited: true, cmdInited: true, infraInited: true},
 }
 ```
 

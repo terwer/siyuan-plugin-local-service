@@ -43,10 +43,10 @@ export default class ImporterPlugin extends Plugin {
   async onload() {
     // 加载服务，使用异步来做
     const that = this
-    this.logger.info("local service is starting...")
+    this.logger.info("local service is initializing ...")
     this.loadServices()
       .then(() => {
-        that.logger.info("local service has been successfully initiated😄")
+        that.logger.info("local service has been completed init😊")
       })
       .catch((e) => {
         that.logger.error("the initiation of local service has encountered an error😭", e)
