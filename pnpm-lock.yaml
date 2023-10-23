@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.24.3
     version: 1.24.3(typescript@5.2.2)
   zhi-device:
-    specifier: ^2.9.0
-    version: 2.9.0
+    specifier: ^2.10.0
+    version: 2.10.0
   zhi-lib-base:
     specifier: ^0.8.0
     version: 0.8.0
@@ -4261,8 +4261,8 @@ packages:
       - typescript
     dev: false
 
-  /zhi-device@2.9.0:
-    resolution: {integrity: sha512-kBGI1L5f6RzlqgJYuXVlbypCIkLlGtLF9uFm7nPqZVdSE8GfnAgu3gAfSjk9zspPPYKB4okwJfL/mN34xuDINw==}
+  /zhi-device@2.10.0:
+    resolution: {integrity: sha512-E6ODo/AGvlWJiMnDCCUSvceoAPCPiq0DocLp2lzOA/8DYIECRmeQMtzkmy/vgXzniR3+qUGDYJ8cT0/v0nOozA==}
     dev: false
 
   /zhi-lib-base@0.8.0:

@@ -4696,7 +4696,7 @@ var p = class {
       case n.BasePathType_ThisPlugin:
         if (!i)
           throw new Error("pluginName must be provided when use plugin path");
-        a = this.joinPath(this.siyuanDataPath(), "plugins", i);
+        a = this.joinPath(this.siyuanDataPath(), "plugins", i, e);
         break;
       case n.BasePathType_AppData:
         a = this.joinPath(this.appDataFolder(), e);
@@ -4743,7 +4743,7 @@ var p = class {
       case n.BasePathType_ThisPlugin:
         if (!i)
           throw new Error("pluginName must be provided when use plugin path");
-        a = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", i);
+        a = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", i, e);
         break;
       case n.BasePathType_Absolute:
         break;
@@ -5184,7 +5184,7 @@ var p2 = class {
       case n2.BasePathType_ThisPlugin:
         if (!i)
           throw new Error("pluginName must be provided when use plugin path");
-        a = this.joinPath(this.siyuanDataPath(), "plugins", i);
+        a = this.joinPath(this.siyuanDataPath(), "plugins", i, e);
         break;
       case n2.BasePathType_AppData:
         a = this.joinPath(this.appDataFolder(), e);
@@ -5231,7 +5231,7 @@ var p2 = class {
       case n2.BasePathType_ThisPlugin:
         if (!i)
           throw new Error("pluginName must be provided when use plugin path");
-        a = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", i);
+        a = this.browserJoinPath(this.siyuanDataRelativePath(), "plugins", i, e);
         break;
       case n2.BasePathType_Absolute:
         break;
@@ -5905,7 +5905,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.15.1",
+  version: "0.15.2",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
