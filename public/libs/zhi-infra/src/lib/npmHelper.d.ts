@@ -25,10 +25,11 @@ declare class NpmPackageManager {
      * 执行 NPM 命令
      *
      * @param subCommand - 要执行的 NPM 命令
+     * @param path 命令路径
      * @param oargs - 其它参数
      * @returns 执行结果的 Promise
      */
-    npmCmd(subCommand: string, oargs?: any[]): Promise<any>;
+    npmCmd(subCommand: string, path?: string, oargs?: any[]): Promise<any>;
     /**
      * 获取 Node 的版本号
      *
@@ -57,15 +58,17 @@ declare class NpmPackageManager {
      * 安装 NPM 依赖
      *
      * @param moduleName - 可选的模块名，不传默认安装全量
+     * @param path 命令路径
      */
-    npmInstall(moduleName?: string): Promise<void>;
+    npmInstall(moduleName?: string, path?: string): Promise<void>;
     /**
      * 安装依赖并马上导入
      *
      * @param moduleName - 依赖名称
+     * @param path 命令路径
      * @returns 导入的模块
      */
-    requireInstall(moduleName: string): Promise<any>;
+    requireInstall(moduleName: string, path?: string): Promise<any>;
     /**
      * 检测并初始化 Node
      *
@@ -81,12 +84,12 @@ declare class NpmPackageManager {
      * @param oargs 其它参数
      * @private
      */
-    private localNodeCmd;
     /**
      * 本地服务的 Node exec 命令
      *
      * @param command 主命令
      * @param subCommand 子命令
+     * @param path 命令路径
      * @param oargs 其它参数
      * @private
      */

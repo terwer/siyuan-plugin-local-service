@@ -234,47 +234,47 @@ class ServiceManager {
       }
       case "node": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "python": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "java": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "go": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "php": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "csharp": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "rust": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "c": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       case "cpp": {
         const invoke = InvokeFactory.createInvoke(item.importType)
-        result = await invoke.invoke(item.name, item.libpath, item.initParams)
+        invoke.invoke(item.name, item.libpath, item.initParams)
         break
       }
       default:
@@ -316,9 +316,9 @@ class ServiceManager {
         }
       }
     } else {
-      this.logger.debug(`Lib entry is not a js function, ${item.importType} ${item.libpath}, get result =>`, result)
+      this.logger.debug(`Lib ${item.name} run as background service`)
     }
-    this.logger.info(`Success invoke [${item.importType}] script from [${item.libpath}]`)
+    this.logger.info(`Success invoke [${item.name}] as [${item.importType}] service`)
   }
 
   /**
