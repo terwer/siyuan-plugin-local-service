@@ -270,15 +270,15 @@ const initParams = [
 
 可用占位符
 
-[thisPluginBasePath] - 本地服务插件根目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service
+- `[thisPluginBasePath]` - 本地服务插件根目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service
 
-[eq] - "=" 符号
+- `[eq]` - "=" 符号
 
-[siyuanDataDir] - 思源笔记数据目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data
+- `[siyuanDataDir]` - 思源笔记数据目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data
 
-[thisServiceBasePath] - 当前服务的根目录，例如：/Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
+- `[thisServiceBasePath]` - 当前服务的根目录，例如：/Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
 
-[thisServiceName] - 当前服务的根目录，例如：local-service-nocodb
+- `[thisServiceName]` - 当前服务的根目录，例如：local-service-nocodb
 
 例子
 
