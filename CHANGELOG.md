@@ -1,10 +1,14 @@
 # Changelog
 
-## [1.3.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.2.0...v1.3.0) (2023-10-23)
+## [1.4.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.3.0...v1.4.0) (2023-10-24)
 ### Features
+* 支持自定义执行目录和环境变量 ([123a647](https://github.com/terwer/siyuan-plugin-local-service/commit/123a6473f868d4f21d789432870521478eb2782c))
+* 核心服务默认启动 ([dacc223](https://github.com/terwer/siyuan-plugin-local-service/commit/dacc223ac2541c581f90603344cc289a6f299093))
+### Bug Fixes
+* **deps:** bump actions/setup-node from 3 to 4 ([d54d0a9](https://github.com/terwer/siyuan-plugin-local-service/commit/d54d0a9b9f9983d10a37887d5e01df00787f1a26))
+## [1.3.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.2.0...v1.3.0) (2023-10-23)
 * 优化启动与加载顺序 ([b92e156](https://github.com/terwer/siyuan-plugin-local-service/commit/b92e1565d759a4218983bbf585f34040a5ad07fe))
 * 适配 chatgpt 和 nocodb ([09b113d](https://github.com/terwer/siyuan-plugin-local-service/commit/09b113d2621f32d21e730d8828dbd047a785bd73))
-### Bug Fixes
 * 修复路径问题 ([77225e2](https://github.com/terwer/siyuan-plugin-local-service/commit/77225e204c198c83ef3171d17c9a60687f17df4e))
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.1.0...v1.2.0) (2023-10-22)
 * 支持 node 和 python 调用 ([8995b31](https://github.com/terwer/siyuan-plugin-local-service/commit/8995b31ac0edc838cb54461ba853cc37d00f54a0))
