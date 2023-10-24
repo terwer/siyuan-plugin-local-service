@@ -26,14 +26,14 @@
 import DependencyItem from "../models/dependencyItem"
 import dependencyItem from "../models/dependencyItem"
 import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
-import { getAppBase } from "../utils/utils"
-import { dataDir, isDev } from "../Constants"
+import { isDev } from "../Constants"
 import { ILogger, simpleLogger } from "zhi-lib-base"
 import Bootstrap from "../core/bootstrap"
 import { StrUtil } from "zhi-common"
 import InvokeUtils from "./invoke/invokeUtils"
 import InvokeFactory from "./invoke/invokeFactory"
 import ServiceTypeEnum from "../enums/serviceTypeEnum"
+import EnvUtils from "../utils/envUtils"
 
 /**
  * 服务管理器，用于启动和停止多个服务
@@ -312,15 +312,9 @@ class ServiceManager {
       const libObj = lib
       this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
       // 参数替换
-      item.initParams = item.initParams.map((x: any) => {
-        if (typeof x === "string") {
-          const basePath = getAppBase()
-          const absBasePath = SiyuanDevice.joinPath(dataDir, basePath)
-          return x.replace(/\[thisPluginBasePath\]/g, absBasePath)
-        } else {
-          return x
-        }
-      })
+      const { oargs } = EnvUtils.parseArgs(item.initParams, item.name)
+      item.initParams = oargs
+
       if (typeof libObj == "function") {
         await libObj(item.initParams)
         this.logger.info(`Inited ${item.libpath} with function, params=>`, item.initParams)

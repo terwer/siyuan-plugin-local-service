@@ -248,3 +248,26 @@ const pythonInvode = zhi.if.createInvoke("python")
 const args = []
 await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
 ```
+
+## Explanation of Service Parameters
+
+```js
+const initParams = ["[thisPluginBasePath]", true]
+
+const initParams = [
+  "PORT[eq]8888",
+  "NC_DB[eq]sqlite3:///?database=[siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+```
+
+Available placeholders
+
+[thisPluginBasePath] - The root directory of the local service plugin, for example: /Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service
+
+[eq] - The "=" symbol, used to separate key-value type parameters
+
+[siyuanDataDir] - The data directory of SiYuan Notes, for example: /Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data
+
+[thisServiceBasePath] - The root directory of the current service, for example: /Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
+
+[thisServiceName] - The root directory of the current service, for example: local-service-nocodb

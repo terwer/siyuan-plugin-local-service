@@ -28,6 +28,7 @@ import { ILogger, simpleLogger } from "zhi-lib-base"
 import { isDev } from "../../../Constants"
 import InvokeUtils from "../invokeUtils"
 import { SiyuanDevice } from "zhi-device"
+import EnvUtils from "../../../utils/envUtils"
 
 /**
  * `NodeInvoke` 类扩展自 `InvokeBase`，提供对 Node 服务的调用功能
@@ -57,7 +58,12 @@ class NodeInvoke extends InvokeBase {
     this.logger.debug("args=>", args)
     const command = await InvokeUtils.getCommand(serviceName, entry)
     this.logger.info(`😄准备从以下路径执行 Node 脚本 => ${command}🤔`)
-    return await SiyuanDevice.siyuanWindow().zhi.npm.nodeCmd(command, args)
+
+    const { oargs, cwd, env } = EnvUtils.parseArgs(args, serviceName)
+    this.logger.debug("oargs=>", oargs)
+    this.logger.debug("cwd=>", cwd)
+    this.logger.debug("env=>", env)
+    return await SiyuanDevice.siyuanWindow().zhi.npm.nodeCmd(command, oargs, cwd, env)
   }
 }
 

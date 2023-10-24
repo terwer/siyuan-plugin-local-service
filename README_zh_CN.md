@@ -6,24 +6,23 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
- 
 ## 新手快速体验
 
-  ```js
-  await zhi.npm.checkAndInitNode()
-  await zhi.store.getPackage("python-hello")
-  await zhi.store.getPackage("local-service-chatgpt")
-  await zhi.store.getPackage("local-service-nocodb")
-  zhi.sc.stopAll()
-  zhi.sc.startAll()
-  ```
+```js
+await zhi.npm.checkAndInitNode()
+await zhi.store.getPackage("python-hello")
+await zhi.store.getPackage("local-service-chatgpt")
+await zhi.store.getPackage("local-service-nocodb")
+zhi.sc.stopAll()
+zhi.sc.startAll()
+```
 
-  打开浏览器访问，或者设置 url 到 webapp 插件
+打开浏览器访问，或者设置 url 到 webapp 插件
 
-  ```
-  http://localhost:3000
-  http://localhost:8080
-  ```
+```
+http://localhost:3000
+http://localhost:8080
+```
 
 ## 最近更新
 
@@ -257,3 +256,27 @@ const pythonInvode = zhi.if.createInvoke("python")
 const args = []
 await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
 ```
+
+## 服务参数解释
+
+```js
+const initParams = ["[thisPluginBasePath]", true]
+
+const initParams = [
+  "PORT=8888",
+  "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+```
+
+可用占位符
+
+[thisPluginBasePath] - 本地服务插件根目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service
+
+[eq] - "=" 符号
+
+[siyuanDataDir] - 思源笔记数据目录，例如：/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data
+
+[thisServiceBasePath] - 当前服务的根目录，例如：/Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
+
+[thisServiceName] - 当前服务的根目录，例如：local-service-nocodb
+

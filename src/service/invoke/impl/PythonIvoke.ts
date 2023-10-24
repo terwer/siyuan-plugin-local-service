@@ -28,6 +28,7 @@ import InvokeUtils from "../invokeUtils"
 import { SiyuanDevice } from "zhi-device"
 import { ILogger, simpleLogger } from "zhi-lib-base"
 import { isDev } from "../../../Constants"
+import EnvUtils from "../../../utils/envUtils"
 
 /**
  * `PythonInvoke` 类扩展自 `InvokeBase`，提供对 Python 服务的调用功能
@@ -56,15 +57,20 @@ class PythonInvoke extends InvokeBase {
     this.logger.debug("entry=>", entry)
     this.logger.debug("args=>", args)
     const command = await InvokeUtils.getCommand(serviceName, entry)
-
-    // // const args = []
-    // const options = undefined
-    // this.logger.info(`😄准备从以下路径执行 Python 脚本 => ${command}🤔`)
-    // return await SiyuanDevice.siyuanWindow().zhi.cmd.executeCommand("python", [`${command}`], options)
-
-    const pythonArgs = [command].concat(args)
-    const options = undefined
     this.logger.info(`😄准备从以下路径执行 Python 脚本 => ${command}🤔`)
+
+    const { oargs, cwd, env } = EnvUtils.parseArgs(args, serviceName)
+    this.logger.debug("oargs=>", oargs)
+    this.logger.debug("cwd=>", cwd)
+    this.logger.debug("env=>", env)
+
+    // 进行 Python 调用
+    const pythonArgs = [command].concat(oargs)
+    const options = {
+      cwd: cwd,
+      env: { PATH: process.env.PATH, ...env },
+    }
+    // return await SiyuanDevice.siyuanWindow().zhi.cmd.executeCommand("python", [`${command}`], options)
     return await SiyuanDevice.siyuanWindow().zhi.cmd.executeCommandWithSpawn("python", pythonArgs, options)
   }
 }
