@@ -9854,7 +9854,7 @@ var NpmPackageManager = class {
       cwd: cwd ?? this.zhiCoreNpmPath,
       env: {
         PATH: ENV_PATH,
-        ...{ env: env2 }
+        ...env2
       }
     };
     this.logger.info("localNodeCmd spawn command =>", command);
@@ -9885,7 +9885,7 @@ var NpmPackageManager = class {
       cwd: cwd ?? this.zhiCoreNpmPath,
       env: {
         PATH: ENV_PATH,
-        ...{ env: env2 }
+        ...env2
       }
     };
     this.logger.info("localNodeExecCmd exec command =>", command);
@@ -9902,7 +9902,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.17.0",
+  version: "0.18.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",

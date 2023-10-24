@@ -280,3 +280,14 @@ const initParams = [
 
 [thisServiceName] - 当前服务的根目录，例如：local-service-nocodb
 
+例子
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "PORT=8888",
+  "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+await nodeInvoke.invoke("local-service-nocodb", "local-service-nocodb/index.js", args)
+```
+

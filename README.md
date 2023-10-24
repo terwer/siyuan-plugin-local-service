@@ -271,3 +271,14 @@ Available placeholders
 [thisServiceBasePath] - The root directory of the current service, for example: /Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
 
 [thisServiceName] - The root directory of the current service, for example: local-service-nocodb
+
+Example:
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "PORT=8888",
+  "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+await nodeInvoke.invoke("local-service-nocodb", "local-service-nocodb/index.js", args)
+```
