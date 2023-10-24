@@ -9701,10 +9701,12 @@ var NpmPackageManager = class {
    *
    * @param subCommand - 要执行的 NPM 命令
    * @param oargs - 其它参数
+   * @param cwd 当前路径
+   * @param env 环境变量
    * @returns 执行结果的 Promise
    */
-  async nodeCmd(subCommand, oargs) {
-    return await this.localNodeExecCmd("node", subCommand, void 0, oargs);
+  async nodeCmd(subCommand, oargs, cwd, env2) {
+    return await this.localNodeExecCmd("node", subCommand, void 0, oargs, cwd, env2);
   }
   /**
    * 执行 NPM 命令
@@ -9712,10 +9714,12 @@ var NpmPackageManager = class {
    * @param subCommand - 要执行的 NPM 命令
    * @param path 命令路径
    * @param oargs - 其它参数
+   * @param cwd 当前路径
+   * @param env 环境变量
    * @returns 执行结果的 Promise
    */
-  async npmCmd(subCommand, path5, oargs) {
-    return await this.localNodeExecCmd("npm", subCommand, path5 ?? this.zhiCoreNpmPath, oargs);
+  async npmCmd(subCommand, path5, oargs, cwd, env2) {
+    return await this.localNodeExecCmd("npm", subCommand, path5 ?? this.zhiCoreNpmPath, oargs, cwd, env2);
   }
   /**
    * 获取 Node 的版本号
@@ -9834,29 +9838,30 @@ var NpmPackageManager = class {
    * @param command 主命令
    * @param subCommand 子命令
    * @param oargs 其它参数
+   * @param cwd 当前路径
+   * @param env 环境变量
    * @private
    */
-  // private async localNodeCmd(command: string, subCommand: string, oargs?: any[]): Promise<any> {
-  //   // 使用 spawn
-  //   const args = [subCommand, this.zhiCoreNpmPath].concat(oargs ?? [])
-  //   // 设置全局环境变量
-  //   const process = SiyuanDevice.siyuanWindow().process
-  //   const NODE_PATH = SiyuanDevice.nodeCurrentBinFolder()
-  //   let ENV_PATH = process.env.PATH
-  //   if (NODE_PATH !== "") {
-  //     ENV_PATH = NODE_PATH + ":" + process.env.PATH
-  //   }
-  //   const options = {
-  //     cwd: this.zhiCoreNpmPath,
-  //     env: {
-  //       PATH: ENV_PATH,
-  //     },
-  //   }
-  //   this.logger.info("localNodeCmd spawn command =>", command)
-  //   this.logger.info("localNodeCmd spawn args =>", args)
-  //   this.logger.info("localNodeCmd spawn options =>", options)
-  //   return await this.customCmd.executeCommandWithSpawn(command, args, options)
-  // }
+  async localNodeCmd(command, subCommand, oargs, cwd, env2) {
+    const args2 = [subCommand, this.zhiCoreNpmPath].concat(oargs ?? []);
+    const process5 = c.siyuanWindow().process;
+    const NODE_PATH = c.nodeCurrentBinFolder();
+    let ENV_PATH = process5.env.PATH;
+    if (NODE_PATH !== "") {
+      ENV_PATH = NODE_PATH + ":" + process5.env.PATH;
+    }
+    const options = {
+      cwd: cwd ?? this.zhiCoreNpmPath,
+      env: {
+        PATH: ENV_PATH,
+        ...env2
+      }
+    };
+    this.logger.info("localNodeCmd spawn command =>", command);
+    this.logger.info("localNodeCmd spawn args =>", args2);
+    this.logger.info("localNodeCmd spawn options =>", options);
+    return await this.customCmd.executeCommandWithSpawn(command, args2, options);
+  }
   /**
    * 本地服务的 Node exec 命令
    *
@@ -9864,9 +9869,11 @@ var NpmPackageManager = class {
    * @param subCommand 子命令
    * @param path 命令路径
    * @param oargs 其它参数
+   * @param cwd 当前路径
+   * @param env 环境变量
    * @private
    */
-  async localNodeExecCmd(command, subCommand, path5, oargs) {
+  async localNodeExecCmd(command, subCommand, path5, oargs, cwd, env2) {
     const args2 = path5 ? [`"${subCommand}"`, `"${path5}"`, ...oargs ?? []] : [`"${subCommand}"`, ...oargs ?? []];
     const process5 = c.siyuanWindow().process;
     const NODE_PATH = c.nodeCurrentBinFolder();
@@ -9875,9 +9882,10 @@ var NpmPackageManager = class {
       ENV_PATH = NODE_PATH + ":" + process5.env.PATH;
     }
     const options = {
-      cwd: this.zhiCoreNpmPath,
+      cwd: cwd ?? this.zhiCoreNpmPath,
       env: {
-        PATH: ENV_PATH
+        PATH: ENV_PATH,
+        ...env2
       }
     };
     this.logger.info("localNodeExecCmd exec command =>", command);
@@ -9894,7 +9902,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.16.4",
+  version: "0.18.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",

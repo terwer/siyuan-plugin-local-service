@@ -132,11 +132,17 @@ class LocalService {
       this.logger.info("local service inited😎")
 
       // 启动服务
+      this.logger.info("..................................................................")
+      this.logger.info("Try starting core services defined in app.js, please wait...")
+      this.logger.info("..................................................................")
+      await serviceManager.startCore()
+
       // this.logger.info("..................................................................")
-      // this.logger.info("Try starting services defined in app.js, please wait...")
+      // this.logger.info("Try starting all services defined in app.js, please wait...")
       // this.logger.info("..................................................................")
       // await serviceManager.startAll()
-      // this.hello(this.runAs)
+
+      this.hello(this.runAs)
     } catch (e) {
       this.logger.error("Unable to start some services from local service😭 =>", e)
     }

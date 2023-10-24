@@ -45,7 +45,7 @@ module.exports = {
         format: "js",
         importType: "node",
         runAs: ["Siyuan_RendererWindow"],
-        initParams: [],
+        initParams: ["PORT=3333"],
         order: 4,
       },
       {
@@ -56,7 +56,10 @@ module.exports = {
         format: "js",
         importType: "node",
         runAs: ["Siyuan_RendererWindow"],
-        initParams: [],
+        initParams: [
+          "PORT=8888",
+          "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+        ],
         order: 5,
       },
     ],

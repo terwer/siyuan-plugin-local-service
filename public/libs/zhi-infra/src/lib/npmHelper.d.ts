@@ -18,18 +18,22 @@ declare class NpmPackageManager {
      *
      * @param subCommand - 要执行的 NPM 命令
      * @param oargs - 其它参数
+     * @param cwd 当前路径
+     * @param env 环境变量
      * @returns 执行结果的 Promise
      */
-    nodeCmd(subCommand: string, oargs?: any[]): Promise<any>;
+    nodeCmd(subCommand: string, oargs?: any[], cwd?: string, env?: Record<string, any>): Promise<any>;
     /**
      * 执行 NPM 命令
      *
      * @param subCommand - 要执行的 NPM 命令
      * @param path 命令路径
      * @param oargs - 其它参数
+     * @param cwd 当前路径
+     * @param env 环境变量
      * @returns 执行结果的 Promise
      */
-    npmCmd(subCommand: string, path?: string, oargs?: any[]): Promise<any>;
+    npmCmd(subCommand: string, path?: string, oargs?: any[], cwd?: string, env?: Record<string, any>): Promise<any>;
     /**
      * 获取 Node 的版本号
      *
@@ -82,8 +86,11 @@ declare class NpmPackageManager {
      * @param command 主命令
      * @param subCommand 子命令
      * @param oargs 其它参数
+     * @param cwd 当前路径
+     * @param env 环境变量
      * @private
      */
+    localNodeCmd(command: string, subCommand: string, oargs?: any[], cwd?: string, env?: Record<string, any>): Promise<any>;
     /**
      * 本地服务的 Node exec 命令
      *
@@ -91,9 +98,11 @@ declare class NpmPackageManager {
      * @param subCommand 子命令
      * @param path 命令路径
      * @param oargs 其它参数
+     * @param cwd 当前路径
+     * @param env 环境变量
      * @private
      */
-    private localNodeExecCmd;
+    localNodeExecCmd(command: string, subCommand: string, path?: string, oargs?: any[], cwd?: string, env?: Record<string, any>): Promise<any>;
 }
 export { NpmPackageManager };
 //# sourceMappingURL=npmHelper.d.ts.map

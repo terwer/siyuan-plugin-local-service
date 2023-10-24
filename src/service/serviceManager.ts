@@ -26,13 +26,14 @@
 import DependencyItem from "../models/dependencyItem"
 import dependencyItem from "../models/dependencyItem"
 import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
-import { getAppBase } from "../utils/utils"
-import { dataDir, isDev } from "../Constants"
+import { isDev } from "../Constants"
 import { ILogger, simpleLogger } from "zhi-lib-base"
 import Bootstrap from "../core/bootstrap"
 import { StrUtil } from "zhi-common"
 import InvokeUtils from "./invoke/invokeUtils"
 import InvokeFactory from "./invoke/invokeFactory"
+import ServiceTypeEnum from "../enums/serviceTypeEnum"
+import EnvUtils from "../utils/envUtils"
 
 /**
  * 服务管理器，用于启动和停止多个服务
@@ -57,8 +58,15 @@ class ServiceManager {
   /**
    * 查找所有的服务
    */
+  public async findCores(): Promise<DependencyItem[]> {
+    return await Bootstrap.loadServices(ServiceTypeEnum.ServiceType_Core)
+  }
+
+  /**
+   * 查找所有的服务
+   */
   public async findAll(): Promise<DependencyItem[]> {
-    return await Bootstrap.start()
+    return await Bootstrap.loadServices()
   }
 
   /**
@@ -73,8 +81,27 @@ class ServiceManager {
   /**
    * 启动所有的服务
    */
-  public async startAll(): Promise<void> {
-    const dynamicImports = await this.findAll()
+  public async startCore(): Promise<void> {
+    const dynamicImports = await this.findCores()
+    await this.startMany(dynamicImports)
+  }
+
+  /**
+   * 启动所有的服务
+   *
+   * @param shouldStartCore 是否启动核心，默认false
+   */
+  public async startAll(shouldStartCore?: boolean): Promise<void> {
+    let dynamicImports: DependencyItem[]
+
+    if (shouldStartCore) {
+      dynamicImports = await this.findAll()
+    } else {
+      const cores = await this.findCores()
+      const all = await this.findAll()
+      dynamicImports = all.filter((item) => !cores.includes(item))
+    }
+
     await this.startMany(dynamicImports)
   }
 
@@ -285,15 +312,9 @@ class ServiceManager {
       const libObj = lib
       this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
       // 参数替换
-      item.initParams = item.initParams.map((x: any) => {
-        if (typeof x === "string") {
-          const basePath = getAppBase()
-          const absBasePath = SiyuanDevice.joinPath(dataDir, basePath)
-          return x.replace(/\[thisPluginBasePath\]/g, absBasePath)
-        } else {
-          return x
-        }
-      })
+      const { oargs } = EnvUtils.parseArgs(item.initParams, item.name)
+      item.initParams = oargs
+
       if (typeof libObj == "function") {
         await libObj(item.initParams)
         this.logger.info(`Inited ${item.libpath} with function, params=>`, item.initParams)

@@ -8,9 +8,23 @@ a plugin for connecting siyuan-note with local services
 
 > View all commands: `windos.zhi`
 
-## Recent Updates
+## Quick start - TODO
 
-* Commands are now unified under `window.zhi`.
+  ```js
+  await zhi.npm.checkAndInitNode()
+  await zhi.store.getPackage("python-hello")
+  await zhi.store.getPackage("local-service-chatgpt")
+  await zhi.store.getPackage("local-service-nocodb")
+  zhi.sc.stopAll()
+  zhi.sc.startAll()
+  ```
+
+  Open browser access, or set the URL to the WebApp plugin
+
+  ```
+  http://localhost:3000
+  http://localhost:8080
+  ```
 
 ```bash
 > zhi
@@ -233,4 +247,38 @@ await nodeInvoke.invoke("package-downloader", "services/package-downloader/downl
 const pythonInvode = zhi.if.createInvoke("python")
 const args = []
 await pythonInvode.invoke("python-hello", "services/python-hello/hello.py", args)
+```
+
+## Explanation of Service Parameters
+
+```js
+const initParams = ["[thisPluginBasePath]", true]
+
+const initParams = [
+  "PORT[eq]8888",
+  "NC_DB[eq]sqlite3:///?database=[siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+```
+
+Available placeholders
+
+[thisPluginBasePath] - The root directory of the local service plugin, for example: /Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service
+
+[eq] - The "=" symbol, used to separate key-value type parameters
+
+[siyuanDataDir] - The data directory of SiYuan Notes, for example: /Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data
+
+[thisServiceBasePath] - The root directory of the current service, for example: /Users/terwer/Library/Application Support/siyuancommunity/workspace/test/apps/local-service-nocodb
+
+[thisServiceName] - The root directory of the current service, for example: local-service-nocodb
+
+Example:
+
+```js
+const nodeInvoke = zhi.if.createInvoke("node")
+const args = [
+  "PORT=8888",
+  "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
+]
+await nodeInvoke.invoke("local-service-nocodb", "local-service-nocodb/index.js", args)
 ```
