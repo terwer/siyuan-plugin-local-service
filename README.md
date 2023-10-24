@@ -8,7 +8,7 @@ a plugin for connecting siyuan-note with local services
 
 > View all commands: `windos.zhi`
 
-## Quick start
+## Quick start - TODO
 
   ```js
   await zhi.npm.checkAndInitNode()

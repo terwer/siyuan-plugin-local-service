@@ -6,7 +6,7 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-## 新手快速体验
+## 新手快速体验 -【下版本实现】
 
 ```js
 await zhi.npm.checkAndInitNode()
