@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.3.0...v1.4.0) (2023-10-24)
+
+
+### Features
+
+* 支持服务应用市场 ([28f9f21](https://github.com/terwer/siyuan-plugin-local-service/commit/28f9f21e34ace84d75fb1378126e4a5befa1e2f6))
+* 支持自定义执行目录和环境变量 ([53a112e](https://github.com/terwer/siyuan-plugin-local-service/commit/53a112e9a9fbfcec3711fdbb76057f36ec29d5af))
+* 支持自定义执行目录和环境变量 ([0f6ada9](https://github.com/terwer/siyuan-plugin-local-service/commit/0f6ada95ecc30f9aa523e22733b015038f1e0f9c))
+* 支持自定义执行目录和环境变量 ([52f4117](https://github.com/terwer/siyuan-plugin-local-service/commit/52f411700ee7da98a5011fec2c11fd3b68f364a0))
+* 支持自定义执行目录和环境变量 ([123a647](https://github.com/terwer/siyuan-plugin-local-service/commit/123a6473f868d4f21d789432870521478eb2782c))
+* 核心服务默认启动 ([dacc223](https://github.com/terwer/siyuan-plugin-local-service/commit/dacc223ac2541c581f90603344cc289a6f299093))
+
+
+### Bug Fixes
+
+* **deps:** bump actions/setup-node from 3 to 4 ([d54d0a9](https://github.com/terwer/siyuan-plugin-local-service/commit/d54d0a9b9f9983d10a37887d5e01df00787f1a26))
+
 ## [1.3.0](https://github.com/terwer/siyuan-plugin-local-service/compare/v1.2.0...v1.3.0) (2023-10-23)
 ### Features
 * 优化启动与加载顺序 ([b92e156](https://github.com/terwer/siyuan-plugin-local-service/commit/b92e1565d759a4218983bbf585f34040a5ad07fe))
