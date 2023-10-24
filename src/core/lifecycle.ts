@@ -28,6 +28,7 @@ import { SiyuanDevice } from "zhi-device"
 import { simpleLogger } from "zhi-lib-base"
 import { APP_JSON, APP_JSON_SCHEMA, isDev } from "../Constants"
 import InvokeUtils from "../service/invoke/invokeUtils"
+import ServiceTypeEnum from "../enums/serviceTypeEnum"
 
 /**
  * zhi主题统一生命周期管理
@@ -54,8 +55,10 @@ class Lifecycle {
    * 3 前端模块
    * 4 第三方库
    * ```
+   *
+   * @param serviceNode 服务节点
    */
-  public async load() {
+  public async load(serviceNode?: string) {
     const allImports = <DependencyItem[]>[]
 
     // json-schema 校验
@@ -78,18 +81,34 @@ class Lifecycle {
     }
 
     // 解析json
+
     // 核心模块
     const cores = appJson.dependencies.core
     const coreModuleImports = await this.loadCoreModules(cores)
+    if (serviceNode === ServiceTypeEnum.ServiceType_Core) {
+      return coreModuleImports
+    }
+
     // 后端模块
     const servers = appJson.dependencies.server
     const backendImports = await this.loadBackendModules(servers)
+    if (serviceNode === ServiceTypeEnum.ServiceType_Server) {
+      return backendImports
+    }
+
     // 前端模块
     const webs = appJson.dependencies.web
     const frontendImports = await this.loadFrontendModules(webs)
+    if (serviceNode === ServiceTypeEnum.ServiceType_Web) {
+      return frontendImports
+    }
+
     // 第三方组件
     const vendors = appJson.dependencies.vendor
     const vendorImports = await this.loadVendors(vendors)
+    if (serviceNode === ServiceTypeEnum.ServiceType_Vendor) {
+      return vendorImports
+    }
 
     return allImports.concat(coreModuleImports).concat(backendImports).concat(frontendImports).concat(vendorImports)
   }

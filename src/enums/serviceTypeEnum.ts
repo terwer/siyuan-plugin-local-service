@@ -23,27 +23,32 @@
  * questions.
  */
 
-import Lifecycle from "./lifecycle"
-import DependencyItem from "../models/dependencyItem"
-import ServiceTypeEnum from "../enums/serviceTypeEnum"
-
 /**
- * 服务唯一激活入口
+ * 枚举类型，表示不同的服务类型
  *
  * @author terwer
- * @since 0.1.0
+ * @since 1.4.0
  */
-class Bootstrap {
-  private static lifecycle = new Lifecycle()
+enum ServiceTypeEnum {
+  /**
+   * 表示核心服务类型
+   */
+  ServiceType_Core = "core",
 
   /**
-   * 主题激活
-   *
-   * @param serviceNode 服务节点
+   * 表示服务器服务类型
    */
-  public static async loadServices(serviceNode?: ServiceTypeEnum): Promise<DependencyItem[]> {
-    return await this.lifecycle.load(serviceNode)
-  }
+  ServiceType_Server = "server",
+
+  /**
+   * 表示Web服务类型
+   */
+  ServiceType_Web = "web",
+
+  /**
+   * 表示供应商服务类型
+   */
+  ServiceType_Vendor = "vendor",
 }
 
-export default Bootstrap
+export default ServiceTypeEnum
