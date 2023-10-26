@@ -24,6 +24,18 @@ module.exports = {
         initParams: [],
         order: 2,
       },
+      {
+        name: "zhi-rubick-core",
+        alias: "pd",
+        version: "0.1.1",
+        libpath: "libs/zhi-rubick-core",
+        baseType: "ThisPlugin",
+        format: "cjs",
+        importType: "require",
+        runAs: ["Siyuan_RendererWindow"],
+        initParams: [],
+        order: 3,
+      },
     ],
     server: [
       {
@@ -35,7 +47,7 @@ module.exports = {
         importType: "python",
         runAs: ["Siyuan_RendererWindow"],
         initParams: [],
-        order: 3,
+        order: 101,
       },
       {
         name: "local-service-chatgpt",
@@ -45,8 +57,8 @@ module.exports = {
         format: "js",
         importType: "node",
         runAs: ["Siyuan_RendererWindow"],
-        initParams: ["PORT=3333"],
-        order: 4,
+        initParams: ["PORT=3000"],
+        order: 102,
       },
       {
         name: "local-service-nocodb",
@@ -57,10 +69,10 @@ module.exports = {
         importType: "node",
         runAs: ["Siyuan_RendererWindow"],
         initParams: [
-          "PORT=8888",
+          "PORT=8000",
           "NC_DB=sqlite3:///?database[eq][siyuanDataDir]/storage/services/[thisServiceName]/noco.db",
         ],
-        order: 5,
+        order: 103,
       },
     ],
     web: [],

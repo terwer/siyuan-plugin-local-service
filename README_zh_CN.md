@@ -21,7 +21,7 @@ zhi.sc.startAll()
 
 ```
 http://localhost:3000
-http://localhost:8080
+http://localhost:8000
 ```
 
 ## 最近更新
@@ -291,3 +291,6 @@ const args = [
 await nodeInvoke.invoke("local-service-nocodb", "local-service-nocodb/index.js", args)
 ```
 
+## 感谢
+
+[rubick](https://github.com/rubickCenter/rubick)

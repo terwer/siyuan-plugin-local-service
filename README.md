@@ -23,7 +23,7 @@ a plugin for connecting siyuan-note with local services
 
   ```
   http://localhost:3000
-  http://localhost:8080
+  http://localhost:8000
   ```
 
 ```bash
@@ -282,3 +282,7 @@ const args = [
 ]
 await nodeInvoke.invoke("local-service-nocodb", "local-service-nocodb/index.js", args)
 ```
+
+## Thanks
+
+[rubick](https://github.com/rubickCenter/rubick)
