@@ -28,7 +28,7 @@ module.exports = {
         name: "zhi-rubick-core",
         alias: "pd",
         version: "0.1.1",
-        libpath: "libs/zhi-rubick-core",
+        libpath: "libs/zhi-rubick-core/index.cjs",
         baseType: "ThisPlugin",
         format: "cjs",
         importType: "require",

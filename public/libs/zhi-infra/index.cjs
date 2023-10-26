@@ -9902,7 +9902,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.18.0",
+  version: "0.19.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -9947,7 +9947,7 @@ var ZhiInfra = class {
   zhiCoreNodeModulesPath;
   npmManager;
   constructor(depsJsonPath) {
-    this.logger = w("zhi-infra", "zhi", true);
+    this.logger = w("zhi-infra", "zhi", false);
     this.zhiCoreNpmPath = c.appNpmFolder();
     this.zhiCoreNodeModulesPath = c.joinPath(this.zhiCoreNpmPath, "node_modules");
     this.npmManager = new NpmPackageManager(this.zhiCoreNpmPath, depsJsonPath);
