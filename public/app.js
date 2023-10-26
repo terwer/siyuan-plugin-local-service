@@ -31,7 +31,7 @@ module.exports = {
         libpath: "libs/zhi-rubick-core/index.cjs",
         baseType: "ThisPlugin",
         format: "cjs",
-        importType: "require",
+        importType: "node",
         runAs: ["Siyuan_RendererWindow"],
         initParams: [],
         order: 3,

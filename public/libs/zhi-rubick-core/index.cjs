@@ -1,26 +1,45 @@
-/*
- * Copyright (c) 2023, Terwer . All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Terwer designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Terwer in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
- * or visit www.terwer.space if you need additional information or have any
- * questions.
- */
+"use strict";
 
-console.log("hello, rubick")
+// ../zhi-lib-base/dist/index.js
+var w = (n, $, p) => {
+  const s = $ ?? "zhi", i = (t) => {
+    const e = t.getFullYear(), o = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), u = String(t.getMinutes()).padStart(2, "0"), d = String(t.getSeconds()).padStart(2, "0");
+    return `${e}-${o}-${r} ${S}:${u}:${d}`;
+  }, c = (t, e) => {
+    const o = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.log(`[${s}] [${o}] [DEBUG] [${n}] ${t}`, r) : console.log(`[${s}] [${o}] [DEBUG] [${n}] ${t}`);
+  }, l = (t, e) => {
+    const o = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.info(`[${s}] [${o}] [INFO] [${n}] ${t}`, r) : console.info(`[${s}] [${o}] [INFO] [${n}] ${t}`);
+  }, f = (t, e) => {
+    const o = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
+    r ? console.warn(`[${s}] [${o}] [WARN] [${n}] ${t}`, r) : console.warn(`[${s}] [${o}] [WARN] [${n}] ${t}`);
+  }, g = (t, e) => {
+    const o = i(/* @__PURE__ */ new Date());
+    e ? console.error(`[${s}] [${o}] [ERROR] [${n}] ${t.toString()}`, e) : console.error(`[${s}] [${o}] [ERROR] [${n}] ${t.toString()}`);
+  };
+  return {
+    debug: (t, e) => {
+      p && (e ? c(t, e) : c(t));
+    },
+    info: (t, e) => {
+      e ? l(t, e) : l(t);
+    },
+    warn: (t, e) => {
+      e ? f(t, e) : f(t);
+    },
+    error: (t, e) => {
+      e ? g(t, e) : g(t);
+    }
+  };
+};
+
+// src/index.ts
+var logger = w("zi-rubick-core", "zhi", false);
+var main = async (args) => {
+  return "ok";
+};
+(async () => {
+  const result = await main([]);
+  console.log(result);
+})();

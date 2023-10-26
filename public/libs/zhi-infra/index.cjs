@@ -5521,7 +5521,7 @@ var CustomCmd = class {
         cwd: cwd ?? process22.cwd(),
         silent: true
       };
-      console.log(`\u6B63\u5728\u6267\u884C\u547D\u4EE4\uFF1A${command},args=>${args2}, options=>`, options);
+      console.log(`\u6B63\u5728\u4F7F\u7528 Electron \u81EA\u5E26\u7684 Node \u6267\u884C\u547D\u4EE4\uFF1A${command},args=>${args2}, options=>`, options);
       const child = fork(command, args2, options);
       const logFilePath = path5.join(
         process22.env?.HOME ?? process22.env?.USERPROFILE ?? process22.env?.Temp ?? cwd,
@@ -5588,9 +5588,11 @@ var CustomCmd = class {
     return new Promise((resolve, reject) => {
       exec(fullCommand, options, (err, stdout) => {
         if (err) {
+          console.error("executeCommand error =>", err);
           reject(err);
         } else {
-          resolve(stdout.trim());
+          console.info("executeCommand success =>", stdout);
+          resolve(stdout);
         }
       });
     });
@@ -5610,22 +5612,36 @@ var CustomCmd = class {
    */
   async executeCommandWithSpawn(command, args2, options = {}) {
     const { spawn } = c2.requireLib("child_process");
+    const siyuanRequire = c2.siyuanWindow()?.require ?? __require;
+    const process22 = c2.siyuanWindow()?.process ?? global.process;
+    const fs4 = siyuanRequire("fs");
+    const path5 = siyuanRequire("path");
     return new Promise((resolve, reject) => {
       const child = spawn(command, args2, options);
+      const logFilePath = path5.join(
+        process22.env?.HOME ?? process22.env?.USERPROFILE ?? process22.env?.Temp ?? process22.cwd,
+        "local-service-command-log.txt"
+      );
+      console.log(`\u547D\u4EE4\u6267\u884C\u65E5\u5FD7\u5DF2\u4FDD\u5B58\u5230\u6587\u4EF6 => ${logFilePath}`);
+      const logStream = fs4.createWriteStream(logFilePath, { flags: "a" });
+      child.stdout.pipe(logStream);
+      child.stderr.pipe(logStream);
       let output = "";
       let error = "";
       child.stdout.on("data", (data) => {
         output += data.toString();
       });
-      child.stderr.on("data", (data) => {
+      child.stderr.on("error", (data) => {
         error += data.toString();
       });
-      child.on("close", (code) => {
+      child.on("error", (err) => {
+        resolve(err.message);
+      });
+      child.on("exit", (code) => {
         if (code === 0) {
           resolve(output);
         } else {
-          const errorMsg = `Command "${command}" failed with exit code ${code}. ${error}`;
-          reject(new Error(errorMsg));
+          resolve(error);
         }
       });
     });
@@ -9902,7 +9918,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.19.0",
+  version: "0.19.3",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -9917,10 +9933,9 @@ var package_default = {
     "infra"
   ],
   scripts: {
-    dev: "zhi-build --watch --outDir=/Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra",
+    dev: "zhi-build --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service/libs/zhi-infra",
     build: "zhi-build --production",
-    syncBuild: "cp -r ./dist/* /Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra/",
-    test: "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-infra"
+    localBuild: "zhi-build --production --outDir=/Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra"
   },
   devDependencies: {
     "@terwer/esbuild-config-custom": "workspace:*",
