@@ -46,8 +46,8 @@ var require_windows = __commonJS({
         return true;
       }
       for (var i = 0; i < pathext.length; i++) {
-        var p3 = pathext[i].toLowerCase();
-        if (p3 && path5.substr(-p3.length).toLowerCase() === p3) {
+        var p = pathext[i].toLowerCase();
+        if (p && path5.substr(-p.length).toLowerCase() === p) {
           return true;
         }
       }
@@ -201,21 +201,21 @@ var require_which = __commonJS({
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
         const pCmd = path5.join(pathPart, cmd);
-        const p3 = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
-        resolve(subStep(p3, i, 0));
+        const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
+        resolve(subStep(p, i, 0));
       });
-      const subStep = (p3, i, ii2) => new Promise((resolve, reject) => {
+      const subStep = (p, i, ii2) => new Promise((resolve, reject) => {
         if (ii2 === pathExt.length)
           return resolve(step(i + 1));
         const ext = pathExt[ii2];
-        isexe(p3 + ext, { pathExt: pathExtExe }, (er, is2) => {
+        isexe(p + ext, { pathExt: pathExtExe }, (er, is2) => {
           if (!er && is2) {
             if (opt.all)
-              found.push(p3 + ext);
+              found.push(p + ext);
             else
-              return resolve(p3 + ext);
+              return resolve(p + ext);
           }
-          return resolve(subStep(p3, i, ii2 + 1));
+          return resolve(subStep(p, i, ii2 + 1));
         });
       });
       return cb ? step(0).then((res) => cb(null, res), cb) : step(0);
@@ -228,9 +228,9 @@ var require_which = __commonJS({
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
         const pCmd = path5.join(pathPart, cmd);
-        const p3 = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
+        const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
         for (let j2 = 0; j2 < pathExt.length; j2++) {
-          const cur = p3 + pathExt[j2];
+          const cur = p + pathExt[j2];
           try {
             const is2 = isexe.sync(cur, { pathExt: pathExtExe });
             if (is2) {
@@ -2035,9 +2035,9 @@ var require_polyfills = __commonJS({
     }
     if (typeof process.chdir === "function") {
       chdir = process.chdir;
-      process.chdir = function(d) {
+      process.chdir = function(d3) {
         cwd = null;
-        chdir.call(process, d);
+        chdir.call(process, d3);
       };
       if (Object.setPrototypeOf)
         Object.setPrototypeOf(process.chdir, chdir);
@@ -4478,10 +4478,10 @@ function fixPath() {
 }
 
 // ../../libs/zhi-lib-base/dist/index.js
-var w = (n3, $2, p3) => {
+var w = (n3, $2, p) => {
   const s3 = $2 ?? "zhi", i = (t) => {
-    const e = t.getFullYear(), o3 = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S2 = String(t.getHours()).padStart(2, "0"), u3 = String(t.getMinutes()).padStart(2, "0"), d = String(t.getSeconds()).padStart(2, "0");
-    return `${e}-${o3}-${r} ${S2}:${u3}:${d}`;
+    const e = t.getFullYear(), o3 = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S2 = String(t.getHours()).padStart(2, "0"), u3 = String(t.getMinutes()).padStart(2, "0"), d3 = String(t.getSeconds()).padStart(2, "0");
+    return `${e}-${o3}-${r} ${S2}:${u3}:${d3}`;
   }, c3 = (t, e) => {
     const o3 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
     r ? console.log(`[${s3}] [${o3}] [DEBUG] [${n3}] ${t}`, r) : console.log(`[${s3}] [${o3}] [DEBUG] [${n3}] ${t}`);
@@ -4497,7 +4497,7 @@ var w = (n3, $2, p3) => {
   };
   return {
     debug: (t, e) => {
-      p3 && (e ? c3(t, e) : c3(t));
+      p && (e ? c3(t, e) : c3(t));
     },
     info: (t, e) => {
       e ? l(t, e) : l(t);
@@ -4519,12 +4519,12 @@ var D = (n3, $2) => {
 var b = Object.defineProperty;
 var g = (r, e, t) => e in r ? b(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t;
 var o = (r, e, t) => (g(r, typeof e != "symbol" ? e + "" : e, t), t);
-var u = class {
+var d = class {
   /**
    * 检测是否运行在Chrome插件中
    */
   static isInChromeExtension() {
-    return u.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
+    return d.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
   }
   /**
    * 复制网页内容到剪贴板
@@ -4540,7 +4540,7 @@ var u = class {
     }
   }
 };
-var s = u;
+var s = d;
 o(s, "isNode", typeof process < "u" && process.versions != null && process.versions.node != null), /**
 * 是否在浏览器环境
 */
@@ -4553,7 +4553,7 @@ o(s, "BrowserSeparator", "/"), /**
 o(s, "isElectron", () => typeof process < "u" && process.versions != null && process.versions.electron != null), /**
 * 是否有Node环境，目前包括 Electron 和 Node
 */
-o(s, "hasNodeEnv", () => u.isElectron() || u.isNode), /**
+o(s, "hasNodeEnv", () => d.isElectron() || d.isNode), /**
 * 通用的从 url 中获取获取参数的方法，优先获取查询参数，然后获取 hash 参数与
 *
 * @param key - 参数
@@ -4562,11 +4562,11 @@ o(s, "hasNodeEnv", () => u.isElectron() || u.isNode), /**
 * @since 0.0.1
 */
 o(s, "getQueryParam", (e) => {
-  if (!u.isInBrowser)
+  if (!d.isInBrowser)
     return "";
   const t = window.location.href, i = t.indexOf("?");
   if (i !== -1) {
-    const h = t.indexOf("#", i), l = h !== -1 ? t.substring(i + 1, h) : t.substring(i + 1), y = new URLSearchParams(l).get(e);
+    const h = t.indexOf("#", i), p = h !== -1 ? t.substring(i + 1, h) : t.substring(i + 1), y = new URLSearchParams(p).get(e);
     if (y)
       return y;
   }
@@ -4599,10 +4599,10 @@ o(s, "replaceUrlParam", (e, t, i) => {
   const a = new RegExp("\\b(" + t + "=).*?(&|#|$)");
   if (e.search(a) >= 0)
     return e.replace(a, "$1" + i + "$2");
-  const [h, l] = e.split("#"), [w2, y] = h.split("?"), m = new URLSearchParams(y);
+  const [h, p] = e.split("#"), [w2, y] = h.split("?"), m = new URLSearchParams(y);
   m.set(t, i);
   const f = m.toString(), P2 = w2 + (f ? "?" + f : "");
-  return l ? P2 + "#" + l : P2;
+  return p ? P2 + "#" + p : P2;
 }), /**
 * 设置url参数
 *
@@ -4612,11 +4612,11 @@ o(s, "replaceUrlParam", (e, t, i) => {
 */
 o(s, "setUrlParameter", (e, t, i) => {
   if (e.includes(t))
-    return u.replaceUrlParam(e, t, i);
+    return d.replaceUrlParam(e, t, i);
   const a = e.split("#");
   let h = a[0];
-  const l = a[1];
-  return h.includes("?") ? h += `&${t}=${i}` : h += `?${t}=${i}`, l && (h += "#" + l), h;
+  const p = a[1];
+  return h.includes("?") ? h += `&${t}=${i}` : h += `?${t}=${i}`, p && (h += "#" + p), h;
 }), /**
 * 重新加载指定tab
 *
@@ -4625,9 +4625,9 @@ o(s, "setUrlParameter", (e, t, i) => {
 */
 o(s, "reloadTabPage", (e, t) => {
   setTimeout(function() {
-    if (u.isInBrowser) {
+    if (d.isInBrowser) {
       const i = window.location.href;
-      window.location.href = u.setUrlParameter(i, "tab", e);
+      window.location.href = d.setUrlParameter(i, "tab", e);
     }
   }, t ?? 200);
 }), /**
@@ -4637,7 +4637,7 @@ o(s, "reloadTabPage", (e, t) => {
 */
 o(s, "reloadPage", (e) => {
   setTimeout(function() {
-    u.isInBrowser && window.location.reload();
+    d.isInBrowser && window.location.reload();
   }, e ?? 200);
 }), /**
 * 刷新当前tab页面
@@ -4648,11 +4648,11 @@ o(s, "reloadPage", (e) => {
 */
 o(s, "reloadPageWithMessageCallback", (e, t, i) => {
   t && t(e), setTimeout(function() {
-    u.isInBrowser && window.location.reload();
+    d.isInBrowser && window.location.reload();
   }, i ?? 200);
 });
 var n = /* @__PURE__ */ ((r) => (r.BasePathType_Appearance = "Appearance", r.BasePathType_Data = "Data", r.BasePathType_Themes = "Themes", r.BasePathType_ZhiTheme = "ZhiTheme", r.BasePathType_ThisPlugin = "ThisPlugin", r.BasePathType_AppData = "AppData", r.BasePathType_AppNpm = "AppNpm", r.BasePathType_AppService = "AppService", r.BasePathType_Absolute = "Absolute", r.BasePathType_None = "None", r))(n || {});
-var p = class {
+var u = class {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
@@ -4882,7 +4882,7 @@ var p = class {
    * 用户数据目录
    */
   static appDataFolder() {
-    const e = p.siyuanWindow().process, t = p.requireNpm("path");
+    const e = u.siyuanWindow().process, t = u.requireNpm("path");
     let i;
     if (e.platform === "darwin")
       i = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
@@ -4943,7 +4943,7 @@ var p = class {
     return this.joinPath(this.appNpmFolder(), "apps");
   }
 };
-var c = p;
+var c = u;
 o(c, "isInSiyuanWidget", () => s.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
 * 思源笔记渲染窗口
 *
@@ -4955,46 +4955,48 @@ o(c, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && win
 * 依赖 npm
 *
 * @param libpath
+* @param win - 可选，执行窗口
 */
-o(c, "requireNpm", (e) => p.requireLib(e, n.BasePathType_Absolute)), /**
+o(c, "requireNpm", (e, t) => u.requireLib(e, n.BasePathType_Absolute, "", t)), /**
 * 引入依赖
 *
 * @param libpath - 依赖全路径
 * @param type - 可选，以谁的基本路径为准
 * @param pluginName - 可选，当前插件目录
+* @param win - 可选，执行窗口
 */
-o(c, "requireLib", (e, t, i) => {
-  const a = p.getRequirePath(e, t, i), h = p.siyuanWindow();
-  if (!h)
-    return require(a);
-  if (typeof h.require < "u")
-    return h.require(a);
+o(c, "requireLib", (e, t, i, a) => {
+  const h = u.getRequirePath(e, t, i), p = a ?? u.siyuanWindow();
+  if (!p)
+    return require(h);
+  if (typeof p.require < "u")
+    return p.require(h);
 }), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 appearance 的相对路径
 */
-o(c, "requireAppearanceLib", (e) => p.requireLib(e, n.BasePathType_Appearance)), /**
+o(c, "requireAppearanceLib", (e) => u.requireLib(e, n.BasePathType_Appearance)), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 data 的相对路径
 */
-o(c, "requireDataLib", (e) => p.requireLib(e, n.BasePathType_Data)), /**
+o(c, "requireDataLib", (e) => u.requireLib(e, n.BasePathType_Data)), /**
 * 引入依赖，以 theme 的基本路径为准
 *
 * @param libpath - 相对于 theme 的相对路径
 */
-o(c, "requireThemesLib", (e) => p.requireLib(e, n.BasePathType_Themes)), /**
+o(c, "requireThemesLib", (e) => u.requireLib(e, n.BasePathType_Themes)), /**
 * 引入依赖，以 ZhiTheme 的基本路径为准
 *
 * @param libpath - 相对于 ZhiTheme 的相对路径
 */
-o(c, "requireZhiThemeLib", (e) => p.requireLib(e, n.BasePathType_ZhiTheme)), /**
+o(c, "requireZhiThemeLib", (e) => u.requireLib(e, n.BasePathType_ZhiTheme)), /**
 * 引入依赖，以 AppService 的基本路径为准
 *
 * @param libpath - 相对于 AppService 的相对路径
 */
-o(c, "requireAppServiceLib", (e) => p.requireLib(e, n.BasePathType_AppService));
+o(c, "requireAppServiceLib", (e) => u.requireLib(e, n.BasePathType_AppService));
 
 // ../../libs/zhi-cmd/dist/index.cjs
 var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
@@ -5007,12 +5009,12 @@ var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? requir
 var b2 = Object.defineProperty;
 var g2 = (r, e, t) => e in r ? b2(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t;
 var o2 = (r, e, t) => (g2(r, typeof e != "symbol" ? e + "" : e, t), t);
-var u2 = class {
+var d2 = class {
   /**
    * 检测是否运行在Chrome插件中
    */
   static isInChromeExtension() {
-    return u2.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
+    return d2.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
   }
   /**
    * 复制网页内容到剪贴板
@@ -5028,7 +5030,7 @@ var u2 = class {
     }
   }
 };
-var s2 = u2;
+var s2 = d2;
 o2(s2, "isNode", typeof process < "u" && process.versions != null && process.versions.node != null), /**
 * 是否在浏览器环境
 */
@@ -5041,7 +5043,7 @@ o2(s2, "BrowserSeparator", "/"), /**
 o2(s2, "isElectron", () => typeof process < "u" && process.versions != null && process.versions.electron != null), /**
 * 是否有Node环境，目前包括 Electron 和 Node
 */
-o2(s2, "hasNodeEnv", () => u2.isElectron() || u2.isNode), /**
+o2(s2, "hasNodeEnv", () => d2.isElectron() || d2.isNode), /**
 * 通用的从 url 中获取获取参数的方法，优先获取查询参数，然后获取 hash 参数与
 *
 * @param key - 参数
@@ -5050,11 +5052,11 @@ o2(s2, "hasNodeEnv", () => u2.isElectron() || u2.isNode), /**
 * @since 0.0.1
 */
 o2(s2, "getQueryParam", (e) => {
-  if (!u2.isInBrowser)
+  if (!d2.isInBrowser)
     return "";
   const t = window.location.href, i = t.indexOf("?");
   if (i !== -1) {
-    const h = t.indexOf("#", i), l = h !== -1 ? t.substring(i + 1, h) : t.substring(i + 1), y = new URLSearchParams(l).get(e);
+    const h = t.indexOf("#", i), p = h !== -1 ? t.substring(i + 1, h) : t.substring(i + 1), y = new URLSearchParams(p).get(e);
     if (y)
       return y;
   }
@@ -5087,10 +5089,10 @@ o2(s2, "replaceUrlParam", (e, t, i) => {
   const a = new RegExp("\\b(" + t + "=).*?(&|#|$)");
   if (e.search(a) >= 0)
     return e.replace(a, "$1" + i + "$2");
-  const [h, l] = e.split("#"), [w2, y] = h.split("?"), m = new URLSearchParams(y);
+  const [h, p] = e.split("#"), [w2, y] = h.split("?"), m = new URLSearchParams(y);
   m.set(t, i);
   const f = m.toString(), P2 = w2 + (f ? "?" + f : "");
-  return l ? P2 + "#" + l : P2;
+  return p ? P2 + "#" + p : P2;
 }), /**
 * 设置url参数
 *
@@ -5100,11 +5102,11 @@ o2(s2, "replaceUrlParam", (e, t, i) => {
 */
 o2(s2, "setUrlParameter", (e, t, i) => {
   if (e.includes(t))
-    return u2.replaceUrlParam(e, t, i);
+    return d2.replaceUrlParam(e, t, i);
   const a = e.split("#");
   let h = a[0];
-  const l = a[1];
-  return h.includes("?") ? h += `&${t}=${i}` : h += `?${t}=${i}`, l && (h += "#" + l), h;
+  const p = a[1];
+  return h.includes("?") ? h += `&${t}=${i}` : h += `?${t}=${i}`, p && (h += "#" + p), h;
 }), /**
 * 重新加载指定tab
 *
@@ -5113,9 +5115,9 @@ o2(s2, "setUrlParameter", (e, t, i) => {
 */
 o2(s2, "reloadTabPage", (e, t) => {
   setTimeout(function() {
-    if (u2.isInBrowser) {
+    if (d2.isInBrowser) {
       const i = window.location.href;
-      window.location.href = u2.setUrlParameter(i, "tab", e);
+      window.location.href = d2.setUrlParameter(i, "tab", e);
     }
   }, t ?? 200);
 }), /**
@@ -5125,7 +5127,7 @@ o2(s2, "reloadTabPage", (e, t) => {
 */
 o2(s2, "reloadPage", (e) => {
   setTimeout(function() {
-    u2.isInBrowser && window.location.reload();
+    d2.isInBrowser && window.location.reload();
   }, e ?? 200);
 }), /**
 * 刷新当前tab页面
@@ -5136,11 +5138,11 @@ o2(s2, "reloadPage", (e) => {
 */
 o2(s2, "reloadPageWithMessageCallback", (e, t, i) => {
   t && t(e), setTimeout(function() {
-    u2.isInBrowser && window.location.reload();
+    d2.isInBrowser && window.location.reload();
   }, i ?? 200);
 });
 var n2 = /* @__PURE__ */ ((r) => (r.BasePathType_Appearance = "Appearance", r.BasePathType_Data = "Data", r.BasePathType_Themes = "Themes", r.BasePathType_ZhiTheme = "ZhiTheme", r.BasePathType_ThisPlugin = "ThisPlugin", r.BasePathType_AppData = "AppData", r.BasePathType_AppNpm = "AppNpm", r.BasePathType_AppService = "AppService", r.BasePathType_Absolute = "Absolute", r.BasePathType_None = "None", r))(n2 || {});
-var p2 = class {
+var u2 = class {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
@@ -5370,7 +5372,7 @@ var p2 = class {
    * 用户数据目录
    */
   static appDataFolder() {
-    const e = p2.siyuanWindow().process, t = p2.requireNpm("path");
+    const e = u2.siyuanWindow().process, t = u2.requireNpm("path");
     let i;
     if (e.platform === "darwin")
       i = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
@@ -5431,7 +5433,7 @@ var p2 = class {
     return this.joinPath(this.appNpmFolder(), "apps");
   }
 };
-var c2 = p2;
+var c2 = u2;
 o2(c2, "isInSiyuanWidget", () => s2.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
 * 思源笔记渲染窗口
 *
@@ -5443,46 +5445,48 @@ o2(c2, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && w
 * 依赖 npm
 *
 * @param libpath
+* @param win - 可选，执行窗口
 */
-o2(c2, "requireNpm", (e) => p2.requireLib(e, n2.BasePathType_Absolute)), /**
+o2(c2, "requireNpm", (e, t) => u2.requireLib(e, n2.BasePathType_Absolute, "", t)), /**
 * 引入依赖
 *
 * @param libpath - 依赖全路径
 * @param type - 可选，以谁的基本路径为准
 * @param pluginName - 可选，当前插件目录
+* @param win - 可选，执行窗口
 */
-o2(c2, "requireLib", (e, t, i) => {
-  const a = p2.getRequirePath(e, t, i), h = p2.siyuanWindow();
-  if (!h)
-    return __require(a);
-  if (typeof h.require < "u")
-    return h.require(a);
+o2(c2, "requireLib", (e, t, i, a) => {
+  const h = u2.getRequirePath(e, t, i), p = a ?? u2.siyuanWindow();
+  if (!p)
+    return __require(h);
+  if (typeof p.require < "u")
+    return p.require(h);
 }), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 appearance 的相对路径
 */
-o2(c2, "requireAppearanceLib", (e) => p2.requireLib(e, n2.BasePathType_Appearance)), /**
+o2(c2, "requireAppearanceLib", (e) => u2.requireLib(e, n2.BasePathType_Appearance)), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 data 的相对路径
 */
-o2(c2, "requireDataLib", (e) => p2.requireLib(e, n2.BasePathType_Data)), /**
+o2(c2, "requireDataLib", (e) => u2.requireLib(e, n2.BasePathType_Data)), /**
 * 引入依赖，以 theme 的基本路径为准
 *
 * @param libpath - 相对于 theme 的相对路径
 */
-o2(c2, "requireThemesLib", (e) => p2.requireLib(e, n2.BasePathType_Themes)), /**
+o2(c2, "requireThemesLib", (e) => u2.requireLib(e, n2.BasePathType_Themes)), /**
 * 引入依赖，以 ZhiTheme 的基本路径为准
 *
 * @param libpath - 相对于 ZhiTheme 的相对路径
 */
-o2(c2, "requireZhiThemeLib", (e) => p2.requireLib(e, n2.BasePathType_ZhiTheme)), /**
+o2(c2, "requireZhiThemeLib", (e) => u2.requireLib(e, n2.BasePathType_ZhiTheme)), /**
 * 引入依赖，以 AppService 的基本路径为准
 *
 * @param libpath - 相对于 AppService 的相对路径
 */
-o2(c2, "requireAppServiceLib", (e) => p2.requireLib(e, n2.BasePathType_AppService));
+o2(c2, "requireAppServiceLib", (e) => u2.requireLib(e, n2.BasePathType_AppService));
 var CustomCmd = class {
   /**
    * 使用 Electron 自带的 node 运行命令
@@ -5843,8 +5847,8 @@ var Mn = class {
 };
 var Qn = (n3, e, i) => {
   const u3 = e ?? "zhi", a = (l) => {
-    const r = l.getFullYear(), t = String(l.getMonth() + 1).padStart(2, "0"), y = String(l.getDate()).padStart(2, "0"), d = String(l.getHours()).padStart(2, "0"), c3 = String(l.getMinutes()).padStart(2, "0"), w2 = String(l.getSeconds()).padStart(2, "0");
-    return `${r}-${t}-${y} ${d}:${c3}:${w2}`;
+    const r = l.getFullYear(), t = String(l.getMonth() + 1).padStart(2, "0"), y = String(l.getDate()).padStart(2, "0"), d3 = String(l.getHours()).padStart(2, "0"), c3 = String(l.getMinutes()).padStart(2, "0"), w2 = String(l.getSeconds()).padStart(2, "0");
+    return `${r}-${t}-${y} ${d3}:${c3}:${w2}`;
   }, o3 = (l, r) => {
     const t = a(/* @__PURE__ */ new Date()), y = typeof r == "boolean" ? String(r) : r;
     y ? console.log(`[${u3}] [${t}] [DEBUG] [${n3}] ${l}`, y) : console.log(`[${u3}] [${t}] [DEBUG] [${n3}] ${l}`);
@@ -5931,8 +5935,8 @@ var Qi = class {
       let l = h;
       i && (l = this.addHoursToDate(new Date(h), 8).toISOString());
       const r = l.split("T"), t = r[0], y = r[1].split(".")[0];
-      let d = t + this.TIME_SPLIT + y;
-      u3 && (d = t), a = a.replace(h, d);
+      let d3 = t + this.TIME_SPLIT + y;
+      u3 && (d3 = t), a = a.replace(h, d3);
     }
     return a;
   }
@@ -7105,7 +7109,7 @@ function Lo(n3, e, { immediate: i, deep: u3, flush: a, onTrack: o3, onTrigger: g
     process.env.NODE_ENV !== "production" && h(f);
   })) : F(n3) ? e ? r = () => on(n3, l, 2) : r = () => {
     if (!(l && l.isUnmounted))
-      return d && d(), Ye(
+      return d3 && d3(), Ye(
         n3,
         l,
         3,
@@ -7115,35 +7119,35 @@ function Lo(n3, e, { immediate: i, deep: u3, flush: a, onTrack: o3, onTrigger: g
     const f = r;
     r = () => rn(f());
   }
-  let d, c3 = (f) => {
-    d = p3.onStop = () => {
+  let d3, c3 = (f) => {
+    d3 = p.onStop = () => {
       on(f, l, 4);
     };
   }, w2 = y ? new Array(n3.length).fill(Wn) : Wn;
   const m = () => {
-    if (p3.active)
+    if (p.active)
       if (e) {
-        const f = p3.run();
+        const f = p.run();
         (u3 || t || (y ? f.some(
           (au, uu) => vn(au, w2[uu])
-        ) : vn(f, w2))) && (d && d(), Ye(e, l, 3, [
+        ) : vn(f, w2))) && (d3 && d3(), Ye(e, l, 3, [
           f,
           // pass undefined as the old value when it's changed for the first time
           w2 === Wn ? void 0 : y && w2[0] === Wn ? [] : w2,
           c3
         ]), w2 = f);
       } else
-        p3.run();
+        p.run();
   };
   m.allowRecurse = !!e;
   let J;
   a === "sync" ? J = m : a === "post" ? J = () => di(m, l && l.suspense) : (m.pre = true, l && (m.id = l.uid), J = () => Ke(m));
-  const p3 = new ku(r, J);
-  return process.env.NODE_ENV !== "production" && (p3.onTrack = o3, p3.onTrigger = g3), e ? i ? m() : w2 = p3.run() : a === "post" ? di(
-    p3.run.bind(p3),
+  const p = new ku(r, J);
+  return process.env.NODE_ENV !== "production" && (p.onTrack = o3, p.onTrigger = g3), e ? i ? m() : w2 = p.run() : a === "post" ? di(
+    p.run.bind(p),
     l && l.suspense
-  ) : p3.run(), () => {
-    p3.stop(), l && l.scope && tu(l.scope.effects, p3);
+  ) : p.run(), () => {
+    p.stop(), l && l.scope && tu(l.scope.effects, p);
   };
 }
 function Zo(n3, e, i) {
@@ -7212,9 +7216,9 @@ var ko = {
       return true;
     let l;
     if (e[0] !== "$") {
-      const d = g3[e];
-      if (d !== void 0)
-        switch (d) {
+      const d3 = g3[e];
+      if (d3 !== void 0)
+        switch (d3) {
           case 1:
             return u3[e];
           case 2:
@@ -7683,8 +7687,8 @@ function Io() {
   function o3(t) {
     const y = [];
     t.type.props && t.props && y.push(g3("props", j(t.props))), t.setupState !== K && y.push(g3("setup", t.setupState)), t.data !== K && y.push(g3("data", j(t.data)));
-    const d = h(t, "computed");
-    d && y.push(g3("computed", d));
+    const d3 = h(t, "computed");
+    d3 && y.push(g3("computed", d3));
     const c3 = h(t, "inject");
     return c3 && y.push(g3("injected", c3)), y.push([
       "div",
@@ -7715,11 +7719,11 @@ function Io() {
         {
           style: "padding-left:1.25em"
         },
-        ...Object.keys(y).map((d) => [
+        ...Object.keys(y).map((d3) => [
           "div",
           {},
-          ["span", u3, d + ": "],
-          s3(y[d], false)
+          ["span", u3, d3 + ": "],
+          s3(y[d3], false)
         ])
       ]
     ] : ["span", {}];
@@ -7728,17 +7732,17 @@ function Io() {
     return typeof t == "number" ? ["span", e, t] : typeof t == "string" ? ["span", i, JSON.stringify(t)] : typeof t == "boolean" ? ["span", u3, t] : x(t) ? ["object", { object: y ? j(t) : t }] : ["span", i, String(t)];
   }
   function h(t, y) {
-    const d = t.type;
-    if (F(d))
+    const d3 = t.type;
+    if (F(d3))
       return;
     const c3 = {};
     for (const w2 in t.ctx)
-      l(d, w2, y) && (c3[w2] = t.ctx[w2]);
+      l(d3, w2, y) && (c3[w2] = t.ctx[w2]);
     return c3;
   }
-  function l(t, y, d) {
-    const c3 = t[d];
-    if (Y(c3) && c3.includes(y) || x(c3) && y in c3 || t.extends && l(t.extends, y, d) || t.mixins && t.mixins.some((w2) => l(w2, y, d)))
+  function l(t, y, d3) {
+    const c3 = t[d3];
+    if (Y(c3) && c3.includes(y) || x(c3) && y in c3 || t.extends && l(t.extends, y, d3) || t.mixins && t.mixins.some((w2) => l(w2, y, d3)))
       return true;
   }
   function r(t) {
@@ -8548,29 +8552,29 @@ function ze(n3, e) {
 `, e - 1));
 }
 function os(n3, e, i) {
-  var u3, a, o3, g3, s3, h, l, r, t = n3.kind, y = n3.result, d;
-  if (d = n3.input.charCodeAt(n3.position), B(d) || dn(d) || d === 35 || d === 38 || d === 42 || d === 33 || d === 124 || d === 62 || d === 39 || d === 34 || d === 37 || d === 64 || d === 96 || (d === 63 || d === 45) && (a = n3.input.charCodeAt(n3.position + 1), B(a) || i && dn(a)))
+  var u3, a, o3, g3, s3, h, l, r, t = n3.kind, y = n3.result, d3;
+  if (d3 = n3.input.charCodeAt(n3.position), B(d3) || dn(d3) || d3 === 35 || d3 === 38 || d3 === 42 || d3 === 33 || d3 === 124 || d3 === 62 || d3 === 39 || d3 === 34 || d3 === 37 || d3 === 64 || d3 === 96 || (d3 === 63 || d3 === 45) && (a = n3.input.charCodeAt(n3.position + 1), B(a) || i && dn(a)))
     return false;
-  for (n3.kind = "scalar", n3.result = "", o3 = g3 = n3.position, s3 = false; d !== 0; ) {
-    if (d === 58) {
+  for (n3.kind = "scalar", n3.result = "", o3 = g3 = n3.position, s3 = false; d3 !== 0; ) {
+    if (d3 === 58) {
       if (a = n3.input.charCodeAt(n3.position + 1), B(a) || i && dn(a))
         break;
-    } else if (d === 35) {
+    } else if (d3 === 35) {
       if (u3 = n3.input.charCodeAt(n3.position - 1), B(u3))
         break;
     } else {
-      if (n3.position === n3.lineStart && oe(n3) || i && dn(d))
+      if (n3.position === n3.lineStart && oe(n3) || i && dn(d3))
         break;
-      if (R(d))
+      if (R(d3))
         if (h = n3.line, l = n3.lineStart, r = n3.lineIndent, Z(n3, false, -1), n3.lineIndent >= e) {
-          s3 = true, d = n3.input.charCodeAt(n3.position);
+          s3 = true, d3 = n3.input.charCodeAt(n3.position);
           continue;
         } else {
           n3.position = g3, n3.line = h, n3.lineStart = l, n3.lineIndent = r;
           break;
         }
     }
-    s3 && ($(n3, o3, g3, false), ze(n3, n3.line - h), o3 = g3 = n3.position, s3 = false), gn(d) || (g3 = n3.position + 1), d = n3.input.charCodeAt(++n3.position);
+    s3 && ($(n3, o3, g3, false), ze(n3, n3.line - h), o3 = g3 = n3.position, s3 = false), gn(d3) || (g3 = n3.position + 1), d3 = n3.input.charCodeAt(++n3.position);
   }
   return $(n3, o3, g3, false), n3.result ? true : (n3.kind = t, n3.result = y, false);
 }
@@ -8613,17 +8617,17 @@ function ss(n3, e) {
   b3(n3, "unexpected end of the stream within a double quoted scalar");
 }
 function hs(n3, e) {
-  var i = true, u3, a, o3, g3 = n3.tag, s3, h = n3.anchor, l, r, t, y, d, c3 = /* @__PURE__ */ Object.create(null), w2, m, J, p3;
-  if (p3 = n3.input.charCodeAt(n3.position), p3 === 91)
-    r = 93, d = false, s3 = [];
-  else if (p3 === 123)
-    r = 125, d = true, s3 = {};
+  var i = true, u3, a, o3, g3 = n3.tag, s3, h = n3.anchor, l, r, t, y, d3, c3 = /* @__PURE__ */ Object.create(null), w2, m, J, p;
+  if (p = n3.input.charCodeAt(n3.position), p === 91)
+    r = 93, d3 = false, s3 = [];
+  else if (p === 123)
+    r = 125, d3 = true, s3 = {};
   else
     return false;
-  for (n3.anchor !== null && (n3.anchorMap[n3.anchor] = s3), p3 = n3.input.charCodeAt(++n3.position); p3 !== 0; ) {
-    if (Z(n3, true, e), p3 = n3.input.charCodeAt(n3.position), p3 === r)
-      return n3.position++, n3.tag = g3, n3.anchor = h, n3.kind = d ? "mapping" : "sequence", n3.result = s3, true;
-    i ? p3 === 44 && b3(n3, "expected the node content, but found ','") : b3(n3, "missed comma between flow collection entries"), m = w2 = J = null, t = y = false, p3 === 63 && (l = n3.input.charCodeAt(n3.position + 1), B(l) && (t = y = true, n3.position++, Z(n3, true, e))), u3 = n3.line, a = n3.lineStart, o3 = n3.position, Yn(n3, e, Un, false, true), m = n3.tag, w2 = n3.result, Z(n3, true, e), p3 = n3.input.charCodeAt(n3.position), (y || n3.line === u3) && p3 === 58 && (t = true, p3 = n3.input.charCodeAt(++n3.position), Z(n3, true, e), Yn(n3, e, Un, false, true), J = n3.result), d ? bn(n3, s3, c3, m, w2, J, u3, a, o3) : t ? s3.push(bn(n3, null, c3, m, w2, J, u3, a, o3)) : s3.push(w2), Z(n3, true, e), p3 = n3.input.charCodeAt(n3.position), p3 === 44 ? (i = true, p3 = n3.input.charCodeAt(++n3.position)) : i = false;
+  for (n3.anchor !== null && (n3.anchorMap[n3.anchor] = s3), p = n3.input.charCodeAt(++n3.position); p !== 0; ) {
+    if (Z(n3, true, e), p = n3.input.charCodeAt(n3.position), p === r)
+      return n3.position++, n3.tag = g3, n3.anchor = h, n3.kind = d3 ? "mapping" : "sequence", n3.result = s3, true;
+    i ? p === 44 && b3(n3, "expected the node content, but found ','") : b3(n3, "missed comma between flow collection entries"), m = w2 = J = null, t = y = false, p === 63 && (l = n3.input.charCodeAt(n3.position + 1), B(l) && (t = y = true, n3.position++, Z(n3, true, e))), u3 = n3.line, a = n3.lineStart, o3 = n3.position, Yn(n3, e, Un, false, true), m = n3.tag, w2 = n3.result, Z(n3, true, e), p = n3.input.charCodeAt(n3.position), (y || n3.line === u3) && p === 58 && (t = true, p = n3.input.charCodeAt(++n3.position), Z(n3, true, e), Yn(n3, e, Un, false, true), J = n3.result), d3 ? bn(n3, s3, c3, m, w2, J, u3, a, o3) : t ? s3.push(bn(n3, null, c3, m, w2, J, u3, a, o3)) : s3.push(w2), Z(n3, true, e), p = n3.input.charCodeAt(n3.position), p === 44 ? (i = true, p = n3.input.charCodeAt(++n3.position)) : i = false;
   }
   b3(n3, "unexpected end of the stream within a flow collection");
 }
@@ -8691,20 +8695,20 @@ function Li(n3, e) {
   return s3 ? (n3.tag = u3, n3.anchor = a, n3.kind = "sequence", n3.result = o3, true) : false;
 }
 function ts(n3, e, i) {
-  var u3, a, o3, g3, s3, h, l = n3.tag, r = n3.anchor, t = {}, y = /* @__PURE__ */ Object.create(null), d = null, c3 = null, w2 = null, m = false, J = false, p3;
+  var u3, a, o3, g3, s3, h, l = n3.tag, r = n3.anchor, t = {}, y = /* @__PURE__ */ Object.create(null), d3 = null, c3 = null, w2 = null, m = false, J = false, p;
   if (n3.firstTabInLine !== -1)
     return false;
-  for (n3.anchor !== null && (n3.anchorMap[n3.anchor] = t), p3 = n3.input.charCodeAt(n3.position); p3 !== 0; ) {
-    if (!m && n3.firstTabInLine !== -1 && (n3.position = n3.firstTabInLine, b3(n3, "tab characters must not be used in indentation")), u3 = n3.input.charCodeAt(n3.position + 1), o3 = n3.line, (p3 === 63 || p3 === 58) && B(u3))
-      p3 === 63 ? (m && (bn(n3, t, y, d, c3, null, g3, s3, h), d = c3 = w2 = null), J = true, m = true, a = true) : m ? (m = false, a = true) : b3(n3, "incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line"), n3.position += 1, p3 = u3;
+  for (n3.anchor !== null && (n3.anchorMap[n3.anchor] = t), p = n3.input.charCodeAt(n3.position); p !== 0; ) {
+    if (!m && n3.firstTabInLine !== -1 && (n3.position = n3.firstTabInLine, b3(n3, "tab characters must not be used in indentation")), u3 = n3.input.charCodeAt(n3.position + 1), o3 = n3.line, (p === 63 || p === 58) && B(u3))
+      p === 63 ? (m && (bn(n3, t, y, d3, c3, null, g3, s3, h), d3 = c3 = w2 = null), J = true, m = true, a = true) : m ? (m = false, a = true) : b3(n3, "incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line"), n3.position += 1, p = u3;
     else {
       if (g3 = n3.line, s3 = n3.lineStart, h = n3.position, !Yn(n3, i, Ba, false, true))
         break;
       if (n3.line === o3) {
-        for (p3 = n3.input.charCodeAt(n3.position); gn(p3); )
-          p3 = n3.input.charCodeAt(++n3.position);
-        if (p3 === 58)
-          p3 = n3.input.charCodeAt(++n3.position), B(p3) || b3(n3, "a whitespace character is expected after the key-value separator within a block mapping"), m && (bn(n3, t, y, d, c3, null, g3, s3, h), d = c3 = w2 = null), J = true, m = false, a = false, d = n3.tag, c3 = n3.result;
+        for (p = n3.input.charCodeAt(n3.position); gn(p); )
+          p = n3.input.charCodeAt(++n3.position);
+        if (p === 58)
+          p = n3.input.charCodeAt(++n3.position), B(p) || b3(n3, "a whitespace character is expected after the key-value separator within a block mapping"), m && (bn(n3, t, y, d3, c3, null, g3, s3, h), d3 = c3 = w2 = null), J = true, m = false, a = false, d3 = n3.tag, c3 = n3.result;
         else if (J)
           b3(n3, "can not read an implicit mapping pair; a colon is missed");
         else
@@ -8714,12 +8718,12 @@ function ts(n3, e, i) {
       else
         return n3.tag = l, n3.anchor = r, true;
     }
-    if ((n3.line === o3 || n3.lineIndent > e) && (m && (g3 = n3.line, s3 = n3.lineStart, h = n3.position), Yn(n3, e, $n, true, a) && (m ? c3 = n3.result : w2 = n3.result), m || (bn(n3, t, y, d, c3, w2, g3, s3, h), d = c3 = w2 = null), Z(n3, true, -1), p3 = n3.input.charCodeAt(n3.position)), (n3.line === o3 || n3.lineIndent > e) && p3 !== 0)
+    if ((n3.line === o3 || n3.lineIndent > e) && (m && (g3 = n3.line, s3 = n3.lineStart, h = n3.position), Yn(n3, e, $n, true, a) && (m ? c3 = n3.result : w2 = n3.result), m || (bn(n3, t, y, d3, c3, w2, g3, s3, h), d3 = c3 = w2 = null), Z(n3, true, -1), p = n3.input.charCodeAt(n3.position)), (n3.line === o3 || n3.lineIndent > e) && p !== 0)
       b3(n3, "bad indentation of a mapping entry");
     else if (n3.lineIndent < e)
       break;
   }
-  return m && bn(n3, t, y, d, c3, null, g3, s3, h), J && (n3.tag = l, n3.anchor = r, n3.kind = "mapping", n3.result = t), J;
+  return m && bn(n3, t, y, d3, c3, null, g3, s3, h), J && (n3.tag = l, n3.anchor = r, n3.kind = "mapping", n3.result = t), J;
 }
 function rs(n3) {
   var e, i = false, u3 = false, a, o3, g3;
@@ -8760,7 +8764,7 @@ function ds(n3) {
   return n3.position === e && b3(n3, "name of an alias node must contain at least one character"), i = n3.input.slice(e, n3.position), nn.call(n3.anchorMap, i) || b3(n3, 'unidentified alias "' + i + '"'), n3.result = n3.anchorMap[i], Z(n3, true, -1), true;
 }
 function Yn(n3, e, i, u3, a) {
-  var o3, g3, s3, h = 1, l = false, r = false, t, y, d, c3, w2, m;
+  var o3, g3, s3, h = 1, l = false, r = false, t, y, d3, c3, w2, m;
   if (n3.listener !== null && n3.listener("open", n3), n3.tag = null, n3.anchor = null, n3.kind = null, n3.result = null, o3 = g3 = s3 = $n === i || xa === i, u3 && Z(n3, true, -1) && (l = true, n3.lineIndent > e ? h = 1 : n3.lineIndent === e ? h = 0 : n3.lineIndent < e && (h = -1)), h === 1)
     for (; rs(n3) || ys(n3); )
       Z(n3, true, -1) ? (l = true, s3 = o3, n3.lineIndent > e ? h = 1 : n3.lineIndent === e ? h = 0 : n3.lineIndent < e && (h = -1)) : s3 = false;
@@ -8776,9 +8780,9 @@ function Yn(n3, e, i, u3, a) {
     if (nn.call(n3.typeMap[n3.kind || "fallback"], n3.tag))
       c3 = n3.typeMap[n3.kind || "fallback"][n3.tag];
     else
-      for (c3 = null, d = n3.typeMap.multi[n3.kind || "fallback"], t = 0, y = d.length; t < y; t += 1)
-        if (n3.tag.slice(0, d[t].tag.length) === d[t].tag) {
-          c3 = d[t];
+      for (c3 = null, d3 = n3.typeMap.multi[n3.kind || "fallback"], t = 0, y = d3.length; t < y; t += 1)
+        if (n3.tag.slice(0, d3[t].tag.length) === d3[t].tag) {
+          c3 = d3[t];
           break;
         }
     c3 || b3(n3, "unknown tag !<" + n3.tag + ">"), n3.result !== null && c3.kind !== n3.kind && b3(n3, "unacceptable node kind for !<" + n3.tag + '> tag; it should be "' + c3.kind + '", not "' + n3.kind + '"'), c3.resolve(n3.result, n3.tag) ? (n3.result = c3.construct(n3.result, n3.tag), n3.anchor !== null && (n3.anchorMap[n3.anchor] = n3.result)) : b3(n3, "cannot resolve a node with !<" + n3.tag + "> explicit tag");
@@ -8992,7 +8996,7 @@ var qa = 3;
 var nu = 4;
 var tn = 5;
 function Rs(n3, e, i, u3, a, o3, g3, s3) {
-  var h, l = 0, r = null, t = false, y = false, d = u3 !== -1, c3 = -1, w2 = Ws(Cn(n3, 0)) && Ks(Cn(n3, n3.length - 1));
+  var h, l = 0, r = null, t = false, y = false, d3 = u3 !== -1, c3 = -1, w2 = Ws(Cn(n3, 0)) && Ks(Cn(n3, n3.length - 1));
   if (e || g3)
     for (h = 0; h < n3.length; l >= 65536 ? h += 2 : h++) {
       if (l = Cn(n3, h), !Fn(l))
@@ -9002,13 +9006,13 @@ function Rs(n3, e, i, u3, a, o3, g3, s3) {
   else {
     for (h = 0; h < n3.length; l >= 65536 ? h += 2 : h++) {
       if (l = Cn(n3, h), l === Tn)
-        t = true, d && (y = y || // Foldable line = too long, and not more-indented.
+        t = true, d3 && (y = y || // Foldable line = too long, and not more-indented.
         h - c3 - 1 > u3 && n3[c3 + 1] !== " ", c3 = h);
       else if (!Fn(l))
         return tn;
       w2 = w2 && Ci(l, r, s3), r = l;
     }
-    y = y || d && h - c3 - 1 > u3 && n3[c3 + 1] !== " ";
+    y = y || d3 && h - c3 - 1 > u3 && n3[c3 + 1] !== " ";
   }
   return !t && !y ? w2 && !g3 && !a(n3) ? Va : o3 === Hn ? tn : Je : i > 9 && $a(n3) ? tn : g3 ? o3 === Hn ? tn : Je : y ? nu : qa;
 }
@@ -9478,15 +9482,15 @@ var iu = class {
     o3.length && (a = this.replaceString(a, o3, u3.ignore));
     const g3 = u3.ignore && u3.ignore.length > 0 ? function(h, l) {
       let r = [];
-      for (let d = 0; d < l.length; d++) {
-        const c3 = l[d];
+      for (let d3 = 0; d3 < l.length; d3++) {
+        const c3 = l[d3];
         let w2 = -1;
         for (; (w2 = h.indexOf(c3, w2 + 1)) > -1; )
           r.push([w2, w2 + c3.length - 1]);
       }
-      const t = r.sort((d, c3) => d[0] - c3[0] || d[1] - c3[1]);
+      const t = r.sort((d3, c3) => d3[0] - c3[0] || d3[1] - c3[1]);
       let y;
-      return r = [], t.forEach((d) => !y || d[0] > y[1] + 1 ? r.push(y = d) : d[1] > y[1] && (y[1] = d[1])), r;
+      return r = [], t.forEach((d3) => !y || d3[0] > y[1] + 1 ? r.push(y = d3) : d3[1] > y[1] && (y[1] = d3[1])), r;
     }(a, u3.ignore) : [];
     a = this.codeMapReplace(a, g3, u3), u3.trim && (a = a.trim());
     const s3 = this.formatReplaceOption(u3.replaceAfter);

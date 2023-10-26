@@ -26,12 +26,12 @@ module.exports = {
       },
       {
         name: "zhi-rubick-core",
-        alias: "pd",
+        alias: "store",
         version: "0.1.1",
         libpath: "libs/zhi-rubick-core/index.cjs",
         baseType: "ThisPlugin",
         format: "cjs",
-        importType: "node",
+        importType: "require",
         runAs: ["Siyuan_RendererWindow"],
         initParams: [],
         order: 3,
@@ -39,9 +39,9 @@ module.exports = {
     ],
     server: [
       {
-        name: "python-hello",
+        name: "local-service-weekly-log",
         version: "0.0.1",
-        libpath: "services/python-hello/hello.py",
+        libpath: "services/local-service-weekly-log/index.py",
         baseType: "ThisPlugin",
         format: "py",
         importType: "python",

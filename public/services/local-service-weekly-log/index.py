@@ -3,4 +3,4 @@
 # ========================================================
 
 if __name__ == "__main__":
-   print("hello, python service")
+   print("hello, python service for weekly log from nocodb")
