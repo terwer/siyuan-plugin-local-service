@@ -526,24 +526,18 @@ var SiyuanUtils = class {
   static mainRequireStaticScript(name) {
     return c.requireDataLib(`/plugins/siyuan-plugin-local-service/libs/zhi-rubick-core/${name}`);
   }
-  // ==========================================
-  static requireStaticScript(name) {
-    return c.requireLib(
-      `libs/zhi-rubick-core/${name}`,
-      n.BasePathType_ThisPlugin,
-      "siyuan-plugin-local-service",
-      window
-    );
+  static appServiceFolder() {
+    return c.appServiceFolder();
   }
 };
 var siyuanUtils_default = SiyuanUtils;
 
 // src/browsers/main.ts
 var mainWin = siyuanUtils_default.mainWindow();
-var path = mainWin.require("path");
-var { app, BrowserWindow, getCurrentWindow, nativeTheme } = mainWin.require("@electron/remote");
+var { app, BrowserWindow, getCurrentWindow, nativeTheme, ipcMain } = mainWin.require("@electron/remote");
 var remote = mainWin.require("@electron/remote");
 var remoteMain = remote.require("@electron/remote/main");
+var { constants } = mainWin.require(__dirname + "/constants.js");
 var main_default = () => {
   let win;
   const init = () => {
@@ -571,7 +565,7 @@ var main_default = () => {
         contextIsolation: false,
         webviewTag: true,
         nodeIntegration: true,
-        preload: siyuanUtils_default.requireStaticScript("preload.js"),
+        preload: __dirname + "/preload.js",
         spellcheck: false
       }
     });
@@ -579,10 +573,13 @@ var main_default = () => {
     win.webContents.userAgent = `rubick/${app.getVersion()} https://github.com/rubickCenter/rubick Electron`;
     const appUrl = `${siyuanUtils_default.appBase()}/index.html`;
     win.loadURL(appUrl);
-    win.on("closed", () => {
-      win = void 0;
-    });
     win.on("show", () => {
+      win.webContents.executeJavaScript(`window.rc = {
+        cwd: "${__dirname}",
+        device: {
+          appServiceFolder: "${siyuanUtils_default.appServiceFolder()}"
+        }
+      }`);
       win.webContents.executeJavaScript(
         `window.rubick && window.rubick.hooks && typeof window.rubick.hooks.onShow === "function" && window.rubick.hooks.onShow()`
       );
@@ -593,7 +590,20 @@ var main_default = () => {
         `window.rubick && window.rubick.hooks && typeof window.rubick.hooks.onHide === "function" && window.rubick.hooks.onHide()`
       );
     });
+    win.on("closed", () => {
+      win = void 0;
+    });
     win.on("blur", async () => {
+    });
+    ipcMain.on(constants.RUBICK_MSG_TRIGGER_KEY, (event, arg) => {
+      console.log(`\u63A5\u6536\u5230\u6E32\u67D3\u8FDB\u7A0B\u53D1\u9001\u7684\u6D88\u606F, event:${event}, arg =>`, arg);
+      switch (arg.type) {
+        default:
+          event.returnValue = void 0;
+          console.log("\u6D88\u606F\u4F9D\u6210\u529F\u5904\u7406\uFF0C\u51C6\u5907\u8FD4\u56DE\u7ED3\u679C\u7ED9\u6E32\u67D3\u8FDB\u7A0B =>", event.returnValue);
+          console.warn("msg type is not supported");
+          break;
+      }
     });
   };
   const getWindow = () => win;
@@ -639,8 +649,17 @@ var w = (n2, $, p) => {
 
 // src/main/index.ts
 var App = class {
+  /**
+   * 窗口创建器对象，包含初始化和获取窗口的方法
+   */
   windowCreator;
+  /**
+   * 日志记录器对象
+   */
   logger = w("zi-rubick-core", "zhi", false);
+  /**
+   * 创建一个新的应用程序实例
+   */
   constructor() {
     this.windowCreator = main_default();
   }

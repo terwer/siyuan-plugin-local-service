@@ -9,7 +9,9 @@ import fg from "fast-glob"
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w || false
 const isWindows = process.platform === "win32"
-let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service"
+// let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service"
+// Zhangyue
+let devDistDir = "/Users/zhangyue/Documents/terwer/SiyuanWorkspace/test/data/plugins/siyuan-plugin-local-service"
 if (isWindows) {
   // Home
   // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\plugins\\siyuan-plugin-local-service"

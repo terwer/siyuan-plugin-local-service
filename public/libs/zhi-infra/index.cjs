@@ -9922,7 +9922,7 @@ var import_path3 = __toESM(require("path"), 1);
 // package.json
 var package_default = {
   name: "zhi-infra",
-  version: "0.19.3",
+  version: "0.20.0",
   type: "module",
   description: "basic issues for zhi",
   main: "./dist/index.cjs",
@@ -9937,9 +9937,9 @@ var package_default = {
     "infra"
   ],
   scripts: {
-    dev: "zhi-build --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-local-service/libs/zhi-infra",
+    dev: "zhi-build --watch --outDir=/Users/zhangyue/Documents/terwer/SiyuanWorkspace/test/data/plugins/siyuan-plugin-local-service/libs/zhi-infra",
     build: "zhi-build --production",
-    localBuild: "zhi-build --production --outDir=/Users/terwer/Documents/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra"
+    localBuild: "zhi-build --production --outDir=/Users/zhangyue/Documents/terwer/mydocs/siyuan-plugins/siyuan-plugin-local-service/public/libs/zhi-infra"
   },
   devDependencies: {
     "@terwer/esbuild-config-custom": "workspace:*",
