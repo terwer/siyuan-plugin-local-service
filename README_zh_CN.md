@@ -6,13 +6,14 @@
 
 一个连接思源笔记与本地服务的思源笔记插件
 
-## 新手快速体验 -【下版本实现】
+## 新手快速体验 -【尚未实现】
 
 ```js
 await zhi.npm.checkAndInitNode()
-await zhi.store.getPackage("python-hello")
-await zhi.store.getPackage("local-service-chatgpt")
-await zhi.store.getPackage("local-service-nocodb")
+zhi.app.store.rubick.bootstrap()
+await zhi.app.store.rubick.getPackage("python-hello")
+await zhi.app.store.rubick.getPackage("local-service-chatgpt")
+await zhi.app.store.rubick.getPackage("local-service-nocodb")
 zhi.sc.stopAll()
 zhi.sc.startAll()
 ```

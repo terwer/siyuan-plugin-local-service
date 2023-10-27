@@ -25,10 +25,10 @@ module.exports = {
         order: 2,
       },
       {
-        name: "zhi-rubick-core",
+        name: "zhi-rubick-ui",
         alias: "store",
         version: "0.1.1",
-        libpath: "libs/zhi-rubick-core/index.cjs",
+        libpath: "libs/zhi-rubick-ui/index.cjs",
         baseType: "ThisPlugin",
         format: "cjs",
         importType: "require",

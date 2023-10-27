@@ -25,20 +25,20 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/common/constants/common.ts
-var WINDOW_WIDTH = 688;
-var WINDOW_HEIGHT = 60;
+var WINDOW_WIDTH = 1280;
+var WINDOW_HEIGHT = 768;
 var WINDOW_MIN_HEIGHT = 60;
 
 // ../zhi-device/dist/index.js
 var b = Object.defineProperty;
 var g = (r, e, t) => e in r ? b(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t;
 var o = (r, e, t) => (g(r, typeof e != "symbol" ? e + "" : e, t), t);
-var d = class {
+var s = class s2 {
   /**
    * 检测是否运行在Chrome插件中
    */
   static isInChromeExtension() {
-    return d.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
+    return s2.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
   }
   /**
    * 复制网页内容到剪贴板
@@ -54,7 +54,6 @@ var d = class {
     }
   }
 };
-var s = d;
 o(s, "isNode", typeof process < "u" && process.versions != null && process.versions.node != null), /**
 * 是否在浏览器环境
 */
@@ -67,7 +66,7 @@ o(s, "BrowserSeparator", "/"), /**
 o(s, "isElectron", () => typeof process < "u" && process.versions != null && process.versions.electron != null), /**
 * 是否有Node环境，目前包括 Electron 和 Node
 */
-o(s, "hasNodeEnv", () => d.isElectron() || d.isNode), /**
+o(s, "hasNodeEnv", () => s.isElectron() || s.isNode), /**
 * 通用的从 url 中获取获取参数的方法，优先获取查询参数，然后获取 hash 参数与
 *
 * @param key - 参数
@@ -76,19 +75,19 @@ o(s, "hasNodeEnv", () => d.isElectron() || d.isNode), /**
 * @since 0.0.1
 */
 o(s, "getQueryParam", (e) => {
-  if (!d.isInBrowser)
+  if (!s.isInBrowser)
     return "";
   const t = window.location.href, i = t.indexOf("?");
   if (i !== -1) {
-    const h = t.indexOf("#", i), p = h !== -1 ? t.substring(i + 1, h) : t.substring(i + 1), y = new URLSearchParams(p).get(e);
+    const c = t.indexOf("#", i), p = c !== -1 ? t.substring(i + 1, c) : t.substring(i + 1), y = new URLSearchParams(p).get(e);
     if (y)
       return y;
   }
   const a = t.indexOf("#");
   if (a !== -1) {
-    const h = t.substring(a + 1), w2 = new URLSearchParams(h).get(e);
-    if (w2)
-      return w2;
+    const c = t.substring(a + 1), l = new URLSearchParams(c).get(e);
+    if (l)
+      return l;
   }
   return "";
 }), /**
@@ -113,9 +112,9 @@ o(s, "replaceUrlParam", (e, t, i) => {
   const a = new RegExp("\\b(" + t + "=).*?(&|#|$)");
   if (e.search(a) >= 0)
     return e.replace(a, "$1" + i + "$2");
-  const [h, p] = e.split("#"), [w2, y] = h.split("?"), m = new URLSearchParams(y);
+  const [c, p] = e.split("#"), [l, y] = c.split("?"), m = new URLSearchParams(y);
   m.set(t, i);
-  const f = m.toString(), P = w2 + (f ? "?" + f : "");
+  const f = m.toString(), P = l + (f ? "?" + f : "");
   return p ? P + "#" + p : P;
 }), /**
 * 设置url参数
@@ -126,11 +125,11 @@ o(s, "replaceUrlParam", (e, t, i) => {
 */
 o(s, "setUrlParameter", (e, t, i) => {
   if (e.includes(t))
-    return d.replaceUrlParam(e, t, i);
+    return s.replaceUrlParam(e, t, i);
   const a = e.split("#");
-  let h = a[0];
+  let c = a[0];
   const p = a[1];
-  return h.includes("?") ? h += `&${t}=${i}` : h += `?${t}=${i}`, p && (h += "#" + p), h;
+  return c.includes("?") ? c += `&${t}=${i}` : c += `?${t}=${i}`, p && (c += "#" + p), c;
 }), /**
 * 重新加载指定tab
 *
@@ -139,9 +138,9 @@ o(s, "setUrlParameter", (e, t, i) => {
 */
 o(s, "reloadTabPage", (e, t) => {
   setTimeout(function() {
-    if (d.isInBrowser) {
+    if (s.isInBrowser) {
       const i = window.location.href;
-      window.location.href = d.setUrlParameter(i, "tab", e);
+      window.location.href = s.setUrlParameter(i, "tab", e);
     }
   }, t ?? 200);
 }), /**
@@ -151,7 +150,7 @@ o(s, "reloadTabPage", (e, t) => {
 */
 o(s, "reloadPage", (e) => {
   setTimeout(function() {
-    d.isInBrowser && window.location.reload();
+    s.isInBrowser && window.location.reload();
   }, e ?? 200);
 }), /**
 * 刷新当前tab页面
@@ -162,16 +161,17 @@ o(s, "reloadPage", (e) => {
 */
 o(s, "reloadPageWithMessageCallback", (e, t, i) => {
   t && t(e), setTimeout(function() {
-    d.isInBrowser && window.location.reload();
+    s.isInBrowser && window.location.reload();
   }, i ?? 200);
 });
+var u = s;
 var n = /* @__PURE__ */ ((r) => (r.BasePathType_Appearance = "Appearance", r.BasePathType_Data = "Data", r.BasePathType_Themes = "Themes", r.BasePathType_ZhiTheme = "ZhiTheme", r.BasePathType_ThisPlugin = "ThisPlugin", r.BasePathType_AppData = "AppData", r.BasePathType_AppNpm = "AppNpm", r.BasePathType_AppService = "AppService", r.BasePathType_Absolute = "Absolute", r.BasePathType_None = "None", r))(n || {});
-var u = class {
+var h = class h2 {
   /**
    * 检测是否运行在思源打开的浏览器中
    */
   static isInSiyuanBrowser() {
-    return s.isInBrowser ? typeof window.siyuan < "u" && typeof window.Lute < "u" : false;
+    return u.isInBrowser ? typeof window.siyuan < "u" && typeof window.Lute < "u" : false;
   }
   /**
    * 思源笔记 window 对象
@@ -191,7 +191,7 @@ var u = class {
    * @param pluginName - 可选，当前插件目录
    */
   static getRequirePath(e, t, i) {
-    if (!s.hasNodeEnv())
+    if (!u.hasNodeEnv())
       throw new Error("require ony works on node env");
     let a = e;
     switch (t) {
@@ -274,11 +274,11 @@ var u = class {
    * @param pluginName - 可选，当前插件目录
    */
   static async importJs(e, t, i) {
-    const a = this.getImportPath(e, t, i), { default: h } = await import(
+    const a = this.getImportPath(e, t, i), { default: c } = await import(
       /* @vite-ignore */
       a
     );
-    return h;
+    return c;
   }
   /**
    * 引入 zhi 主题的 js - 以 zhi 主题 的根路径为基本路径
@@ -297,7 +297,7 @@ var u = class {
    * @param paths - 路径数组
    */
   static joinPath(...e) {
-    if (s.hasNodeEnv()) {
+    if (u.hasNodeEnv()) {
       const t = this.requireNpm("path");
       if (t)
         return t.join(...e);
@@ -305,7 +305,7 @@ var u = class {
     return this.browserJoinPath(...e);
   }
   static browserJoinPath(...e) {
-    return e.join(s.BrowserSeparator);
+    return e.join(u.BrowserSeparator);
   }
   /**
    * 思源笔记 workspace 目录
@@ -363,7 +363,7 @@ var u = class {
    * @since 0.1.0
    */
   static siyuanThemePath() {
-    if (s.hasNodeEnv())
+    if (u.hasNodeEnv())
       return this.joinPath(this.siyuanAppearancePath(), "themes");
     {
       const e = this.siyuanWindow();
@@ -396,7 +396,7 @@ var u = class {
    * 用户数据目录
    */
   static appDataFolder() {
-    const e = u.siyuanWindow().process, t = u.requireNpm("path");
+    const e = h2.siyuanWindow().process, t = h2.requireNpm("path");
     let i;
     if (e.platform === "darwin")
       i = t.join(e.env.HOME ?? "/Users/terwer", "/Library/Application Support");
@@ -457,21 +457,20 @@ var u = class {
     return this.joinPath(this.appNpmFolder(), "apps");
   }
 };
-var c = u;
-o(c, "isInSiyuanWidget", () => s.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
+o(h, "isInSiyuanWidget", () => u.isInBrowser ? typeof window.siyuan > "u" && typeof window.parent.process < "u" && window.parent.process.versions != null && window.parent.process.versions.electron != null : false), /**
 * 思源笔记渲染窗口
 *
 * @author terwer
 * @version 0.1.0
 * @since 0.0.1
 */
-o(c, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && window.process.type === "renderer"), /**
+o(h, "isInSiyuanRendererWin", () => typeof window < "u" && window.process && window.process.type === "renderer"), /**
 * 依赖 npm
 *
 * @param libpath
 * @param win - 可选，执行窗口
 */
-o(c, "requireNpm", (e, t) => u.requireLib(e, n.BasePathType_Absolute, "", t)), /**
+o(h, "requireNpm", (e, t) => h.requireLib(e, n.BasePathType_Absolute, "", t)), /**
 * 引入依赖
 *
 * @param libpath - 依赖全路径
@@ -479,55 +478,50 @@ o(c, "requireNpm", (e, t) => u.requireLib(e, n.BasePathType_Absolute, "", t)), /
 * @param pluginName - 可选，当前插件目录
 * @param win - 可选，执行窗口
 */
-o(c, "requireLib", (e, t, i, a) => {
-  const h = u.getRequirePath(e, t, i), p = a ?? u.siyuanWindow();
+o(h, "requireLib", (e, t, i, a) => {
+  const c = h.getRequirePath(e, t, i), p = a ?? h.siyuanWindow();
   if (!p)
-    return require(h);
+    return require(c);
   if (typeof p.require < "u")
-    return p.require(h);
+    return p.require(c);
 }), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 appearance 的相对路径
 */
-o(c, "requireAppearanceLib", (e) => u.requireLib(e, n.BasePathType_Appearance)), /**
+o(h, "requireAppearanceLib", (e) => h.requireLib(e, n.BasePathType_Appearance)), /**
 * 引入依赖，以 data 的基本路径为准
 *
 * @param libpath - 相对于 data 的相对路径
 */
-o(c, "requireDataLib", (e) => u.requireLib(e, n.BasePathType_Data)), /**
+o(h, "requireDataLib", (e) => h.requireLib(e, n.BasePathType_Data)), /**
 * 引入依赖，以 theme 的基本路径为准
 *
 * @param libpath - 相对于 theme 的相对路径
 */
-o(c, "requireThemesLib", (e) => u.requireLib(e, n.BasePathType_Themes)), /**
+o(h, "requireThemesLib", (e) => h.requireLib(e, n.BasePathType_Themes)), /**
 * 引入依赖，以 ZhiTheme 的基本路径为准
 *
 * @param libpath - 相对于 ZhiTheme 的相对路径
 */
-o(c, "requireZhiThemeLib", (e) => u.requireLib(e, n.BasePathType_ZhiTheme)), /**
+o(h, "requireZhiThemeLib", (e) => h.requireLib(e, n.BasePathType_ZhiTheme)), /**
 * 引入依赖，以 AppService 的基本路径为准
 *
 * @param libpath - 相对于 AppService 的相对路径
 */
-o(c, "requireAppServiceLib", (e) => u.requireLib(e, n.BasePathType_AppService));
+o(h, "requireAppServiceLib", (e) => h.requireLib(e, n.BasePathType_AppService));
+var w = h;
 
 // src/siyuan/siyuanUtils.ts
 var SiyuanUtils = class {
   static appBase() {
-    return this.mainWindow().location.origin + "/plugins/siyuan-plugin-local-service/libs/zhi-rubick-core";
+    return this.mainWindow().location.origin + "/plugins/siyuan-plugin-local-service/libs/zhi-rubick-ui";
   }
   static mainWindow() {
-    return c.siyuanWindow();
-  }
-  static mainRequireNpm(name) {
-    return c.requireNpm(name);
-  }
-  static mainRequireStaticScript(name) {
-    return c.requireDataLib(`/plugins/siyuan-plugin-local-service/libs/zhi-rubick-core/${name}`);
+    return w.siyuanWindow();
   }
   static appServiceFolder() {
-    return c.appServiceFolder();
+    return w.appServiceFolder();
   }
 };
 var siyuanUtils_default = SiyuanUtils;
@@ -553,7 +547,7 @@ var main_default = () => {
       useContentSize: true,
       resizable: true,
       width: WINDOW_WIDTH,
-      frame: false,
+      frame: constants.DEBUG_MODE,
       title: "\u62C9\u6BD4\u514B",
       show: true,
       modal: false,
@@ -614,26 +608,26 @@ var main_default = () => {
 };
 
 // ../zhi-lib-base/dist/index.js
-var w = (n2, $, p) => {
-  const s2 = $ ?? "zhi", i = (t) => {
-    const e = t.getFullYear(), o2 = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), u2 = String(t.getMinutes()).padStart(2, "0"), d2 = String(t.getSeconds()).padStart(2, "0");
-    return `${e}-${o2}-${r} ${S}:${u2}:${d2}`;
-  }, c2 = (t, e) => {
+var w2 = (n2, $, p) => {
+  const s3 = $ ?? "zhi", i = (t) => {
+    const e = t.getFullYear(), o2 = String(t.getMonth() + 1).padStart(2, "0"), r = String(t.getDate()).padStart(2, "0"), S = String(t.getHours()).padStart(2, "0"), u2 = String(t.getMinutes()).padStart(2, "0"), d = String(t.getSeconds()).padStart(2, "0");
+    return `${e}-${o2}-${r} ${S}:${u2}:${d}`;
+  }, c = (t, e) => {
     const o2 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
-    r ? console.log(`[${s2}] [${o2}] [DEBUG] [${n2}] ${t}`, r) : console.log(`[${s2}] [${o2}] [DEBUG] [${n2}] ${t}`);
+    r ? console.log(`[${s3}] [${o2}] [DEBUG] [${n2}] ${t}`, r) : console.log(`[${s3}] [${o2}] [DEBUG] [${n2}] ${t}`);
   }, l = (t, e) => {
     const o2 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
-    r ? console.info(`[${s2}] [${o2}] [INFO] [${n2}] ${t}`, r) : console.info(`[${s2}] [${o2}] [INFO] [${n2}] ${t}`);
+    r ? console.info(`[${s3}] [${o2}] [INFO] [${n2}] ${t}`, r) : console.info(`[${s3}] [${o2}] [INFO] [${n2}] ${t}`);
   }, f = (t, e) => {
     const o2 = i(/* @__PURE__ */ new Date()), r = typeof e == "boolean" ? String(e) : e;
-    r ? console.warn(`[${s2}] [${o2}] [WARN] [${n2}] ${t}`, r) : console.warn(`[${s2}] [${o2}] [WARN] [${n2}] ${t}`);
+    r ? console.warn(`[${s3}] [${o2}] [WARN] [${n2}] ${t}`, r) : console.warn(`[${s3}] [${o2}] [WARN] [${n2}] ${t}`);
   }, g2 = (t, e) => {
     const o2 = i(/* @__PURE__ */ new Date());
-    e ? console.error(`[${s2}] [${o2}] [ERROR] [${n2}] ${t.toString()}`, e) : console.error(`[${s2}] [${o2}] [ERROR] [${n2}] ${t.toString()}`);
+    e ? console.error(`[${s3}] [${o2}] [ERROR] [${n2}] ${t.toString()}`, e) : console.error(`[${s3}] [${o2}] [ERROR] [${n2}] ${t.toString()}`);
   };
   return {
     debug: (t, e) => {
-      p && (e ? c2(t, e) : c2(t));
+      p && (e ? c(t, e) : c(t));
     },
     info: (t, e) => {
       e ? l(t, e) : l(t);
@@ -656,18 +650,27 @@ var App = class {
   /**
    * 日志记录器对象
    */
-  logger = w("zi-rubick-core", "zhi", false);
+  logger = w2("zi-rubick-core", "zhi", false);
   /**
    * 创建一个新的应用程序实例
    */
   constructor() {
     this.windowCreator = main_default();
   }
+  /**
+   * 启动 rubick
+   */
+  bootstrap() {
+    this.windowCreator.init();
+  }
+  /**
+   * 获取商店的 window
+   */
+  getWindow() {
+    return this.windowCreator.getWindow();
+  }
 };
 var main_default2 = new App();
-
-// src/index.ts
-main_default2.windowCreator.init();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   rubick

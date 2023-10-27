@@ -23,27 +23,31 @@
  * questions.
  */
 
-/**
- * Rubick消息触发器的键值
- */
-const RUBICK_MSG_TRIGGER_KEY = "rubick-msg-trigger"
+import { i18n, pluginInstance } from "./utils/utils"
+import { SiyuanDevice } from "zhi-device"
 
-/**
- * 常量对象，包含Rubick消息触发器键值的常量
- *
- * @author terwer
- * @since 0.1.0
- */
-const constants = {
-  /**
-   * Rubick消息触发器的键值常量
-   */
-  RUBICK_MSG_TRIGGER_KEY,
+export const initTopbar = () => {
+  //添加顶栏按钮
+  const topBarElement = pluginInstance.addTopBar({
+    icon: "iconNumber",
+    title: i18n.localService,
+    position: "right",
+    callback: async () => {
+      showRubickStore()
+    },
+  })
+
+  //添加快捷键
+  pluginInstance.addCommand({
+    langKey: "addTopBarIcon",
+    hotkey: "⌥⌘S",
+    callback: async () => {
+      showRubickStore()
+    },
+  })
 }
 
-/**
- * 导出常量对象
- */
-module.exports = {
-  constants,
+const showRubickStore = () => {
+  const win = SiyuanDevice.siyuanWindow()
+  win.zhi.app.store.rubick.bootstrap()
 }

@@ -30,8 +30,11 @@ import "../index.styl"
 import { isDev } from "./Constants"
 import { DeviceDetection, SiyuanDevice } from "zhi-device"
 import { LocalService } from "./service/localService"
+import { setI18n, setPluginInstance } from "./utils/utils"
+import { initTopbar } from "./topbar"
+import { initSidebar } from "./sidebar"
 
-export default class ImporterPlugin extends Plugin {
+export default class LocalServicePlugin extends Plugin {
   private logger: any
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
@@ -41,6 +44,15 @@ export default class ImporterPlugin extends Plugin {
   }
 
   async onload() {
+    // 初始化
+    this.init()
+
+    // 初始化顶栏
+    initTopbar()
+
+    // 初始化边栏
+    initSidebar()
+
     // 加载服务，使用异步来做
     const that = this
     this.logger.info("local service is initializing ...")
@@ -55,14 +67,21 @@ export default class ImporterPlugin extends Plugin {
 
   onunload() {
     const win = SiyuanDevice.siyuanWindow()
-    win.npmManager = undefined
-    win.zhiCmd = undefined
+    win.zhi = undefined
     this.logger.info("local services have been deactivated.")
   }
 
   //===================
   // private function
   //===================
+  /**
+   * 获取i18n和插件类实例
+   */
+  init() {
+    setI18n(this.i18n)
+    setPluginInstance(this)
+  }
+
   /**
    * 加载服务
    */

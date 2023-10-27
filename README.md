@@ -11,12 +11,13 @@ a plugin for connecting siyuan-note with local services
 ## Quick start - TODO
 
   ```js
-  await zhi.npm.checkAndInitNode()
-  await zhi.store.getPackage("python-hello")
-  await zhi.store.getPackage("local-service-chatgpt")
-  await zhi.store.getPackage("local-service-nocodb")
-  zhi.sc.stopAll()
-  zhi.sc.startAll()
+await zhi.npm.checkAndInitNode()
+zhi.app.store.rubick.bootstrap()
+await zhi.app.store.rubick.getPackage("python-hello")
+await zhi.app.store.rubick.getPackage("local-service-chatgpt")
+await zhi.app.store.rubick.getPackage("local-service-nocodb")
+zhi.sc.stopAll()
+zhi.sc.startAll()
   ```
 
   Open browser access, or set the URL to the WebApp plugin
