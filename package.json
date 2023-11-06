@@ -39,7 +39,7 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
-    "zhi-common": "^1.24.3",
+    "zhi-common": "^1.27.0",
     "zhi-device": "^2.10.0",
     "zhi-lib-base": "^0.8.0"
   }
